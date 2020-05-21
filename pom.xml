@@ -8,7 +8,7 @@
 		<version>2.3.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.org.jenkins</groupId>
+	<groupId> io.jenkins.plugins</groupId>
 	<artifactId>Custom-Jenkins-Distribution-Service</artifactId>
 	<version>1.0.0</version>
 	<name>Custom-Jenkins-Distribution-Service</name>
