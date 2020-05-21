@@ -42,6 +42,13 @@
 		</dependency>
 	</dependencies>
 
+	<licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
 	<build>
 		<plugins>
 			<plugin>
