@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId> io.jenkins.plugins</groupId>
-	<artifactId>Custom-Jenkins-Distribution-Service</artifactId>
+	<artifactId>custom-distribution-service</artifactId>
 	<version>1.0.0</version>
 	<name>Custom-Jenkins-Distribution-Service</name>
 	<description>The main idea behind the project is to build a customizable jenkins distribution service that could be used to build tailor-made jenkins distributions</description>
