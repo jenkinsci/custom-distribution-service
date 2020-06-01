@@ -1,0 +1,14 @@
+{
+  "bundle": {
+    "artifactId" : "jenkins-all-latest",
+    "title" : "Jenkins WAR - all latest",
+    "desc" : "New Jenkins Version"
+  },
+  "war" : {
+    "jenkinsVersion": "2.107.3"
+  },
+  "buildSettings" : {
+    "base" : "jenkins/jenkins:2.138.2",
+    "tag" : "jenkins-experimental/custom-war-packager-casc-demo"
+  }
+}
