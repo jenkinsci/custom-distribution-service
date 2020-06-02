@@ -1,14 +1,4 @@
-pipeline {
-    stages {
-        stage('Build') {
-            steps {
-                sh './mvn spring-boot:run'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh ' ./mvn test'
-            }
-        }
-    }
-}
+buildPlugin(configurations: [
+        [ platform: "linux", jdk: "8", jenkins: null ],
+        [ platform: "windows", jdk: "8", jenkins: null ],
+])
