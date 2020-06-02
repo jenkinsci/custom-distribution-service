@@ -10,5 +10,19 @@
   "buildSettings" : {
     "base" : "jenkins/jenkins:2.138.2",
     "tag" : "jenkins-experimental/custom-war-packager-casc-demo"
-  }
+  },
+  "sysSettings" : {
+    "setupWizard" : "true",
+    "slaveAgentPort" : "5000",
+    "slaveAgentPortEnforce" : "true"
+  },
+  "plugins" : [{
+    "AnchorChain" : {
+      "version" : "4.12"
+    },
+    "gitlab-plugin" : {
+      "version" : "4.12"
+    }
+  }],
+  "casc" : true
 }
