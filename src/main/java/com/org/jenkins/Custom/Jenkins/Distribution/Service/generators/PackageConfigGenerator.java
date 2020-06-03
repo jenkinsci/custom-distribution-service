@@ -3,17 +3,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.org.jenkins.Custom.Jenkins.Distribution.Service.Util.Util;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Iterator;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class PackageConfigGenerator {
 
-    static Util util = new Util();
+    private static Util util = new Util();
 
     public static String generatePackageConfig(JSONObject formData)
         throws  Exception {
@@ -44,6 +42,7 @@ public class PackageConfigGenerator {
         packageConfig.put("bundle", bundleInfo);
         packageConfig.put("war", warInfo);
         packageConfig.put("plugins", pluginInfoArray);
+        packageConfig.put("systemProperties", sysInfo);
 
         if(formData.getBoolean("casc")) {
             packageConfig.put("casc", generateJCasC());

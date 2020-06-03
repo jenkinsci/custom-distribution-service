@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static com.org.jenkins.Custom.Jenkins.Distribution.Service.generators.PackageConfigGenerator.generatePackageConfig;
 
 public class PackageConfigGeneratorTest {
-    Util util = new Util();
+    private Util util = new Util();
 
     @Test
     public void testSimplePackageConfigGeneration() {
