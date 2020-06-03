@@ -1,7 +1,7 @@
 package com.org.jenkins.custom.jenkins.distribution.service.generators;
 
 
-import com.org.jenkins.custom.jenkins.distribution.service.Util.Util;
+import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.org.jenkins.custom.jenkins.distribution.service.Util;
+package com.org.jenkins.custom.jenkins.distribution.service.util;
 
 import java.io.File;
 import java.net.URL;

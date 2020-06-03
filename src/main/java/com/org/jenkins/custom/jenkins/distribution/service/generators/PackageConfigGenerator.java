@@ -2,7 +2,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.generators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import com.org.jenkins.custom.jenkins.distribution.service.Util.Util;
+import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.nio.file.Files;
 import java.util.Iterator;
 import org.json.JSONArray;
