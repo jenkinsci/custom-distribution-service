@@ -1,13 +1,10 @@
-package com.org.jenkins.Custom.Jenkins.Distribution.Service.generators;
+package com.org.jenkins.custom.jenkins.distribution.service.generators;
 
 
-import com.org.jenkins.Custom.Jenkins.Distribution.Service.Util.Util;
+import com.org.jenkins.custom.jenkins.distribution.service.Util.Util;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-
-import static com.org.jenkins.Custom.Jenkins.Distribution.Service.generators.PackageConfigGenerator.generatePackageConfig;
 
 public class PackageConfigGeneratorTest {
     private Util util = new Util();
@@ -16,7 +13,7 @@ public class PackageConfigGeneratorTest {
     public void testSimplePackageConfigGeneration() {
         try {
             String sampleConfig = util.readStringFromFile("packagerConfig/simpleConfig.json");
-            String generatedYAML = generatePackageConfig(new JSONObject(sampleConfig));
+            String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
             String expectedYAML = util.readStringFromFile("packagerConfig/simpleConfig.yml");
             Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
@@ -28,7 +25,7 @@ public class PackageConfigGeneratorTest {
     public void testPackagerConfigWithoutDockerTag() {
         try {
         String sampleConfig = util.readStringFromFile("packagerConfig/emptyDockerTag.json");
-        String generatedYAML = generatePackageConfig(new JSONObject(sampleConfig));
+        String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
         String expectedYAML = util.readStringFromFile("packagerConfig/emptyDockerTag.yaml");
         Assert.assertEquals(generatedYAML, expectedYAML);
     } catch (Exception e) {
@@ -40,7 +37,7 @@ public class PackageConfigGeneratorTest {
     public void testPackagerConfigWithoutCasCTag() {
         try {
             String sampleConfig = util.readStringFromFile("packagerConfig/emptyCascSection.json");
-            String generatedYAML = generatePackageConfig(new JSONObject(sampleConfig));
+            String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
             String expectedYAML = util.readStringFromFile("packagerConfig/emptyCascSection.yaml");
             Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
