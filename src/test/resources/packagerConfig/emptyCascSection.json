@@ -1,0 +1,27 @@
+{
+  "bundle": {
+    "artifactId" : "jenkins-all-latest",
+    "title" : "Jenkins WAR - all latest",
+    "desc" : "New Jenkins Version"
+  },
+  "war" : {
+    "jenkinsVersion": "2.107.3"
+  },
+  "buildSettings" : {
+    "base" : "jenkins/jenkins:2.138.2"
+  },
+  "sysSettings" : {
+    "setupWizard" : "true",
+    "slaveAgentPort" : "5000",
+    "slaveAgentPortEnforce" : "true"
+  },
+  "plugins" : [{
+    "AnchorChain" : {
+      "version" : "4.12"
+    },
+    "gitlab-plugin" : {
+      "version" : "4.12"
+    }
+  }],
+  "casc" : false
+}

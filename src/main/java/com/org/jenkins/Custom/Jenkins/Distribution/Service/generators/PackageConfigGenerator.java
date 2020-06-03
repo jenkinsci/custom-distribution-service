@@ -45,7 +45,7 @@ public class PackageConfigGenerator {
         packageConfig.put("war", warInfo);
         packageConfig.put("plugins", pluginInfoArray);
 
-        if(formData.has("casc")) {
+        if(formData.getBoolean("casc")) {
             packageConfig.put("casc", generateJCasC());
         }
 

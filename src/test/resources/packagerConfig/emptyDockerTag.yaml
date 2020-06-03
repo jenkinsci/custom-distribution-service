@@ -1,0 +1,28 @@
+---
+casc:
+  id: "casc"
+  source:
+    dir: "casc.yml"
+plugins:
+- groupId: "org.jenkins-ci.plugins"
+  artifactId: "AnchorChain"
+  source:
+    version: "1.0"
+- groupId: "org.jenkins-ci.plugins"
+  artifactId: "gitlab-plugin"
+  source:
+    version: "1.5.13"
+war:
+  groupId: "org.jenkins-ci.main"
+  artifactId: "jenkins-war"
+  source:
+    version: "2.107.3"
+buildSettings:
+  docker:
+    base: "jenkins/jenkins:2.138.2"
+bundle:
+  vendor: "Jenkins project"
+  groupId: "io.jenkins.tools.custom-distribution-service.build"
+  description: "New Jenkins Version"
+  artifactId: "jenkins-all-latest"
+  title: "Jenkins WAR - all latest"
