@@ -43,4 +43,4 @@ for (int i = 0; i < platforms.size(); ++i) {
 }
 
 /* Execute our platforms in parallel */
-parallel(branches)\
+parallel(branches)
