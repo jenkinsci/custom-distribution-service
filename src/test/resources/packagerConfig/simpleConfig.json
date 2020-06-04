@@ -20,7 +20,7 @@
     "AnchorChain" : {
       "version" : "4.12"
     },
-    "gitlab-plugin" : {
+    "ApicaLoadtest" : {
       "version" : "4.12"
     }
   }],
