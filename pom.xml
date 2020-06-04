@@ -11,7 +11,7 @@
 	<groupId>io.jenkins.tools.distribution-service</groupId>
 	<artifactId>custom-distribution-service</artifactId>
 	<version>0.0.1</version>
-	<name>custom jenkins distribution service</name>
+	<name>Custom Jenkins Distribution Service</name>
 	<description>The main idea behind the project is to build a customizable jenkins distribution service that could be used to build tailor-made jenkins distributions</description>
 
 	<properties>
@@ -39,7 +39,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
