@@ -2,6 +2,12 @@ import React from 'react'
 
 export const Header = () => {
     return(
-        <p>I am a header</p>
+        <header className="header" data-tesid="header">
+            <nav>
+                <div className="logo">
+                    <img src="/images/logo.png"></img>
+                </div>
+            </nav>
+        </header>
     )
 }
