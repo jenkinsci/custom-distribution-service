@@ -9,12 +9,12 @@ body {
 }
 :root {
     --theme-color1: #fff;
-    --theme-color2: #f06161;
+    --theme-color2: #011a30;
     
 }
 .colored {
     width: 100%;
-    background: #f06161;
+    background: #011a30;
     -webkit-box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18);
     padding-top: 10px;
@@ -62,10 +62,11 @@ body {
 .nav-items .main-nav li a.active {
     border-color: var(--theme-color1);
 }
+
 .site-logo {
     width: 78.33px;
-    margin-right: 50px;
-    background-color: blue($color: #000000);;
+    margin-right: 30px;
+    background-color: #011a30;
 }
 
 .c-container {

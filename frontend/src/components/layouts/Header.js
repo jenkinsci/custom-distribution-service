@@ -2,27 +2,27 @@ import React from 'react'
 
 export const Header = () => {
     return(
-        <header class="header colored sticky-header" data-scroll="out">
-				<div class="c-container">
-					<div class="nav-items">
+        <header className="header colored sticky-header" data-scroll="out">
+				<div className="c-container">
+					<div className="nav-items">
 					<a href="">
-					<img class="site-logo" src="frontend/src/images/jenkins_logo.png" alt=""></img>
+					<img className="site-logo" src="https://i.imgur.com/kAZS0eh.png" alt=""></img>
 					</a>
-					<ul class="main-nav">
-						<li class="nav-item active">
-						<a class="nav-link active" href="#">Home</a>
+					<ul className="main-nav">
+						<li className="nav-item active">
+						<a className="nav-link active" href="#">Home</a>
 						</li>
-						<li class="nav-item">
-						<a class="nav-link" href="#">Plugins</a>
+						<li className="nav-item">
+						<a className="nav-link" href="#">Plugins</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Community Config</a>
+						<li className="nav-item">
+							<a className="nav-link" href="#">Community Config</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">Package Generation</a>
+							<li className="nav-item">
+								<a className="nav-link" href="#">Package Generation</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">BLOGS</a>
+							<li className="nav-item">
+								<a className="nav-link" href="#">War Download</a>
 							</li>
 					</ul>
 					</div>
