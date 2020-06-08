@@ -1,4 +1,4 @@
-package com.org.jenkins.Custom.Jenkins.Distribution.Service;
+package com.org.jenkins.custom.jenkins.distribution.service;
 
 import java.io.File;
 import java.io.IOException;
