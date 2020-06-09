@@ -8,13 +8,14 @@ import java.io.File;
 
 public class WarGenerator {
 
-    private Util util = new Util();
+    private static Util util = new Util();
 
-    public static final String DEFAULT_TMP_DIR_NAME = "tmp";
+    private static final String DEFAULT_TMP_DIR_NAME = "tmp";
+    private static final String PACKAGER_CONFIG_YAML = "packager-config.yml";
 
-    public void generateWAR(String versionName) {
+    public static void generateWAR(String versionName) {
         final Config cfg;
-        final File configPath = util.getFileFromResources("packager-config.yml");
+        final File configPath = util.getFileFromResources(PACKAGER_CONFIG_YAML);
         try {
             cfg = Config.loadConfig(configPath);
             cfg.buildSettings.setTmpDir(new File(DEFAULT_TMP_DIR_NAME));
