@@ -1,8 +1,11 @@
 package com.org.jenkins.custom.jenkins.distribution.service.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.logging.Level;
+import org.codehaus.plexus.util.FileUtils;
 
 public class Util {
 
@@ -17,9 +20,20 @@ public class Util {
 
     }
 
-
     public String readStringFromFile(String filename) throws Exception {
         return new String(Files.readAllBytes(getFileFromResources(filename).toPath()));
+    }
+
+    public void cleanupTempDirectory() {
+        // Cleanup the temporary directory
+        try {
+            final File tmpDir = new File(System.getProperty("java.io.tmpdir"));
+            if (tmpDir.exists()) {
+                FileUtils.deleteDirectory(tmpDir);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
