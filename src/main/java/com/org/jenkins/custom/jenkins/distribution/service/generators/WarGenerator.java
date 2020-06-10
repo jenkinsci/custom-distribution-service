@@ -10,7 +10,6 @@ public class WarGenerator {
 
     private static Util util = new Util();
 
-    private static final String DEFAULT_TMP_DIR_NAME = "tmp";
     private static final String PACKAGER_CONFIG_YAML = "packager-config.yml";
 
     public static void generateWAR(String versionName) {
@@ -18,7 +17,7 @@ public class WarGenerator {
         final File configPath = util.getFileFromResources(PACKAGER_CONFIG_YAML);
         try {
             cfg = Config.loadConfig(configPath);
-            cfg.buildSettings.setTmpDir(new File(DEFAULT_TMP_DIR_NAME));
+            cfg.buildSettings.setTmpDir(new File(System.getProperty("java.io.tmpdir")));
             cfg.buildSettings.setVersion(versionName);
             cfg.buildSettings.setInstallArtifacts(true);
             new Builder(cfg).build();
