@@ -1,0 +1,13 @@
+version: '2.2'
+
+# Define services
+services:
+  # App backend service
+  app-server:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
