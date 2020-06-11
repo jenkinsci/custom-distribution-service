@@ -1,9 +1,11 @@
 package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister.Pack;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Map;
+import java.util.logging.Logger;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -15,16 +17,23 @@ import org.yaml.snakeyaml.Yaml;
 @Service
 public class PackagerDownloadService {
 
+    private final static Logger LOGGER = Logger.getLogger(PackagerDownloadService.class.getName());
+    private static Util util = new Util();
 
-    Util util = new Util();
     public ResponseEntity<Resource> downloadWAR(String versionName) throws Exception {
-        //Call WarGenerator function
         String artifactId = getArtifactId();
-        File warFile = new File("/tmp/output/target/" + artifactId + "-" + versionName + ".war");
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
-        String headerValue = "attachment; filename=jenkins.war";
-        System.out.println("Returning War file");
-        return returnResource(returnHeaders(headerValue), warFile, resource);
+        try {
+            File warFile = new File("/tmp/output/target/" + artifactId + "-" + versionName + ".war");
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
+            String headerValue = "attachment; filename=jenkins.war";
+            LOGGER.info("Returning War file");
+            return returnResource(returnHeaders(headerValue), warFile, resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            util.cleanupTempDirectory();
+        }
+        return null;
     }
 
     private ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
