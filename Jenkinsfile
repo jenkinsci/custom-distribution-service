@@ -1,16 +1,11 @@
-List platforms = ['linux']
-Map branches = [:]
-
-for (int i = 0; i < platforms.size(); ++i) {
-    String label = platforms[i]
-    branches[label] = {
-        node(label) {
+pipeline {
+        agent {
             timestamps {
                 stage('Checkout') {
                     checkout scm
                 }
 
-                stage('Build') {
+                stage('Spring Boot Build') {
                     withEnv([
                         "JAVA_HOME=${tool 'jdk8'}",
                         "PATH+MVN=${tool 'mvn'}/bin",
@@ -59,11 +54,4 @@ for (int i = 0; i < platforms.size(); ++i) {
                 }
             }
         }
-
-
-
     }
-}
-
-/* Execute our platforms in parallel */
-parallel(branches)
