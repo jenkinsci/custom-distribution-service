@@ -15,7 +15,7 @@ class PluginCard extends React.Component {
     render() {
         return(
             <div>
-                <Card className = "pluginCard" body inverse style={{ backgroundColor: '#778895', borderColor: '#333' }} >
+                <Card className = "pluginCard" body inverse style={{ backgroundColor: '#001627', borderColor: '#333' }} >
                     <CardBody>
                     <CardTitle>Plugin Name: {this.props.plugin.pluginName}</CardTitle>
                     <CardSubtitle>Artifact ID: {this.props.plugin.artifactId}</CardSubtitle>
