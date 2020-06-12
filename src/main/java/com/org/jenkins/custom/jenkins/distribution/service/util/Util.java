@@ -25,5 +25,4 @@ public class Util {
     public JSONObject convertPayloadToJSON(String payload) throws Exception{
         return new JSONObject(payload);
     }
-
 }

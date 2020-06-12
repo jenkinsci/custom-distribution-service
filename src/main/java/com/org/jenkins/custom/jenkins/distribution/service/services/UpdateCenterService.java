@@ -26,15 +26,13 @@ public class UpdateCenterService {
     public JSONObject downloadUpdateCenterJSON() throws Exception {
         HttpGet get = new HttpGet(UPDATE_CENTER_JSON_URL);
         LOGGER.info("Executing Request");
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse response = httpClient.execute(get)) {
-            String responseString = EntityUtils.toString(response.getEntity());
-           // FileUtils.writeStringToFile(new File("update-center.json"), responseString, Charset.forName("UTF-8"));
-            /*
-            * Instead of writing to a file it would be better to return a json object as of now
-            * and later once we have the caching mechanism in place we could pull it in from there
-            */
-            return util.convertPayloadToJSON(responseString);
-        }
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = httpClient.execute(get);
+        String responseString = EntityUtils.toString(response.getEntity());
+        /*
+        * Instead of writing to a file it would be better to return a json object as of now
+        * and later once we have the caching mechanism in place we could pull it in from there
+        */
+        return util.convertPayloadToJSON(responseString);
     }
 }

@@ -24,13 +24,17 @@ public class PluginController {
         this.updateCenterService = updateCenterService;
     }
 
+    /*
+    * Usage : GET: api/plugin/getPluginList
+    * Returns: Plugin List from update center in the form of a JSONObject
+    */
     @GetMapping(path = "/getPluginList")
     public ResponseEntity<?> getPlugins() {
         LOGGER.info("Request Received");
         try {
             return new ResponseEntity<>(updateCenterService.downloadUpdateCenterJSON().toMap(), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
