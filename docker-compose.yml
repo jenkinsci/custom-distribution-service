@@ -13,7 +13,7 @@ services:
     restart: always
 
   app-client:
-    container_name: sample
+    container_name: cds_front-end
     build:
       context: frontend/
       dockerfile: Dockerfile

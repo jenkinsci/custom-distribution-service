@@ -12,6 +12,8 @@ The main idea behind the project is to build a customizable jenkins distribution
 
 ## QuickStart
 
+You can spin up the entire web application using a docker compose file command: `docker-compose up -d --build`
+
 ### Backend
 The backend of the project is built on spring-boot and there is a dockerfile present in the root.
 
