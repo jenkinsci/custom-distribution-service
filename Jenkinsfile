@@ -15,15 +15,7 @@ pipeline {
                     "PATH+MVN=${tool 'mvn'}/bin",
                     'PATH+JDK=$JAVA_HOME/bin',
                 ]) {
-                    List<String> mvnOptions = ['-Dmaven.test.failure.ignore','verify']
-                    infra.runMaven(
-                        mvnOptions,
-                        /*jdk*/ "8",
-                        /*extraEnv*/ null,
-                        /*settingsFile*/ null,
-                        /*addToolEnv*/ false
-                        )
-
+                    
                     timeout(60) {
                         String command = 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
                         if (isUnix()) {
