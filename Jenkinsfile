@@ -45,9 +45,11 @@ pipeline {
             steps {
                 /* Archive the test results */
                 junit '**/target/surefire-reports/TEST-*.xml'
-                if (label == 'linux') {
-                    archiveArtifacts artifacts: '**/target/**/*.jar'
-                    findbugs pattern: '**/target/findbugsXml.xml'
+                script {
+                    if (label == 'linux') {
+                        archiveArtifacts artifacts: '**/target/**/*.jar'
+                        findbugs pattern: '**/target/findbugsXml.xml'
+                    }
                 }
             }
         }
