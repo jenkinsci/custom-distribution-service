@@ -1,7 +1,6 @@
 pipeline {
     agent any 
     stages {
-       
         stage('Checkout') {
             steps{
              checkout scm
@@ -53,12 +52,8 @@ pipeline {
             steps {
                 /* Archive the test results */
                 junit '**/target/surefire-reports/TEST-*.xml'
-                script {
-                    if (label == 'linux') {
-                        archiveArtifacts artifacts: '**/target/**/*.jar'
-                        findbugs pattern: '**/target/findbugsXml.xml'
-                    }
-                }
+                archiveArtifacts artifacts: '**/target/**/*.jar'
+                findbugs pattern: '**/target/findbugsXml.xml'
             }
         }
     }
