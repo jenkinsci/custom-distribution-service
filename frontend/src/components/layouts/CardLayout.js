@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'reactstrap';
 class CardLayout extends React.Component {
 
     state = {
-        people: [
+        plugins: [
             {
                 pluginName: "github Plugin",
                 artifactId: "github-api-plugin",
