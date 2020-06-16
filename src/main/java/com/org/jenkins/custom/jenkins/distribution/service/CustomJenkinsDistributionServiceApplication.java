@@ -9,5 +9,4 @@ public class CustomJenkinsDistributionServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CustomJenkinsDistributionServiceApplication.class, args);
 	}
-
 }
