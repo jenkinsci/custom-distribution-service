@@ -17,12 +17,12 @@ pipeline {
                 ]) {
                     
                     timeout(60) {
-                        String command = 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
+                        
                         if (isUnix()) {
-                            sh command
+                            sh 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
                         }
                         else {
-                            bat command
+                            bat 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
                         }
                     }
                 }
