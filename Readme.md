@@ -13,32 +13,55 @@ The main idea behind the project is to build a customizable jenkins distribution
 ## QuickStart
 
 You can spin up the entire web application using a docker compose file command: 
-Build the containers: `docker-compose up -d --build`
+Build the containers: 
+```
+docker-compose up -d --build
+```
 
-Run the containers: `docker-compose up`
+Run the containers: 
+```
+docker-compose up
+```
 
 ### Backend
 The backend of the project is built on spring-boot and there is a dockerfile present in the root.
 
 #### Steps to spin up the backend
 
-a) Create a package: `mvn clean package`
+a) Create a package: 
+```
+mvn clean package
+```
 
-b) Build Dockerfile: `docker build -t cds_backend .`
+b) Build Dockerfile: 
+```
+docker build -t cds_backend .
+```
 
-c) Run Dockerfile: ` docker run -p 5000:8080 cds_backend`
+c) Run Dockerfile: 
+```
+docker run -p 5000:8080 cds_backend
+```
 
 ### FrontEnd
 The frontend of the project is built on react and there is a dockerfile present in the frontend directory.
 
 #### Steps to spin up the frontend
 
-a) CD into the front end directory: `cd frontend/`
+a) CD into the front end directory: 
+```
+cd frontend/
+```
 
-b) Build Dockerfile: `docker build -t cds_frontend .`
+b) Build Dockerfile: 
+```
+docker build -t cds_frontend .
+```
 
-c) Run Dockerfile: `docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true react-docker-app`
-
+c) Run Dockerfile: 
+```
+docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true react-docker-app
+```
 
 ## Useful Links
 
