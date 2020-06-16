@@ -75,7 +75,7 @@
 		<dependency>
 			<groupId>io.jenkins.tools.custom-war-packager</groupId>
 			<artifactId>custom-war-packager-lib</artifactId>
-			<version>2.0-alpha-3-SNAPSHOT</version>
+			<version>2.0</version>
 		</dependency>
 	</dependencies>
   
