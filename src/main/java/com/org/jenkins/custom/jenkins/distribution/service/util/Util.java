@@ -5,6 +5,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
+import org.json.JSONObject;
 
 public class Util {
 
@@ -38,4 +39,7 @@ public class Util {
         }
     }
 
+    public JSONObject convertPayloadToJSON(String payload) throws Exception{
+        return new JSONObject(payload);
+    }
 }
