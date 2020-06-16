@@ -18,6 +18,14 @@ pipeline {
                     
                     timeout(60) {
                         script {
+                            List<String> mvnOptions = ['-Dmaven.test.failure.ignore','verify']
+                            infra.runMaven(
+                                mvnOptions,
+                                /*jdk*/ "8",
+                                /*extraEnv*/ null,
+                                /*settingsFile*/ null,
+                                /*addToolEnv*/ false
+                            )
                             if (isUnix()) {
                                 sh 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
                             }
