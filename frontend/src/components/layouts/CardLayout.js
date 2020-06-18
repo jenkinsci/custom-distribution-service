@@ -17,18 +17,18 @@ class CardLayout extends React.Component {
         const response = await fetch('/api/plugin/getPluginList');
         const body = await response.json();
         const mainBody = body["plugins"]
-        console.log(countObjectKeys(mainBody))
         this.setState({ plugins: mainBody});
     }
 
     render () {
 
+        // We need to populate the plugin Array
         let pluginArray = []
         Object.keys(this.state.plugins).map(key => {
             pluginArray.push(this.state.plugins[key])
         });
 
-          // Get current posts
+        // Get current plugins
         const indexOfLastPlugin =  this.state.current * this.state.pluginsperPage;
         const indexOfFirstPlugin =  indexOfLastPlugin - this.state.pluginsperPage;
         const currentPlugins = pluginArray.slice(indexOfFirstPlugin, indexOfLastPlugin)  
@@ -54,9 +54,9 @@ class CardLayout extends React.Component {
                    {pluginCards} 
                 </Row>
           
-                <Pagination aria-label="Page navigation example">
+                <Pagination aria-label="Page navigation example" >
               {this.state.current !== 1 && <PaginationItem>
-                  <PaginationLink first onClick={updatePageWrapper(1)} />
+                  <PaginationLink first onClick={updatePageWrapper(0)} />
               </PaginationItem>}
               {this.state.current > 1 && <PaginationItem>
                   <PaginationLink previous onClick ={updatePageWrapper(this.state.current - 1)} />
@@ -75,7 +75,7 @@ class CardLayout extends React.Component {
                   <PaginationLink next onClick={updatePageWrapper(this.state.current + 1)} />
               </PaginationItem>}
               {this.state.current !== 100 && <PaginationItem>
-                  <PaginationLink last onClick={updatePageWrapper(pluginArray.length)}/>
+                  <PaginationLink last onClick={updatePageWrapper(pluginArray.length - 1)}/>
               </PaginationItem>}
           </Pagination>
 
@@ -84,9 +84,6 @@ class CardLayout extends React.Component {
     }
 }
 
-function countObjectKeys(obj) { 
-    return Object.keys(obj).length; 
-}
 
 
 export default CardLayout;
