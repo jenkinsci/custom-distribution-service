@@ -60,7 +60,7 @@ docker build -t cds_frontend .
 
 c) Run Dockerfile: 
 ```
-docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true react-docker-app
+docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true cds_frontend
 ```
 
 ## Useful Links
