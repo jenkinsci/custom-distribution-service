@@ -1,6 +1,6 @@
 import React from 'react'
 import PluginCard from '../PluginCards/pluginCard'
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col , Button} from 'reactstrap';
 
 
 class CardLayout extends React.Component {
@@ -14,37 +14,37 @@ class CardLayout extends React.Component {
                 description: "USeful pLugin"
             },
             {
-                pluginName: "github Plugin",
+                pluginName: "gitlab Plugin",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "Useful Github plugin"
             },
             {
-                pluginName: "github Plugin",
+                pluginName: "anchore Plugin",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "Useful Github plugin"
             },
             {
-                pluginName: "github Plugin",
+                pluginName: "warnings Plugin",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "Useful Github plugin"
             },
             {
-                pluginName: "github Plugin",
+                pluginName: "slack Plugin",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "Useful Github plugin"
             },
             {
-                pluginName: "github Plugin",
+                pluginName: "kubernetes Plugin",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "Useful Github plugin"
             },
             {
-                pluginName: "github Plugin",
+                pluginName: "docker api Plugin",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "Useful Github plugin"
@@ -59,18 +59,21 @@ class CardLayout extends React.Component {
     }
     render () {
 
-        let pluginCards = this.state.people.map(plugin => {
+        let pluginCards = this.state.plugins.map(plugin => {
             return(
                 <Col sm="3">
-                    <PluginCard plugin = {plugin} />
+                    <PluginCard plugin = {plugin} setClick={click => this.clickChild = click} />
                 </Col>
             )
         })
         return (
-            <Container fluid>
+            <Container fluid style = {{height: "100vh"}}>
                 <Row>
                    {pluginCards} 
                 </Row>
+                <div className="card-footer text-center" >
+                <Button style = {{backgroundColor:"#185ecc"}}  onClick={() => this.clickChild()}>Submit Plugins</Button>
+                </div>
             </Container>
         )
     }

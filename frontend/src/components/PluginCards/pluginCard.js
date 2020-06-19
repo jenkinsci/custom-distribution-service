@@ -1,15 +1,33 @@
 import React from 'react'
 import './pluginCard.scss'
 import {
-    Card, CardImg, CardText, CardBody,
+    Card, CardBody,
     CardTitle, CardSubtitle, Button
   } from 'reactstrap';
   
-
+let pluginArray = []
 class PluginCard extends React.Component {
 
     constructor(props) {
         super(props)
+        this.submitConfiguration = this.submitConfiguration.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.setClick(this.submitConfiguration);
+     }
+    
+    addToConfiguration() {
+        var version = new Object ();
+        version["version"] = this.props.plugin.version;
+        var pluginInfo = new Object();
+        pluginInfo[this.props.plugin.pluginName] = version;
+        pluginArray.push(pluginInfo)
+    }
+
+    submitConfiguration() {
+        console.log(pluginArray)
+        localStorage.setItem("pluginsArray", JSON.stringify(pluginArray))
     }
 
     render() {
@@ -20,9 +38,9 @@ class PluginCard extends React.Component {
                     <CardTitle>Plugin Name: {this.props.plugin.pluginName}</CardTitle>
                     <CardSubtitle>Artifact ID: {this.props.plugin.artifactId}</CardSubtitle>
                     <CardSubtitle>Version: {this.props.plugin.version}</CardSubtitle>
-                    <CardText>Description: {this.props.plugin.description}</CardText>
-                    <Button style ={{backgroundColor:"#185ecc", marginBottom:"5px"}}>Add to configuration</Button>{' '}
-                    <Button style ={{backgroundColor:"#185ecc"}}>Change Version Number</Button>{' '}
+                    <div className="card-footer text-center" style = {{marginTop:"10px"}}>
+                    <Button onClick = {() => this.addToConfiguration()} style ={{backgroundColor:"#185ecc"}}>Add to configuration </Button>
+                    </div>
                     </CardBody>
                 </Card>
             </div>

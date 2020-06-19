@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Header = () => {
     return(
-        <header className="header colored sticky-header" data-scroll="out">
+        <header className="header colored sticky-header " data-scroll="out">
 				<div className="c-container">
 					<div className="nav-items">
 					<a href="">
