@@ -8,6 +8,11 @@ import {
 let pluginArray = []
 class PluginCard extends React.Component {
 
+    state = {
+        backgroundColor: "#185ecc",
+        buttonText: "Add to configuration"
+    }
+
     constructor(props) {
         super(props)
         this.submitConfiguration = this.submitConfiguration.bind(this);
@@ -18,16 +23,18 @@ class PluginCard extends React.Component {
      }
     
     addToConfiguration() {
+        this.setState({ backgroundColor: "red", buttonText: "Remove from configuration"})
         var version = new Object ();
         version["version"] = this.props.plugin.version;
         var pluginInfo = new Object();
         pluginInfo[this.props.plugin.pluginName] = version;
+        console.log("Pushing into plugin Array")
         pluginArray.push(pluginInfo)
+        localStorage.setItem("pluginsArray", JSON.stringify(pluginArray))
     }
 
     submitConfiguration() {
-        console.log(pluginArray)
-        localStorage.setItem("pluginsArray", JSON.stringify(pluginArray))
+        console.log("Saving plugin array")
     }
 
     render() {
@@ -39,7 +46,7 @@ class PluginCard extends React.Component {
                     <CardSubtitle>Artifact ID: {this.props.plugin.artifactId}</CardSubtitle>
                     <CardSubtitle>Version: {this.props.plugin.version}</CardSubtitle>
                     <div className="card-footer text-center" style = {{marginTop:"10px"}}>
-                    <Button onClick = {() => this.addToConfiguration()} style ={{backgroundColor:"#185ecc"}}>Add to configuration </Button>
+                    <Button onClick = {() => this.addToConfiguration()} style ={{backgroundColor:this.state.backgroundColor}}> {this.state.buttonText} </Button>
                     </div>
                     </CardBody>
                 </Card>
