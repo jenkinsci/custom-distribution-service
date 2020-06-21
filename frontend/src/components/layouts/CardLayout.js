@@ -10,7 +10,7 @@ class CardLayout extends React.Component {
     state = {
         plugins: [
             {
-                pluginName: "github Plugin",
+                pluginName: "AnchorChain",
                 artifactId: "github-api-plugin",
                 version: "2.3",
                 description: "USeful pLugin"
