@@ -33,7 +33,7 @@ for (int i = 0; i < platforms.size(); ++i) {
                     junit '**/target/surefire-reports/TEST-*.xml'
 
                     if (label == 'linux') {
-                      archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/**/*.jar
+                      archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/**/*.jar'
                       findbugs pattern: '**/target/findbugsXml.xml'
                     }
                 }
