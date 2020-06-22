@@ -1,7 +1,6 @@
 package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister.Pack;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Map;
