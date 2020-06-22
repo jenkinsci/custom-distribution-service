@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import org.codehaus.plexus.util.FileUtils;
+import org.json.JSONObject;
 
 public class Util {
 
@@ -22,6 +23,7 @@ public class Util {
         return new String(Files.readAllBytes(getFileFromResources(filename).toPath()));
     }
 
+
     public void cleanupTempDirectory() {
         // Cleanup the temporary directory
         try {
@@ -34,4 +36,7 @@ public class Util {
         }
     }
 
+    public JSONObject convertPayloadToJSON(String payload) throws Exception{
+        return new JSONObject(payload);
+    }
 }
