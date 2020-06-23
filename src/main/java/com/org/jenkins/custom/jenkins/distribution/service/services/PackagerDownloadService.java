@@ -20,9 +20,10 @@ public class PackagerDownloadService {
     private static Util util = new Util();
 
     public ResponseEntity<Resource> downloadWAR(String versionName) throws Exception {
+        File warFile = null;
         String artifactId = getArtifactId();
         try {
-            File warFile = new File("/tmp/output/target/" + artifactId + "-" + versionName + ".war");
+            warFile = new File("/tmp/output/target/" + artifactId + "-" + versionName + ".war");
             InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
             String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");
@@ -30,7 +31,7 @@ public class PackagerDownloadService {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            util.cleanupTempDirectory();
+            util.cleanupTempDirectory(warFile);
         }
         return null;
     }
