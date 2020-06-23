@@ -73,6 +73,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.23</version>
+		</dependency>
+		<dependency>
 			<groupId>io.jenkins.tools.custom-war-packager</groupId>
 			<artifactId>custom-war-packager-lib</artifactId>
 			<version>1.7</version>
