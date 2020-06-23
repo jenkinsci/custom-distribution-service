@@ -40,6 +40,7 @@ pipeline {
         stage('React Build') {
             agent {
             docker {
+                label 'linux'
                 image 'node:6-alpine'
                 }
             }
