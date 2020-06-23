@@ -76,6 +76,9 @@
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>1.23</version>
+			<groupId>io.jenkins.tools.custom-war-packager</groupId>
+			<artifactId>custom-war-packager-lib</artifactId>
+			<version>1.7</version>
 		</dependency>
 	</dependencies>
   
@@ -94,5 +97,18 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+		  <id>repo.jenkins-ci.org</id>
+		  <url>https://repo.jenkins-ci.org/public/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+		  <id>repo.jenkins-ci.org</id>
+		  <url>https://repo.jenkins-ci.org/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>
