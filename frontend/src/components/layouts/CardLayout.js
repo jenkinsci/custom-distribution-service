@@ -2,8 +2,7 @@ import React from 'react'
 import PluginCard from '../PluginCards/pluginCard'
 import { Container, Row, Col } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-
-
+import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
 
 class CardLayout extends React.Component {
 
@@ -50,6 +49,19 @@ class CardLayout extends React.Component {
 
         return (
             <Container fluid>
+            <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+             }} >
+                <InputGroup style={{margin:"10px", width:"50%"}}>
+                <Input onChange = {this.onchange} />
+                <InputGroupAddon addonType="append">
+                <Button color="secondary">Search Plugin</Button>
+                </InputGroupAddon>
+                </InputGroup>
+            </div>
                 <Row>
                    {pluginCards} 
                 </Row>
