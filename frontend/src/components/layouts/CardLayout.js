@@ -8,7 +8,7 @@ class CardLayout extends React.Component {
 
     state = {
         plugins: {},
-        pluginsperPage : 12,
+        pluginsperPage : 10,
         current :1
     }
 
@@ -31,6 +31,31 @@ class CardLayout extends React.Component {
         const indexOfLastPlugin =  this.state.current * this.state.pluginsperPage;
         const indexOfFirstPlugin =  indexOfLastPlugin - this.state.pluginsperPage;
         const currentPlugins = pluginArray.slice(indexOfFirstPlugin, indexOfLastPlugin)  
+
+        console.log(indexOfFirstPlugin + " " + indexOfLastPlugin)
+
+        // Create index array
+        const indexArray = []
+        // Calculate first index
+        let lastIndex = indexOfFirstPlugin / 10 + 1;
+        let firstIndex = 0;
+        if (lastIndex >= 10 ) {
+            firstIndex = lastIndex - 10;
+        } else {
+            lastIndex = 9;
+        }
+
+        console.log(firstIndex + " " + lastIndex)
+
+        let counter = 0;
+        for (let index = firstIndex + 1; index < lastIndex + 2; index++) {
+            indexArray[counter] = index 
+            counter = counter + 1;
+        }
+
+        indexArray.map(val => {
+            console.log(val)
+        })
         
         const updatePageWrapper = (num) => {
             return (e) => {
@@ -55,18 +80,15 @@ class CardLayout extends React.Component {
                 justifyContent: "center",
                 alignItems: "center"
              }} >
-                <InputGroup style={{margin:"10px", width:"50%"}}>
+                <InputGroup style={{margin:"10px", width:"40%"}}>
                 <Input onChange = {this.onchange} />
                 <InputGroupAddon addonType="append">
                 <Button color="secondary">Search Plugin</Button>
                 </InputGroupAddon>
                 </InputGroup>
-            </div>
-                <Row>
-                   {pluginCards} 
-                </Row>
-          
-                <Pagination aria-label="Page navigation example" >
+
+
+            <Pagination aria-label="Page navigation example" style ={{margin:"10px"}}>
               {this.state.current !== 1 && <PaginationItem>
                   <PaginationLink first onClick={updatePageWrapper(0)} />
               </PaginationItem>}
@@ -74,11 +96,11 @@ class CardLayout extends React.Component {
                   <PaginationLink previous onClick ={updatePageWrapper(this.state.current - 1)} />
               </PaginationItem>}
               {currentPlugins.map((key, index) => {
-                  const isCurrent = this.state.current == index;
+                  const isCurrent = this.state.current == indexArray[index];
                   return (
-                      <PaginationItem key={index} active={isCurrent}>
-                          <PaginationLink onClick={updatePageWrapper(index)}>
-                              {index}
+                      <PaginationItem key={indexArray[index]} active={isCurrent}>
+                          <PaginationLink onClick={updatePageWrapper(indexArray[index])}>
+                              {indexArray[index]}
                           </PaginationLink>
                       </PaginationItem>
                   );
@@ -89,13 +111,17 @@ class CardLayout extends React.Component {
               {this.state.current !== 100 && <PaginationItem>
                   <PaginationLink last onClick={updatePageWrapper(pluginArray.length - 1)}/>
               </PaginationItem>}
-          </Pagination>
+             </Pagination>
 
+            </div>
+                
+           
+            <Row>
+                   {pluginCards} 
+            </Row>
             </Container>
         )
     }
 }
-
-
 
 export default CardLayout;
