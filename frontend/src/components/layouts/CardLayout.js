@@ -2,21 +2,22 @@ import React from 'react'
 import PluginCard from '../PluginCards/pluginCard'
 import { Container, Row, Col } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input, Spinner } from 'reactstrap';
 
 class CardLayout extends React.Component {
 
     state = {
         plugins: {},
         pluginsperPage : 10,
-        current :1
+        current :1,
+        isLoading: true
     }
 
     async componentDidMount() {
         const response = await fetch('/api/plugin/getPluginList');
         const body = await response.json();
         const mainBody = body["plugins"]
-        this.setState({ plugins: mainBody});
+        this.setState({ plugins: mainBody, isLoading: false});
     }
 
     render () {
@@ -32,8 +33,6 @@ class CardLayout extends React.Component {
         const indexOfFirstPlugin =  indexOfLastPlugin - this.state.pluginsperPage;
         const currentPlugins = pluginArray.slice(indexOfFirstPlugin, indexOfLastPlugin)  
 
-        console.log(indexOfFirstPlugin + " " + indexOfLastPlugin)
-
         // Create index array
         const indexArray = []
         // Calculate first index
@@ -44,19 +43,12 @@ class CardLayout extends React.Component {
         } else {
             lastIndex = 9;
         }
-
-        console.log(firstIndex + " " + lastIndex)
-
         let counter = 0;
         for (let index = firstIndex + 1; index < lastIndex + 2; index++) {
             indexArray[counter] = index 
             counter = counter + 1;
         }
 
-        indexArray.map(val => {
-            console.log(val)
-        })
-        
         const updatePageWrapper = (num) => {
             return (e) => {
                 e.preventDefault();
@@ -72,6 +64,18 @@ class CardLayout extends React.Component {
             )
         });
 
+        if(this.state.isLoading) {
+            return (
+                <div style = { {
+                    position: "fixed",
+                    top: "50%", 
+                    left: "50%",
+                    }}>
+                 <Spinner style = {{width : "6rem", height: "6rem", color:"#011a30"}}> </Spinner>
+                </div>
+            )
+        }
+
         return (
             <Container fluid>
             <div
@@ -80,6 +84,8 @@ class CardLayout extends React.Component {
                 justifyContent: "center",
                 alignItems: "center"
              }} >
+
+                {/* Search Bar */}
                 <InputGroup style={{margin:"10px", width:"40%"}}>
                 <Input onChange = {this.onchange} />
                 <InputGroupAddon addonType="append">
@@ -87,39 +93,36 @@ class CardLayout extends React.Component {
                 </InputGroupAddon>
                 </InputGroup>
 
-
-            <Pagination aria-label="Page navigation example" style ={{margin:"10px"}}>
-              {this.state.current !== 1 && <PaginationItem>
-                  <PaginationLink first onClick={updatePageWrapper(0)} />
-              </PaginationItem>}
-              {this.state.current > 1 && <PaginationItem>
-                  <PaginationLink previous onClick ={updatePageWrapper(this.state.current - 1)} />
-              </PaginationItem>}
-              {currentPlugins.map((key, index) => {
-                  const isCurrent = this.state.current == indexArray[index];
-                  return (
-                      <PaginationItem key={indexArray[index]} active={isCurrent}>
-                          <PaginationLink onClick={updatePageWrapper(indexArray[index])}>
-                              {indexArray[index]}
-                          </PaginationLink>
-                      </PaginationItem>
-                  );
-              })}
-              {this.state.current !== 100 && <PaginationItem>
-                  <PaginationLink next onClick={updatePageWrapper(this.state.current + 1)} />
-              </PaginationItem>}
-              {this.state.current !== 100 && <PaginationItem>
-                  <PaginationLink last onClick={updatePageWrapper(pluginArray.length - 1)}/>
-              </PaginationItem>}
-             </Pagination>
-
+                {/* Pagination Handling (Separate this into a different component later*/}
+                <Pagination aria-label="Page navigation example" style ={{margin:"10px"}}>
+                {this.state.current !== 1 && <PaginationItem>
+                    <PaginationLink first onClick={updatePageWrapper(0)} />
+                </PaginationItem>}
+                {this.state.current > 1 && <PaginationItem>
+                    <PaginationLink previous onClick ={updatePageWrapper(this.state.current - 1)} />
+                </PaginationItem>}
+                {currentPlugins.map((key, index) => {
+                    const isCurrent = this.state.current == indexArray[index];
+                    return (
+                        <PaginationItem key={indexArray[index]} active={isCurrent}>
+                            <PaginationLink onClick={updatePageWrapper(indexArray[index])}>
+                                {indexArray[index]}
+                            </PaginationLink>
+                        </PaginationItem>
+                    );
+                })}
+                {this.state.current !== 100 && <PaginationItem>
+                    <PaginationLink next onClick={updatePageWrapper(this.state.current + 1)} />
+                </PaginationItem>}
+                {this.state.current !== 100 && <PaginationItem>
+                    <PaginationLink last onClick={updatePageWrapper(pluginArray.length - 1)}/>
+                </PaginationItem>}
+                </Pagination>
             </div>
-                
-           
             <Row>
                    {pluginCards} 
             </Row>
-            </Container>
+        </Container>
         )
     }
 }
