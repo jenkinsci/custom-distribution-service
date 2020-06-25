@@ -1,12 +1,15 @@
 import React from 'react'
 import PluginCard from '../PluginCards/pluginCard'
-import { Container, Row, Col } from 'reactstrap';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { InputGroup, InputGroupAddon, Button, Input, Spinner } from 'reactstrap';
+import { Container, Row, Col} from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import ModalExample from '../modal';
+import { Pagination, PaginationItem, PaginationLink, Spinner } from 'reactstrap';
 
 class CardLayout extends React.Component {
 
     state = {
+        search:"",
+        modalShow : false,
         plugins: {},
         pluginsperPage : 10,
         current :1,
@@ -20,14 +23,26 @@ class CardLayout extends React.Component {
         this.setState({ plugins: mainBody, isLoading: false});
     }
 
+    changeModalState = () => {
+        console.log(this.state.modalShow)
+        this.setState({modalShow: !this.state.modalShow})
+    }
+
+    onchange = pluginName => {
+        this.setState({search: pluginName.target.value})
+        console.log("Searching")
+    }
+
     render () {
 
-        // We need to populate the plugin Array
-        let pluginArray = []
-        Object.keys(this.state.plugins).map(key => {
-            pluginArray.push(this.state.plugins[key])
-        });
+         // We need to populate the plugin Array
+         let pluginArray = []
+         Object.keys(this.state.plugins).map(key => {
+             pluginArray.push(this.state.plugins[key])
+         });
 
+        const search  = this.state.search
+       
         // Get current plugins
         const indexOfLastPlugin =  this.state.current * this.state.pluginsperPage;
         const indexOfFirstPlugin =  indexOfLastPlugin - this.state.pluginsperPage;
@@ -36,7 +51,8 @@ class CardLayout extends React.Component {
         // Create index array
         const indexArray = []
         // Calculate first index
-        let lastIndex = indexOfFirstPlugin / 10 + 1;
+        let lastIndex = indexOfFirstPlugin / 10 + 1;     
+
         let firstIndex = 0;
         if (lastIndex >= 10 ) {
             firstIndex = lastIndex - 10;
@@ -49,20 +65,36 @@ class CardLayout extends React.Component {
             counter = counter + 1;
         }
 
+        let pluginCards;
+        if (search !== "") {
+            pluginCards = pluginArray.map(plugin => {
+                if(!(plugin["name"].toLowerCase().indexOf( search.toLowerCase() ) === -1)) {
+                    return(
+                        <Col sm="3">
+                            <PluginCard plugin = {plugin} /> 
+                        </Col>
+                    )
+                }
+            })    
+        } else {
+            pluginCards = currentPlugins.map(plugin => {
+                if (search !== "" && plugin["name"].toLowerCase().indexOf( search.toLowerCase() ) === -1) {
+                    return null
+                }
+                return(
+                    <Col sm="3">
+                        <PluginCard plugin = {plugin} /> 
+                    </Col>
+                )
+            })  
+        }   
+
         const updatePageWrapper = (num) => {
             return (e) => {
                 e.preventDefault();
                 this.setState({current: num});     
             };
         };
-
-        let pluginCards = currentPlugins.map(plugin => {
-            return(
-                <Col sm="3">
-                    <PluginCard plugin = {plugin} /> 
-                </Col>
-            )
-        });
 
         if(this.state.isLoading) {
             return (
@@ -77,7 +109,7 @@ class CardLayout extends React.Component {
         }
 
         return (
-            <Container fluid>
+            <Container fluid style = {{height: "100vh"}}>
             <div
             style={{
                 display: "flex",
@@ -89,7 +121,7 @@ class CardLayout extends React.Component {
                 <InputGroup style={{margin:"10px", width:"40%"}}>
                 <Input onChange = {this.onchange} />
                 <InputGroupAddon addonType="append">
-                <Button color="secondary">Search Plugin</Button>
+                <Button  style = {{backgroundColor:"#185ecc"}} >Search Plugin</Button>
                 </InputGroupAddon>
                 </InputGroup>
 
@@ -120,9 +152,14 @@ class CardLayout extends React.Component {
                 </Pagination>
             </div>
             <Row>
-                   {pluginCards} 
-            </Row>
-        </Container>
+                {pluginCards} 
+             </Row>
+                <div className="card-footer text-center" >
+                <Button style = {{backgroundColor:"#185ecc"}}  onClick={() => {this.clickChild(); this.changeModalState()}}>Submit Plugins</Button>
+                </div>
+                <ModalExample  modalState = {this.state.modalShow} setClick={click => this.clickChild = click} />
+             </Container>
+           
         )
     }
 }
