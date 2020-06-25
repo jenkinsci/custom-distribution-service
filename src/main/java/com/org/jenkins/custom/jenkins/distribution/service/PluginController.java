@@ -2,7 +2,6 @@ package com.org.jenkins.custom.jenkins.distribution.service;
 
 import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
 import java.util.logging.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form } from 'reactstrap';
-import {  FormGroup, Label, Input } from 'reactstrap';
-import axios from 'axios'
-
+import {  FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 class ModalExample extends React.Component {
   
@@ -15,6 +13,7 @@ class ModalExample extends React.Component {
         description: '',
         dockertag:'',
         dockerBase:'',
+        isLoading: false
     }
 
     constructor(props) {
@@ -63,6 +62,7 @@ class ModalExample extends React.Component {
 
     submitConfiguration = async () => {
         console.log("Submitting configuration")
+        this.setState({isLoading:true})
         const apiURL = "http://localhost:8080/package/getPackageConfiguration";
         fetch(apiURL, {
         method: 'POST',
@@ -159,7 +159,10 @@ class ModalExample extends React.Component {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                <Button style = {{backgroundColor:"#185ecc"}} onClick = { this.generateJSON } >Generate Package Configuration</Button>{' '}
+                {this.state.isLoading && <Spinner style = {{width : "2rem", height: "2rem", color:"#011a30", marginRight:"5px"}}> </Spinner>}
+                <Button style = {{backgroundColor:"#185ecc"}} onClick = { this.generateJSON }>
+                Generate Package Configuration
+                </Button>{' '}
                 <Button outline color="danger"  onClick = { this.toggle } >Cancel</Button>
                 </ModalFooter>
             </Modal>

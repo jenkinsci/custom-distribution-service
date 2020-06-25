@@ -5,8 +5,8 @@ import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
 import './Editor.scss';
 import {
-  Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button
+  Card, CardText, CardBody,
+  CardTitle , Button
 } from 'reactstrap';
 
 const code = `a {
@@ -19,6 +19,7 @@ class editor extends React.Component {
      code,
      title: '',
      description: '',
+     isLoading: true
      }
    componentDidMount() {
     this.setState({code: localStorage.getItem("packageConfigYAML")})
@@ -28,7 +29,6 @@ class editor extends React.Component {
 
    render()  {
     const packageJSON = JSON.parse(localStorage.getItem("packageConfigJSON"))
-    console.log(packageJSON["bundle"]["desc"])
 
     return(
        <div className="row" style = {{padding:"10px", borderRadius:"10px", margin:"0 auto"}}>
