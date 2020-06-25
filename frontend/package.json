@@ -24,6 +24,7 @@
     "lint": "eslint --ext .ts,.js --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext .ts,.js --ignore-path .gitignore ."
   },
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": "react-app"
   },

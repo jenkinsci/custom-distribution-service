@@ -15,15 +15,9 @@ class PluginCard extends React.Component {
 
     constructor(props) {
         super(props)
-        this.submitConfiguration = this.submitConfiguration.bind(this);
     }
 
-    componentDidMount() {
-        this.props.setClick(this.submitConfiguration);
-     }
-    
     addToConfiguration() {
-        this.setState({ backgroundColor: "red", buttonText: "Remove from configuration"})
         var version = new Object ();
         version["version"] = this.props.plugin.version;
         var pluginInfo = new Object();
@@ -33,20 +27,15 @@ class PluginCard extends React.Component {
         localStorage.setItem("pluginsArray", JSON.stringify(pluginArray))
     }
 
-    submitConfiguration() {
-        console.log("Saving plugin array")
-    }
-
     render() {
         return(
             <div>
                 <Card className = "pluginCard" body inverse style={{ backgroundColor: '#001627', borderColor: '#333' }} >
                     <CardBody>
-                    <CardTitle>Plugin Name: {this.props.plugin.pluginName}</CardTitle>
-                    <CardSubtitle>Artifact ID: {this.props.plugin.artifactId}</CardSubtitle>
+                    <CardTitle>Plugin Name: {this.props.plugin.name}</CardTitle>
                     <CardSubtitle>Version: {this.props.plugin.version}</CardSubtitle>
                     <div className="card-footer text-center" style = {{marginTop:"10px"}}>
-                    <Button onClick = {() => this.addToConfiguration()} style ={{backgroundColor:this.state.backgroundColor}}> {this.state.buttonText} </Button>
+                    <Button onClick = {() => this.addToConfiguration()} style = {{backgroundColor:this.state.backgroundColor}}> {this.state.buttonText} </Button>
                     </div>
                     </CardBody>
                 </Card>
