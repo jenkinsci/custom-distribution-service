@@ -17,7 +17,7 @@
     "slaveAgentPortEnforce" : "true"
   },
   "plugins" : [{
-    "AnchorChain" : {
+    "dotnet-as-script" : {
       "version" : "4.12"
     },
     "ApicaLoadtest" : {

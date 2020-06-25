@@ -33,6 +33,12 @@ class CardLayout extends React.Component {
         console.log("Searching")
     }
 
+    changeModalState = () => {
+        console.log(this.state.modalShow)
+        this.setState({modalShow: !this.state.modalShow})
+    }
+
+    
     render () {
 
          // We need to populate the plugin Array
@@ -158,8 +164,7 @@ class CardLayout extends React.Component {
                 <Button style = {{backgroundColor:"#185ecc"}}  onClick={() => {this.clickChild(); this.changeModalState()}}>Submit Plugins</Button>
                 </div>
                 <ModalExample  modalState = {this.state.modalShow} setClick={click => this.clickChild = click} />
-             </Container>
-           
+            </Container>           
         )
     }
 }

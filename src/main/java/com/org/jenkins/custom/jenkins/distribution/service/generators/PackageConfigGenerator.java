@@ -2,6 +2,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.generators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.nio.file.Files;
 import java.util.Iterator;
@@ -96,9 +97,7 @@ public class PackageConfigGenerator {
 
     private static JSONArray generatePluginList(JSONArray pluginArray) throws Exception {
 
-        String updateCenterConfig = new String(
-            Files.readAllBytes(util.getFileFromResources("updateCenter.json").toPath()));
-        JSONObject updateCenterJSON = new JSONObject(updateCenterConfig);
+        JSONObject updateCenterJSON = new UpdateCenterService().downloadUpdateCenterJSON();
         JSONObject jsonPluginList = updateCenterJSON.getJSONObject("plugins");
 
         JSONArray pluginInfoArray = new JSONArray();

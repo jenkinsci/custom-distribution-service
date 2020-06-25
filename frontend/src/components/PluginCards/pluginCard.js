@@ -21,8 +21,8 @@ class PluginCard extends React.Component {
         var version = new Object ();
         version["version"] = this.props.plugin.version;
         var pluginInfo = new Object();
-        pluginInfo[this.props.plugin.pluginName] = version;
-        console.log("Pushing into plugin Array")
+        pluginInfo[this.props.plugin.name] = version;
+        console.log("Pushing into plugin Array" + pluginInfo[this.props.plugin.name])
         pluginArray.push(pluginInfo)
         localStorage.setItem("pluginsArray", JSON.stringify(pluginArray))
     }

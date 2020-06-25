@@ -1,16 +1,19 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form } from 'reactstrap';
-import {  FormGroup, Label, Input } from 'reactstrap';
-
+import {  FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 class ModalExample extends React.Component {
   
     state = {
         modalState: false,
+        casc: false,
         title: '',
         warVersion: '', 
         artifactID: '',
-        description: ''
+        description: '',
+        dockertag:'',
+        dockerBase:'',
+        isLoading: false
     }
 
     constructor(props) {
@@ -28,17 +31,57 @@ class ModalExample extends React.Component {
     }
 
     generateJSON = () => {
+        console.log("Generating JSON")
         var packagerInfo = {}
         // Create a bundle object
         var bundle = new Object()
-        bundle["artifactID"] = this.state.artifactID
+        bundle["artifactId"] = this.state.artifactID
         bundle["title"] = this.state.title
         bundle["desc"] = this.state.description
         packagerInfo["bundle"] = bundle
-        packagerInfo["war"] = {version: this.state.warVersion}
+        // Add war object
+        packagerInfo["war"] = {jenkinsVersion: this.state.warVersion}
         packagerInfo["casc"] = true
+        // Add plugin object
         packagerInfo["plugins"] = JSON.parse(localStorage.getItem("pluginsArray"))
-        console.log(packagerInfo)
+        // Add buildSettings object
+        var docker = {}
+        // docker["build"] = true
+        docker["tag"] = this.state.dockertag
+        docker["base"] = this.state.dockerBase
+        packagerInfo["buildSettings"] = docker
+        // Add default System Settings
+        var sysSettings = {}
+        sysSettings["setupWizard"] = "true"
+        sysSettings["slaveAgentPort"] = "5000"
+        sysSettings["slaveAgentPortEnforce"] = "true"
+        packagerInfo["sysSettings"] = sysSettings
+        localStorage.setItem("packageConfigJSON", JSON.stringify(packagerInfo))
+        this.submitConfiguration();
+    }
+
+    submitConfiguration = async () => {
+        console.log("Submitting configuration")
+        this.setState({isLoading:true})
+        const apiURL = "http://localhost:8080/package/getPackageConfiguration";
+        fetch(apiURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: localStorage.getItem("packageConfigJSON"),
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                // Store the configuration client side
+                localStorage.setItem("packageConfigYAML", data)
+                // Once the fetch call is achieved naviagte to the editor page.
+                window.location.assign("/generatePackage")
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+        });
     }
 
     handleChange = async (event) => {
@@ -88,14 +131,38 @@ class ModalExample extends React.Component {
                     </FormGroup>  
                     <FormGroup check>
                         <Label check>
-                        <Input type="checkbox" />{' '}
+                        <Input 
+                         type="checkbox"
+                         value = {this.state.casc}
+                         onChange={ (e) => this.handleChange(e) }/>{' '}
                         Include Configuration as Code Section
                         </Label>
-                    </FormGroup>              
+                    </FormGroup>   
+                    <FormGroup>
+                    <legend>Build Settings</legend>
+                    <Label for = "dockertag">Docker Build</Label>
+                        <Input type = "text" name = "dockertag" id = "dockertag" 
+                        value = { this.state.dockertag }
+                        onChange = { (e) => this.handleChange(e) }
+                        placeholder = "Enter the docker tag you would like to build eg: jenkins-experimental/custom-war-packager-casc-demo"
+                     />
+                    </FormGroup> 
+
+                    <FormGroup>
+                        <Label for = "dockerbase">Docker Base</Label>
+                        <Input type = "text" name = "dockerBase" id = "dockerBase" 
+                        value = { this.state.dockerBase }
+                        onChange = { (e) => this.handleChange(e) }
+                        placeholder = "Enter the docker base for the package eg: jenkins/jenkins:2.138.2" />
+                    </FormGroup>   
+          
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                <Button style = {{backgroundColor:"#185ecc"}} onClick = { this.generateJSON } >Generate Package Configuration</Button>{' '}
+                {this.state.isLoading && <Spinner style = {{width : "2rem", height: "2rem", color:"#011a30", marginRight:"5px"}}> </Spinner>}
+                <Button style = {{backgroundColor:"#185ecc"}} onClick = { this.generateJSON }>
+                Generate Package Configuration
+                </Button>{' '}
                 <Button outline color="danger"  onClick = { this.toggle } >Cancel</Button>
                 </ModalFooter>
             </Modal>
