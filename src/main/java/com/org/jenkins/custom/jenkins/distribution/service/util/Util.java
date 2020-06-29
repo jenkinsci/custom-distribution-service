@@ -6,6 +6,11 @@ import java.nio.file.Files;
 import java.util.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
 import org.json.JSONObject;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 public class Util {
 
@@ -41,5 +46,22 @@ public class Util {
 
     public JSONObject convertPayloadToJSON(String payload) throws Exception{
         return new JSONObject(payload);
+    }
+
+    public ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
+        return ResponseEntity.ok()
+            .headers(headers)
+            .contentLength(file.length())
+            .contentType(MediaType.parseMediaType( "application/octet-stream"))
+            .body(resource);
+    }
+
+    public HttpHeaders returnHeaders(String headerValue) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        return headers;
     }
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const Header = () => {
     return(
@@ -8,22 +9,17 @@ export const Header = () => {
 					<a href="">
 					<img className="site-logo" src="https://i.imgur.com/kAZS0eh.png" alt=""></img>
 					</a>
-					<ul className="main-nav">
-						<li className="nav-item active">
-						<a className="nav-link active" href="#">Home</a>
-						</li>
+					<ul className="main-nav">	
+					 <Link to="/pluginList">
 						<li className="nav-item">
-						<a className="nav-link" href="#">Plugins</a>
+							<a className="nav-link">Plugins</a>
 						</li>
+					</Link>
+					 <Link to="/generatePackage">
 						<li className="nav-item">
-							<a className="nav-link" href="#">Community Config</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">Package Generation</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">War Download</a>
-							</li>
+							<a className="nav-link" >Package Generation</a>
+						</li>
+					</Link>
 					</ul>
 					</div>
 				</div>

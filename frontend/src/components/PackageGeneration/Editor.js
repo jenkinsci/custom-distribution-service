@@ -13,6 +13,17 @@ const code = `a {
     margin:10px;
 }`;
 
+function saveData(blob, fileName) {
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  var url = window.URL.createObjectURL(blob);
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
 class editor extends React.Component {
 
    state = { 
@@ -21,10 +32,21 @@ class editor extends React.Component {
      description: '',
      isLoading: true
      }
+
    componentDidMount() {
     this.setState({code: localStorage.getItem("packageConfigYAML")})
     this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
     this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["desc"]})
+   }
+
+   downloadPackagerConfig() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost:8080/package/downloadPackageConfiguration', true);
+    xhr.responseType = "blob";
+    xhr.onload = function () {
+        saveData(this.response, 'casc.yml');
+    };
+    xhr.send(localStorage.getItem("packageConfigYAML"));
    }
 
    render()  {
@@ -44,7 +66,7 @@ class editor extends React.Component {
         }}
       />
       <div className="column">
-      <Button style = {{backgroundColor:"#185ecc", fontSize:"25px", margin:"10px"}} >Download Packager Config </Button>
+      <Button onClick = { this.downloadPackagerConfig }style = {{backgroundColor:"#185ecc", fontSize:"25px", margin:"10px"}} >Download Packager Config </Button>
       <Button style = {{backgroundColor:"#185ecc", fontSize:"25px"}} >Download War File </Button>
       <Card style = {{ margin:"10px"}}>
         <CardBody>
