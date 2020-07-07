@@ -29,7 +29,7 @@ public class GithubJwtHelper {
         Date now = new Date(nowMillis);
 
         //We will sign our JWT with our private key
-        Key signingKey = get("custom_distribution_private_key.der");
+        Key signingKey = get("jenkins-custom-distribution-bot.der");
 
         //Let's set the JWT Claims
         JwtBuilder builder = Jwts.builder()
