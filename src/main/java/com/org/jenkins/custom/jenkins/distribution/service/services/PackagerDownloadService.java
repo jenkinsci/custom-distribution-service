@@ -1,5 +1,6 @@
 package com.org.jenkins.custom.jenkins.distribution.service.services;
 
+import com.org.jenkins.custom.jenkins.distribution.service.generators.WarGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,10 +20,11 @@ public class PackagerDownloadService {
     private final static Logger LOGGER = Logger.getLogger(PackagerDownloadService.class.getName());
     private static Util util = new Util();
 
-    public ResponseEntity<Resource> downloadWAR(String versionName) throws Exception {
+    public ResponseEntity<Resource> downloadWAR(String versionName, String configuration) throws Exception {
         File warFile = null;
         String artifactId = getArtifactId();
         try {
+            WarGenerator.generateWAR(versionName, configuration);
             warFile = new File("/tmp/output/target/" + artifactId + "-" + versionName + ".war");
             InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
             String headerValue = "attachment; filename=jenkins.war";

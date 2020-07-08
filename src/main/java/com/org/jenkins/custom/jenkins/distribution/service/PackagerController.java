@@ -1,5 +1,6 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
+import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import java.util.logging.Logger;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator.generatePackageConfig;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/package")
@@ -31,6 +31,18 @@ public class PackagerController {
             return new ResponseEntity<>(yamlResponse, HttpStatus.OK);
         } catch (Exception e) {
             LOGGER.severe(e.toString());
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping (path = "/downloadWarPackage")
+    public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
+        LOGGER.info("Request Received for downloading war file with configuration" + postPayload);
+        try {
+            return new PackagerDownloadService().downloadWAR("0.1", postPayload);
+        } catch (Exception e) {
+            LOGGER.severe(e.toString());
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
