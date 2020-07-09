@@ -48,7 +48,7 @@ public class Util {
         return new JSONObject(payload);
     }
 
-    public ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
+    public static ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
         return ResponseEntity.ok()
             .headers(headers)
             .contentLength(file.length())
@@ -56,7 +56,7 @@ public class Util {
             .body(resource);
     }
 
-    public HttpHeaders returnHeaders(String headerValue) {
+    public static HttpHeaders returnHeaders(String headerValue) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");

@@ -1,18 +1,13 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.util.logging.Logger;
 import org.json.JSONObject;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,7 +59,7 @@ public class PackagerController {
             InputStreamResource resource = new InputStreamResource(new FileInputStream(packagerConfigFile));
             String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
-            return util.returnResource(util.returnHeaders(headerValue), packagerConfigFile, resource);
+            return Util.returnResource(Util.returnHeaders(headerValue), packagerConfigFile, resource);
         } catch (Exception e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
