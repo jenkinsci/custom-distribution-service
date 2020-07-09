@@ -12,9 +12,9 @@ public class WarGeneratorTest {
     @Test
     public void testWarGenerationSucceeds() {
         try {
-            WarGenerator.generateWAR("1.0", util.readStringFromFile("packager-config.yml") );
+            WarGenerator.generateWAR("1.0", util.readStringFromFile("packager-config.yml"), "jenkins-all-latest" );
         } catch (Exception e) {
-            fail("Should not have thrown any exception");
+            fail("Should not have thrown any exception" + e);
         }
     }
 
