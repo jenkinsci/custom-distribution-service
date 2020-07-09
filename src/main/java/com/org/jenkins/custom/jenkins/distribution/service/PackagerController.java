@@ -25,12 +25,14 @@ public class PackagerController {
 
     private Util util = new Util();
     private final static Logger LOGGER = Logger.getLogger(PackagerController.class.getName());
-    /*
-     * Usage : GET: package/getPackageConfiguration
-     * Returns: Generates and returns Packager configuration
+
+    /**
+     * @param postPayload  This is
+     * @return Generates and returns Packager configuration
      */
-    @PostMapping (path = "/getPackageConfiguration")
+    @PostMapping(path = "/getPackageConfiguration")
     public ResponseEntity<?> getPackageConfig(@RequestBody String postPayload) {
+
         LOGGER.info("Request Received for packaging configuration with params" + postPayload);
         try {
             String yamlResponse = generatePackageConfig(new JSONObject(postPayload));
@@ -41,9 +43,9 @@ public class PackagerController {
         }
     }
 
-    /*
-     * Usage : POST: package/downloadPackageConfiguration
-     * Returns: Packager-config.yml
+    /**
+     * @param postPayload Cofiguration on the front end that gets posted as a string
+     * @return Packager-config.yml
      */
     @PostMapping (path = "/downloadPackageConfiguration")
     public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
