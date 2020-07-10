@@ -13,7 +13,7 @@ public class WarGenerator {
     private static final String TEMP_PREFIX = "CDS";
 
 
-    public static File generateWAR(String versionName, String configuration, String artifactID) throws Exception {
+    public static File generateWAR(String versionName, String configuration) throws Exception {
         LOGGER.info("Generating War File");
         final Config cfg;
         Path tempDirWithPrefix = Files.createTempDirectory(TEMP_PREFIX);
@@ -27,7 +27,7 @@ public class WarGenerator {
             new Builder(cfg).build();
             LOGGER.info("Cleaning up temporary directory");
             packagerConfigFile.deleteOnExit();
-            return new File("/tmp/output/target/" + artifactID + "-" + versionName + ".war");
+            return cfg.getOutputWar();
     }
 
 }
