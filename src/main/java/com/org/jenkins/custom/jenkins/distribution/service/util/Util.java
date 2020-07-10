@@ -44,14 +44,14 @@ public class Util {
         }
     }
 
-    public JSONObject convertPayloadToJSON(String payload) throws Exception{
+    public JSONObject convertPayloadToJSON(String payload) {
         return new JSONObject(payload);
     }
 
-    public static ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
+    public static ResponseEntity<Resource> returnResource(HttpHeaders headers, int fileLength, InputStreamResource resource){
         return ResponseEntity.ok()
             .headers(headers)
-            .contentLength(file.length())
+            .contentLength(fileLength)
             .contentType(MediaType.parseMediaType( "application/octet-stream"))
             .body(resource);
     }

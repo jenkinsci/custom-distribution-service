@@ -14,7 +14,7 @@ const code = `a {
 }`;
 
 function saveData(blob, fileName) {
-  var a = document.createElement("a");
+  var a = document.createElement("editor-config");
   document.body.appendChild(a);
   a.style = "display: none";
   var url = window.URL.createObjectURL(blob);

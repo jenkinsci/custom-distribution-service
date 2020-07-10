@@ -9,7 +9,7 @@ export const Header = () => {
 					<a href="">
 					<img className="site-logo" src="https://i.imgur.com/kAZS0eh.png" alt=""></img>
 					</a>
-					<ul className="main-nav">	
+					<ul className="main-nav">
 					 <Link to="/pluginList">
 						<li className="nav-item">
 							<a className="nav-link">Plugins</a>

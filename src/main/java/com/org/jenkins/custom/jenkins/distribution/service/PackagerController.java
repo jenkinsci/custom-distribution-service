@@ -1,6 +1,7 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -49,24 +50,14 @@ public class PackagerController {
      */
     @PostMapping (path = "/downloadPackageConfiguration")
     public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
-        LOGGER.info("Request Received for downloading configuration with params" + postPayload);
-        File packagerConfigFile = null;
         try {
-            packagerConfigFile = new File("packagerConfig.yml");
-            // Write to file
-            FileWriter fileWriter = new FileWriter(packagerConfigFile);
-            fileWriter.write(postPayload);
-            fileWriter.flush();
-            fileWriter.close();
-            InputStreamResource resource = new InputStreamResource(new FileInputStream(packagerConfigFile));
+            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes()));
             String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
-            return Util.returnResource(Util.returnHeaders(headerValue), packagerConfigFile, resource);
+            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes().length, resource);
         } catch (Exception e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } finally {
-            util.cleanupTempDirectory(packagerConfigFile);
         }
     }
 
