@@ -28,8 +28,8 @@ public class PackagerController {
     private final static Logger LOGGER = Logger.getLogger(PackagerController.class.getName());
 
     /**
-     * @param postPayload  This is
-     * @return Generates and returns Packager configuration
+     * @param postPayload  This is the JSON Object with all of the plugin configuration and war file details
+     * @return Generates and returns Packager configuration based on the JSON Object supplied as postPayload
      */
     @PostMapping(path = "/getPackageConfiguration")
     public ResponseEntity<?> getPackageConfig(@RequestBody String postPayload) {
@@ -45,8 +45,8 @@ public class PackagerController {
     }
 
     /**
-     * @param postPayload Cofiguration on the front end that gets posted as a string
-     * @return Packager-config.yml
+     * @param postPayload Configuration on the front end that gets posted as a string
+     * @return Downloads the package configuration i.e the configuration that the user types on the editor gets pulled in and downloaded
      */
     @PostMapping (path = "/downloadPackageConfiguration")
     public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {

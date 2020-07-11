@@ -36,8 +36,6 @@ public class PackagerDownloadService {
         return null;
     }
 
-
-
     private ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
         return ResponseEntity.ok()
             .headers(headers)
@@ -54,7 +52,6 @@ public class PackagerDownloadService {
         headers.add("Expires", "0");
         return headers;
     }
-
 
     private String getArtifactId() throws Exception {
         Yaml yaml = new Yaml();
