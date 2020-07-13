@@ -12,7 +12,7 @@ public class WarGeneratorTest {
     @Test
     public void testWarGenerationSucceeds() {
         try {
-            WarGenerator.generateWAR("1.0", util.readStringFromFile("packager-config.yml"), "jenkins-all-latest" );
+            WarGenerator.generateWAR("jenkins-all-latest", util.readStringFromFile("packager-config.yml"));
         } catch (Exception e) {
             fail("Should not have thrown any exception" + e);
         }

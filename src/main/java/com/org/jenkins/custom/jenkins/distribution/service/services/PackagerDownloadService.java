@@ -26,7 +26,7 @@ public class PackagerDownloadService {
         File warFile = null;
         String artifactId = getArtifactId();
         try {
-            warFile = WarGenerator.generateWAR(versionName, configuration, artifactId);
+            warFile = WarGenerator.generateWAR(versionName, configuration);
             InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
             String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");
