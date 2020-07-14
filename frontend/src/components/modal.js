@@ -37,7 +37,7 @@ class ModalExample extends React.Component {
         var bundle = new Object()
         bundle["artifactId"] = this.state.artifactID
         bundle["title"] = this.state.title
-        bundle["desc"] = this.state.description
+        bundle["description"] = this.state.description
         packagerInfo["bundle"] = bundle
         // Add war object
         packagerInfo["war"] = {jenkinsVersion: this.state.warVersion}

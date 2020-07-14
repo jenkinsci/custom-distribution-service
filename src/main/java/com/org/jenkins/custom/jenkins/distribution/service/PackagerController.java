@@ -47,7 +47,7 @@ public class PackagerController {
      */
     @PostMapping (path = "/downloadWarPackage")
     public ResponseEntity<?> downloadWAR(@RequestBody String postPayload) {
-        LOGGER.info("Request Received for downloading war file with configuration");
+        LOGGER.info("Request Received for downloading war file with configuration" + postPayload);
         try {
             return new PackagerDownloadService().downloadWAR(getWarVersion(), postPayload);
         } catch (Exception e) {
