@@ -21,6 +21,7 @@ class editor extends React.Component {
      description: '',
      isLoading: true
      }
+     
    componentDidMount() {
     this.setState({code: localStorage.getItem("packageConfigYAML")})
     this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
