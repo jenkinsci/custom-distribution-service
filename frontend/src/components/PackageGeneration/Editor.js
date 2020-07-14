@@ -14,13 +14,13 @@ const code = `a {
 }`;
 
 function saveData(blob, fileName) {
-  var editor_config = document.createElement("editor-config");
+  var a = document.createElement("a");
   document.body.appendChild(a);
-  editor_config.style = "display: none";
+  a.style = "display: none";
   var url = window.URL.createObjectURL(blob);
-  editor_config.href = url;
-  editor_config.download = fileName;
-  editor_config.click();
+  a.href = url;
+  a.download = fileName;
+  a.click();
   window.URL.revokeObjectURL(url);
 }
 

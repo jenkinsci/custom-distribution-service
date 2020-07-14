@@ -33,7 +33,6 @@ public class PackagerController {
      */
     @PostMapping(path = "/getPackageConfiguration")
     public ResponseEntity<?> getPackageConfig(@RequestBody String postPayload) {
-
         LOGGER.info("Request Received for packaging configuration with params" + postPayload);
         try {
             String yamlResponse = generatePackageConfig(new JSONObject(postPayload));
@@ -51,6 +50,7 @@ public class PackagerController {
     @PostMapping (path = "/downloadPackageConfiguration")
     public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
         try {
+            LOGGER.info(postPayload);
             InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes()));
             String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
