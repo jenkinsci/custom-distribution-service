@@ -26,10 +26,10 @@ pipeline {
                                 /*addToolEnv*/ false
                             )
                             if (isUnix()) {
-                                sh 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
+                                sh 'mvn --batch-mode clean install -Denvironment=test -Prun-its'
                             }
                             else {
-                                bat 'mvn --batch-mode clean install -Dmaven.test.failure.ignore=true -Denvironment=test -Prun-its'
+                                bat 'mvn --batch-mode clean install -Denvironment=test -Prun-its'
                             }
                         }
                     }
