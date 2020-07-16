@@ -13,7 +13,7 @@ class communityConfigLayout extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('https://api.github.com/repos/jenkins-zh/jenkins-formulas/contents/formulas');
+        const response = await fetch(process.env.REACT_APP_GITHUB_COMMUNITY_URL);
         const body = await response.json();
         this.setState({data: body})
     }

@@ -14,6 +14,16 @@ class configurationCard extends React.Component {
     constructor(props) {
         super(props)
     }
+    
+
+    async viewDetails(configName) {
+        console.log(configName)
+        const response = await fetch('https://raw.githubusercontent.com/jenkins-zh/jenkins-formulas/master/formulas/' + configName);
+        const body = await response.text();
+        localStorage.setItem("packageConfigYAML", body)
+        // Once the fetch call is achieved naviagte to the editor page.
+        window.location.assign("/generatePackage")
+    }
 
     render() {
         return(
@@ -22,7 +32,7 @@ class configurationCard extends React.Component {
                     <CardBody>
                     <CardTitle>Configuration Name: {this.props.config.name}</CardTitle>
                     <div className="card-footer text-center" style = {{marginTop:"10px"}}>
-                    <Button style = {{backgroundColor:this.state.backgroundColor}} > {this.state.buttonText} </Button>
+                    <Button onClick = {() => {this.viewDetails(this.props.config.name)}} style = {{backgroundColor:this.state.backgroundColor}} > {this.state.buttonText} </Button>
                     </div>
                     </CardBody>
                 </Card>
