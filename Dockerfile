@@ -11,10 +11,10 @@ VOLUME /tmp
 EXPOSE 8080
 
 # The application's jar file
-ARG JAR_FILE=target/custom-distribution-service-0.0.1.jar
+ARG JAR_FILE=target/*.jar
 
 # Add the application's jar to the container
-ADD ${JAR_FILE} custom-distribution-service.jar
+ADD ${JAR_FILE} app.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/custom-distribution-service.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
