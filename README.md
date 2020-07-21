@@ -17,6 +17,8 @@ to use out of the box.
 ## QuickStart
 
 You can spin up the entire web application using a docker compose file command: 
+The front-end runs on `localhost:3001` and the backend  runs on `localhost:5000`.
+
 Build the containers: 
 ```
 docker-compose up -d --build
@@ -28,9 +30,11 @@ docker-compose up
 ```
 
 ### Backend
-The backend of the project is built on spring-boot and there is a dockerfile present in the root.
+The backend of the project is built on spring-boot and there is a dockerfile present in the root.The backend will run on `localhost:5000`
 
 #### Steps to spin up the backend
+
+## Using Dockerfile
 
 a) Create a package: 
 ```
@@ -47,10 +51,19 @@ c) Run Dockerfile:
 docker run -p 5000:8080 cds_backend
 ```
 
+## Not using Dockerfile
+
+a) Start up the spring boot server
+```
+mvn spring-boot:run
+```
+
 ### Frontend
-The frontend of the project is built on react and there is a dockerfile present in the frontend directory.
+The frontend of the project is built on react and there is a dockerfile present in the frontend directory. The frontend will run on `localhost:3001`
 
 #### Steps to spin up the frontend
+
+## Using Dockerfile
 
 a) CD into the frontend directory: 
 ```
@@ -65,6 +78,13 @@ docker build -t cds_frontend .
 c) Run Dockerfile: 
 ```
 docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true cds_frontend
+```
+
+## Not using Dockerfile
+
+a) Start react server
+```
+npm start
 ```
 
 ## Useful Links
