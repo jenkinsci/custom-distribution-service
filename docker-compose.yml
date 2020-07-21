@@ -25,3 +25,4 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
+    
