@@ -53,7 +53,6 @@ public class PackagerDownloadService {
         return headers;
     }
 
-
     private String getArtifactId() throws Exception {
         Yaml yaml = new Yaml();
         Map<String , Map<String,String>> yamlMaps = (Map<String, Map<String,String>>) yaml.load(util.readStringFromFile("packager-config.yml"));

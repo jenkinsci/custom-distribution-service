@@ -1,12 +1,16 @@
 import React from 'react'
 import PluginCard from '../PluginCards/pluginCard'
 import { Container, Row, Col} from 'reactstrap';
-import { InputGroup, InputGroupAddon, Button, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input, Label } from 'reactstrap';
 import ModalExample from '../modal';
 import { Pagination, PaginationItem, PaginationLink, Spinner } from 'reactstrap';
+import {RadioGroup, Radio} from 'react-radio-group';
+import querystring from 'querystring';
+
 
 class CardLayout extends React.Component {
 
+   
     state = {
         search:"",
         modalShow : false,
@@ -30,7 +34,7 @@ class CardLayout extends React.Component {
 
     onchange = pluginName => {
         this.setState({search: pluginName.target.value})
-        console.log("Searching")
+        console.log("Searching Plugins")
     }
 
     changeModalState = () => {
@@ -38,9 +42,7 @@ class CardLayout extends React.Component {
         this.setState({modalShow: !this.state.modalShow})
     }
 
-    
     render () {
-
          // We need to populate the plugin Array
          let pluginArray = []
          Object.keys(this.state.plugins).map(key => {
@@ -114,14 +116,55 @@ class CardLayout extends React.Component {
             )
         }
 
+        const SORT_TYPES = [
+            ['relevance', 'Relevance'],
+            ['installed', 'Most installed'],
+            ['trend', 'Trending'],
+            ['title', 'Title'],
+            ['updated', 'Release date']
+        ];
+
         return (
-            <Container fluid style = {{height: "100vh"}}>
+            <Container fluid style = {{height: "100vh"}} class="column">
             <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-             }} >
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }} >
+
+                {/* Filter Buttons */}
+                <RadioGroup name="sort" onChange = {async (key) =>{
+                let data = {
+                            categories: '',
+                            labels:'',
+                            page: 1,
+                            query: 'javascript',
+                            sort: key
+                        }
+                        const {categories, labels, page, query, sort} = data;
+                        const params = querystring.stringify({
+                            categories,
+                            labels,
+                            page,
+                            q: query,
+                            sort
+                        });
+                        console.log("Fetching values with key" + key)
+                        const url = `https://plugins.jenkins.io/api/plugins?${params}`
+                        console.log("URL is " + url)
+                        const response = await fetch(url);
+                        const body = await response.json();
+                        const mainBody = body["plugins"]
+                        this.setState({plugins: mainBody, isLoading: false})
+                } } >
+                    {SORT_TYPES.map(([key, label]) => (
+                        <label key={key} style = {{margin: "5px", color:"white"}}>
+                            <Radio value={key}/>
+                            {` ${label}`}
+                        </label>
+                    ))}
+                </RadioGroup>
 
                 {/* Search Bar */}
                 <InputGroup style={{margin:"10px", width:"40%"}}>
@@ -164,7 +207,8 @@ class CardLayout extends React.Component {
                 <Button style = {{backgroundColor:"#185ecc"}}  onClick={() => {this.clickChild(); this.changeModalState()}}>Submit Plugins</Button>
                 </div>
                 <ModalExample  modalState = {this.state.modalShow} setClick={click => this.clickChild = click} />
-            </Container>           
+            </Container> 
+                  
         )
     }
 }
