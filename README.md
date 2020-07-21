@@ -17,7 +17,7 @@ to use out of the box.
 ## QuickStart
 
 You can spin up the entire web application using a docker compose file command: 
-The front-end runs on `localhost:3001` and the backend  runs on `localhost:8080`.
+The front-end runs on `localhost:3001` and the backend  runs on `localhost:5000`.
 
 Build the containers: 
 ```
@@ -30,7 +30,7 @@ docker-compose up
 ```
 
 ### Backend
-The backend of the project is built on spring-boot and there is a dockerfile present in the root.The backend will run on `localhost:8080`
+The backend of the project is built on spring-boot and there is a dockerfile present in the root.The backend will run on `localhost:5000`
 
 #### Steps to spin up the backend
 
