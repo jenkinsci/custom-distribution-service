@@ -30,7 +30,7 @@ docker-compose up
 ```
 
 ### Backend
-The backend of the project is built on spring-boot and there is a dockerfile present in the root.
+The backend of the project is built on spring-boot and there is a dockerfile present in the root.The backend will run on `localhost:8080`
 
 #### Steps to spin up the backend
 
@@ -59,7 +59,7 @@ mvn spring-boot:run
 ```
 
 ### Frontend
-The frontend of the project is built on react and there is a dockerfile present in the frontend directory.
+The frontend of the project is built on react and there is a dockerfile present in the frontend directory. The frontend will run on `localhost:3001`
 
 #### Steps to spin up the frontend
 
