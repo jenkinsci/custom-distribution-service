@@ -37,8 +37,18 @@ class editor extends React.Component {
    componentDidMount() {
     this.setState({code: localStorage.getItem("packageConfigYAML")})
     this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
-    this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["desc"]})
-   }
+    this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+  }
+
+   downloadWarfile() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", 'http://localhost:8080/package/downloadWarPackage', true);
+    xhr.responseType = "blob";
+    xhr.onload = function () {
+        saveData(this.response, 'jenkins.war');
+    };
+    xhr.send(localStorage.getItem("packageConfigYAML"));
+  }
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
@@ -49,8 +59,6 @@ class editor extends React.Component {
     };
     xhr.send(localStorage.getItem("packageConfigYAML"));
    }
-
-   
 
    render()  {
     const packageJSON = JSON.parse(localStorage.getItem("packageConfigJSON"))
@@ -72,8 +80,8 @@ class editor extends React.Component {
         }}
       />
       <div className="column">
+      <Button onClick = {this.downloadWarfile} style = {{backgroundColor:"#185ecc", fontSize:"25px"}} >Download War File </Button>
       <Button onClick = { this.downloadPackagerConfig }style = {{backgroundColor:"#185ecc", fontSize:"25px", margin:"10px"}} >Download Packager Config </Button>
-      <Button style = {{backgroundColor:"#185ecc", fontSize:"25px"}} >Download War File </Button>
       <Card style = {{ margin:"10px"}}>
         <CardBody>
           <CardTitle>Packager Details</CardTitle>

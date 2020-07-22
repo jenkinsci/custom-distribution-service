@@ -1,10 +1,13 @@
 package com.org.jenkins.custom.jenkins.distribution.service.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.org.jenkins.custom.jenkins.distribution.service.generators.WarGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Map;
 import java.util.logging.Logger;
+import org.json.JSONObject;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -19,11 +22,11 @@ public class PackagerDownloadService {
     private final static Logger LOGGER = Logger.getLogger(PackagerDownloadService.class.getName());
     private static Util util = new Util();
 
-    public ResponseEntity<Resource> downloadWAR(String versionName) throws Exception {
+    public ResponseEntity<Resource> downloadWAR(String versionName, String configuration) throws Exception {
         File warFile = null;
         String artifactId = getArtifactId();
         try {
-            warFile = new File("/tmp/output/target/" + artifactId + "-" + versionName + ".war");
+            warFile = WarGenerator.generateWAR(versionName, configuration);
             InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
             String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");
@@ -56,8 +59,9 @@ public class PackagerDownloadService {
     private String getArtifactId() throws Exception {
         Yaml yaml = new Yaml();
         Map<String , Map<String,String>> yamlMaps = (Map<String, Map<String,String>>) yaml.load(util.readStringFromFile("packager-config.yml"));
-        String artifactId = yamlMaps.get("bundle").get("artifactId");
-        return artifactId;
+        return yamlMaps.get("bundle").get("artifactId");
     }
+
+
 }
 

@@ -62,7 +62,7 @@ public class PackageConfigGenerator {
         bundleInfo.put("artifactId", bundle.getString("artifactId"));
         bundleInfo.put("vendor", "Jenkins project");
         bundleInfo.put("title", bundle.getString("title"));
-        bundleInfo.put("description", bundle.getString("desc"));
+        bundleInfo.put("description", bundle.getString("description"));
         return bundleInfo;
     }
 
