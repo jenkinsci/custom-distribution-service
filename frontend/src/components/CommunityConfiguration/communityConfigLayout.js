@@ -27,7 +27,6 @@ class communityConfigLayout extends React.Component {
     render() {
         const search  = this.state.search
         let configurationCards;
-        console.log(this.state.data)
         if (search !== "") {
             configurationCards = this.state.data.map(config => {
                 if(!(config["name"].toLowerCase().indexOf( search.toLowerCase() ) === -1)) {
