@@ -34,20 +34,7 @@ The backend of the project is built on spring-boot and there is a dockerfile pre
 
 #### Steps to spin up the backend
 
-## Using Dockerfile
-
-
-a) Build Dockerfile: 
-```
-docker build -t cds_backend .
-```
-
-b) Run Dockerfile: 
-```
-docker run -p 5000:8080 cds_backend
-```
-
-## Not using Dockerfile
+## Not using docker-compose
 
 a) Start up the spring boot server
 ```
@@ -59,24 +46,7 @@ The frontend of the project is built on react and there is a dockerfile present 
 
 #### Steps to spin up the frontend
 
-## Using Dockerfile
-
-a) CD into the frontend directory: 
-```
-cd frontend/
-```
-
-b) Build Dockerfile: 
-```
-docker build -t cds_frontend .
-```
-
-c) Run Dockerfile: 
-```
-docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true cds_frontend
-```
-
-## Not using Dockerfile
+## Not using docker-compose
 
 a) Start react server
 ```
