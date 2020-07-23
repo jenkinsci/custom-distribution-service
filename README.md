@@ -36,17 +36,13 @@ The backend of the project is built on spring-boot and there is a dockerfile pre
 
 ## Using Dockerfile
 
-a) Create a package: 
-```
-mvn clean package
-```
 
-b) Build Dockerfile: 
+a) Build Dockerfile: 
 ```
 docker build -t cds_backend .
 ```
 
-c) Run Dockerfile: 
+b) Run Dockerfile: 
 ```
 docker run -p 5000:8080 cds_backend
 ```
