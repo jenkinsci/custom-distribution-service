@@ -2,7 +2,7 @@
   "bundle": {
     "artifactId" : "jenkins-all-latest",
     "title" : "Jenkins WAR - all latest",
-    "desc" : "New Jenkins Version"
+    "description" : "New Jenkins Version"
   },
   "war" : {
     "jenkinsVersion": "2.107.3"

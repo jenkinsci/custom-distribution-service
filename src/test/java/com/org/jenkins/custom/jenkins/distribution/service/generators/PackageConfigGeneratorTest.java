@@ -5,6 +5,7 @@ import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class PackageConfigGeneratorTest {
     private Util util = new Util();
@@ -18,6 +19,7 @@ public class PackageConfigGeneratorTest {
             Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
     }
 
@@ -28,10 +30,11 @@ public class PackageConfigGeneratorTest {
         String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
         String expectedYAML = util.readStringFromFile("packagerConfig/emptyDockerTag.yaml");
         Assert.assertEquals(generatedYAML, expectedYAML);
-    } catch (Exception e) {
-        e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+            }
         }
-    }
 
     @Test
     public void testPackagerConfigWithoutCasCTag() {
@@ -42,6 +45,7 @@ public class PackageConfigGeneratorTest {
             Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
         }
     }
 }
