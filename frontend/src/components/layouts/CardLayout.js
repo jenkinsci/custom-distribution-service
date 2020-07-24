@@ -21,7 +21,7 @@ class CardLayout extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('/api/plugin/getPluginList');
+        const response = await fetch(process.env.REACT_APP_API_URL + '/api/plugin/getPluginList');
         const body = await response.json();
         const mainBody = body["plugins"]
         this.setState({ plugins: mainBody, isLoading: false});

@@ -42,7 +42,7 @@ class editor extends React.Component {
 
    downloadWarfile() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost:8080/package/downloadWarPackage', true);
+    xhr.open("POST", process.env.REACT_APP_API_URL + '/package/downloadWarPackage', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'jenkins.war');
@@ -52,7 +52,7 @@ class editor extends React.Component {
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/package/downloadPackageConfiguration', true);
+    xhr.open("POST", process.env.REACT_APP_API_URL + '/package/downloadPackageConfiguration', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'casc.yml');
