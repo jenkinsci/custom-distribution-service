@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
     ports:
       - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
