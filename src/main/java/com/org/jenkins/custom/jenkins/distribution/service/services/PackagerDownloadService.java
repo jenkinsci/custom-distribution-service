@@ -1,13 +1,11 @@
 package com.org.jenkins.custom.jenkins.distribution.service.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.generators.WarGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Map;
 import java.util.logging.Logger;
-import org.json.JSONObject;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +22,6 @@ public class PackagerDownloadService {
 
     public ResponseEntity<Resource> downloadWAR(String versionName, String configuration) throws Exception {
         File warFile = null;
-        String artifactId = getArtifactId();
         try {
             warFile = WarGenerator.generateWAR(versionName, configuration);
             InputStreamResource resource = new InputStreamResource(new FileInputStream(warFile));
@@ -32,11 +29,11 @@ public class PackagerDownloadService {
             LOGGER.info("Returning War file");
             return returnResource(returnHeaders(headerValue), warFile, resource);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         } finally {
+            if(warFile != null)
             util.cleanupTempDirectory(warFile);
         }
-        return null;
     }
 
     private ResponseEntity<Resource> returnResource(HttpHeaders headers, File file, InputStreamResource resource){
@@ -61,7 +58,6 @@ public class PackagerDownloadService {
         Map<String , Map<String,String>> yamlMaps = (Map<String, Map<String,String>>) yaml.load(util.readStringFromFile("packager-config.yml"));
         return yamlMaps.get("bundle").get("artifactId");
     }
-
 
 }
 
