@@ -63,7 +63,7 @@ class ModalExample extends React.Component {
     submitConfiguration = async () => {
         console.log("Submitting configuration")
         this.setState({isLoading:true})
-        const apiURL = "http://localhost:8080/package/getPackageConfiguration";
+        const apiURL = "/package/getPackageConfiguration";
         fetch(apiURL, {
         method: 'POST',
         headers: {

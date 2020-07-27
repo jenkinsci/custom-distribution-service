@@ -56,7 +56,7 @@ class editor extends React.Component {
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost:8080/package/downloadPackageConfiguration', true);
+    xhr.open("POST", '/package/downloadPackageConfiguration', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'casc.yml');
