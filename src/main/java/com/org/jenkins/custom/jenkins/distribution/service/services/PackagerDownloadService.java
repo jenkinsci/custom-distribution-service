@@ -20,6 +20,13 @@ public class PackagerDownloadService {
     private final static Logger LOGGER = Logger.getLogger(PackagerDownloadService.class.getName());
     private static Util util = new Util();
 
+
+    /**
+     * @param versionName This is the version name of the war file eg: jenkins-all-latest
+     * @param configuration This is the configuration with which the war is generated.
+     * @return Response Entity with body as the war file in the form of a resource
+     * @throws Exception
+     */
     public ResponseEntity<Resource> downloadWAR(String versionName, String configuration) throws Exception {
         File warFile = null;
         try {
