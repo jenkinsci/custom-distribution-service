@@ -1,6 +1,9 @@
 package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -17,16 +20,14 @@ public class UpdateCenterService {
 
     private final static Logger LOGGER = Logger.getLogger(UpdateCenterService.class.getName());
     private static final String UPDATE_CENTER_JSON_URL = "https://updates.jenkins.io/current/update-center.actual.json";
-    
+    private int updateFlag = 0;
+    private String responseString;
+    private String updateCenterFilePath = "";
+
     public JSONObject downloadUpdateCenterJSON() throws Exception {
-        HttpGet get = new HttpGet(UPDATE_CENTER_JSON_URL);
-        LOGGER.info("Executing Request");
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        CloseableHttpResponse response = httpClient.execute(get);
-        String responseString = EntityUtils.toString(response.getEntity());
         /*
-        * Instead of writing to a file it would be better to return a json object as of now
-        * and later once we have the caching mechanism in place we could pull it in from there
+        * Check if updateFlag has been set if not then it is the first time the application
+        * is being run so we need to download the update-center
         */
 
         LOGGER.info("Update flag is " + updateFlag);
@@ -49,5 +50,11 @@ public class UpdateCenterService {
         }
         LOGGER.info("Returning Response");
         return util.convertPayloadToJSON(responseString);
+    }
+
+    private static String readFileAsString(String fileName) throws Exception {
+        String data;
+        data = new String(Files.readAllBytes(Paths.get(fileName)));
+        return data;
     }
 }
