@@ -29,15 +29,15 @@ public class UpdateCenterService {
         * Check if updateFlag has been set if not then it is the first time the application
         * is being run so we need to download the update-center
         */
-        System.out.println("Update flag is " + updateFlag);
-        System.out.println("Update Center Path " + updateCenterFilePath);
+        LOGGER.info("Update flag is " + updateFlag);
+        LOGGER.info("Update Center Path " + updateCenterFilePath);
 
         if(updateFlag == 0) {
             File updateCenterFile = File.createTempFile("update-center", ".json");
             updateCenterFilePath = updateCenterFile.getPath();
             LOGGER.info("Creating a new file" + updateCenterFile.getPath());
             HttpGet get = new HttpGet(UPDATE_CENTER_JSON_URL);
-            LOGGER.info("Executing Request");
+            LOGGER.info("Executing Request at " + UPDATE_CENTER_JSON_URL);
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(get);
             responseString = EntityUtils.toString(response.getEntity());
