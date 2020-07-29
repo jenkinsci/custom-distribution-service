@@ -26,9 +26,9 @@ public class UpdateCenterService {
 
     public JSONObject downloadUpdateCenterJSON() throws Exception {
         /*
-         * Check if updateFlag has been set if not then it is the first time the application
-         * is being run so we need to download the update-center
-         */
+        * Check if updateFlag has been set if not then it is the first time the application
+        * is being run so we need to download the update-center
+        */
         System.out.println("Update flag is " + updateFlag);
         System.out.println("Update Center Path " + updateCenterFilePath);
 
