@@ -247,11 +247,4 @@
 		  <url>https://repo.jenkins-ci.org/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
-
-	<reporting>
-		<plugins>
-
-		</plugins>
-	</reporting>
-
 </project>
