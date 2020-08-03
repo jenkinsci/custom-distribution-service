@@ -100,9 +100,8 @@
 				<version>3.13.0</version>
 				<configuration>
 				<rulesets>
-                    <ruleset>/rulesets/java/braces.xml</ruleset>
-                    <ruleset>/rulesets/java/naming.xml</ruleset>
-                </rulesets>
+					<ruleset>/config/pmd.xml</ruleset>
+				</rulesets>
 				</configuration>
 				<executions>
 					<execution>
@@ -114,7 +113,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+				<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>3.0.4</version>
@@ -128,6 +127,9 @@
 							<failOnError>true</failOnError>
 						</configuration>
 					</execution>
+				</executions>
+				</plugin>
+				<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.3</version>
