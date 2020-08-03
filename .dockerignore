@@ -3,3 +3,5 @@
 
 # Allow files and directories
 !/target/**
+!**/pom.xml
+!**/src/**
