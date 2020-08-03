@@ -22,7 +22,7 @@ export const Header = () => {
 					</Link>
 					<Link to="/communityConfiguration">
 						<li className="nav-item">
-							<a className="nav-link" >Community Configuration</a>
+							<a className="nav-link" >Community Configurations</a>
 						</li>
 					</Link>
 					</ul>
