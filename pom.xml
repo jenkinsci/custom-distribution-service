@@ -98,6 +98,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>3.13.0</version>
+				<configuration>
+				<rulesets>
+                    <ruleset>/rulesets/java/braces.xml</ruleset>
+                    <ruleset>/rulesets/java/naming.xml</ruleset>
+                </rulesets>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>compile</phase>
@@ -122,6 +128,41 @@
 							<failOnError>true</failOnError>
 						</configuration>
 					</execution>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<executions>
+				<execution>
+					<id>coverage-initialize</id>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+				</execution>
+				<execution>
+					<id>coverage-report</id>
+					<phase>post-integration-test</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+				</execution>
+				<!-- Threshold -->
+				<execution>
+					<id>coverage-check</id>
+					<goals>
+						<goal>check</goal>
+					</goals>
+					<configuration>
+						<rules>
+							<rule>
+								<element>CLASS</element>
+								<excludes>
+									<exclude>com.asimio.demo.Application</exclude>
+								</excludes>
+							</rule>
+						</rules>
+						<outputDirectory>${project.build.directory}/coverage-reports/jacoco</outputDirectory>
+					</configuration>
+				</execution>
 				</executions>
 			</plugin>
 			<plugin>
