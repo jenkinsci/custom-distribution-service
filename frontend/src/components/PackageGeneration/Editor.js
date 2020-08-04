@@ -45,7 +45,11 @@ class editor extends React.Component {
     xhr.open("POST", process.env.REACT_APP_API_URL + '/package/downloadWarPackage', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
+      if(xhr.status == 404) {
+        alert("This is something wrong with your configuration file. Please fix and try again")
+      } else {
         saveData(this.response, 'jenkins.war');
+      }   
     };
     xhr.send(localStorage.getItem("packageConfigYAML"));
   }

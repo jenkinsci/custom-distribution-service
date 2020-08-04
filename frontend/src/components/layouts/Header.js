@@ -20,6 +20,11 @@ export const Header = () => {
 							<a className="nav-link" >Package Generation</a>
 						</li>
 					</Link>
+					<Link to="/communityConfiguration">
+						<li className="nav-item">
+							<a className="nav-link" >Package Generation</a>
+						</li>
+					</Link>
 					</ul>
 					</div>
 				</div>
