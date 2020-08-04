@@ -7,7 +7,7 @@ import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class PackageConfigGenerator {
 
     private final static UpdateCenterService updateCenterService = new UpdateCenterService();
@@ -95,9 +95,6 @@ public class PackageConfigGenerator {
 
     private static JSONArray generatePluginList(JSONArray pluginArray) throws Exception {
 
-        JSONObject updateCenterJSON = updateCenterService.downloadUpdateCenterJSON();
-        JSONObject jsonPluginList = updateCenterJSON.getJSONObject("plugins");
-
         JSONArray pluginInfoArray = new JSONArray();
         for (int i = 0; i < pluginArray.length(); i++) {
             JSONObject pluginObject = pluginArray.getJSONObject(i);
@@ -107,7 +104,10 @@ public class PackageConfigGenerator {
                 String pluginName = pluginNames.next();
                 pluginInfo.put("groupId", "org.jenkins-ci.plugins");
                 pluginInfo.put("artifactId", pluginName);
-                pluginInfo.put("source", new JSONObject().put("version", jsonPluginList.getJSONObject(pluginName).getString("version")));
+                pluginInfo.put("source", new JSONObject().put("version", updateCenterService.downloadUpdateCenterJSON()
+                                                                         .getJSONObject("plugins")
+                                                                         .getJSONObject(pluginName)
+                                                                         .getString("version")));
                 pluginInfoArray.put(pluginInfo);
             }
         }

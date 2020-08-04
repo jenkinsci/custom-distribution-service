@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/plugin")
 public class PluginController {
 
-    private final static Logger LOGGER = Logger.getLogger(PluginController.class.getName());
-    private final UpdateCenterService updateCenterService;
+    private transient final static Logger LOGGER = Logger.getLogger(PluginController.class.getName());
+    private transient final UpdateCenterService updateCenterService;
 
     @Autowired
     public PluginController(UpdateCenterService updateCenterService) {

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
 @Service
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class PackagerDownloadService {
 
     private final static Logger LOGGER = Logger.getLogger(PackagerDownloadService.class.getName());

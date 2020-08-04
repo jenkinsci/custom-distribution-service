@@ -18,7 +18,7 @@ public class Util {
     private final static Logger LOGGER = Logger.getLogger(Util.class.getName());
 
     public File getFileFromResources(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         URL resource = classLoader.getResource(fileName);
         if (resource == null) {
             throw new IllegalArgumentException("file is not found!");
@@ -29,7 +29,7 @@ public class Util {
     }
 
     public String readStringFromFile(String filename) throws Exception {
-        return new String(Files.readAllBytes(getFileFromResources(filename).toPath()), StandardCharsets.UTF_8);
+        return new String(Files.readAllBytes(getFileFromResources(filename).toPath()));
     }
 
     public void cleanupTempDirectory(File file) {

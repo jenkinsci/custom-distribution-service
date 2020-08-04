@@ -19,7 +19,7 @@ public class WarGenerator {
         final Config cfg;
         Path tempDirWithPrefix = Files.createTempDirectory(TEMP_PREFIX);
             File packagerConfigFile = File.createTempFile("packager-config", ".yml");
-            byte[] buf = configuration.getBytes(StandardCharsets.UTF_8);
+            byte[] buf = configuration.getBytes();
             Files.write(packagerConfigFile.toPath(), buf);
             cfg = Config.loadConfig(packagerConfigFile);
             cfg.buildSettings.setTmpDir(tempDirWithPrefix.toFile());

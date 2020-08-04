@@ -81,11 +81,10 @@ public class PackagerController {
     public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
         try {
             LOGGER.info(postPayload);
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(
-                StandardCharsets.UTF_8)));
+            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes()));
             String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
-            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes(StandardCharsets.UTF_8).length, resource);
+            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes().length, resource);
         } catch (Exception e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);

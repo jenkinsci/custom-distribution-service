@@ -8,35 +8,28 @@
 The Basic ruleset contains a collection of good practices which should be followed.
   </description>
 
-    <!-- Rules, that have been moved into a category -->
-    <rule ref="category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/AvoidMultipleUnaryOperators" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/AvoidUsingOctalValues" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/BrokenNullCheck" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/CheckSkipResult" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/ClassCastExceptionWithToArray" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/DontUseFloatTypeForLoopIndices" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/JumbledIncrementer" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/MisplacedNullCheck" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/ReturnFromFinallyBlock" deprecated="true" />
-    <rule ref="category/java/errorprone.xml/UnconditionalIfStatement" deprecated="true" />
-
-    <rule ref="category/java/multithreading.xml/AvoidThreadGroup" deprecated="true" />
-    <rule ref="category/java/multithreading.xml/DontCallThreadRun" deprecated="true" />
-    <rule ref="category/java/multithreading.xml/DoubleCheckedLocking" deprecated="true" />
-
-    <rule ref="category/java/bestpractices.xml/AvoidUsingHardCodedIP" deprecated="true" />
-    <rule ref="category/java/bestpractices.xml/CheckResultSet" deprecated="true" />
-
-    <rule ref="category/java/codestyle.xml/ExtendsObject" deprecated="true" />
-    <rule ref="category/java/codestyle.xml/ForLoopShouldBeWhileLoop" deprecated="true" />
-
-    <rule ref="category/java/performance.xml/BigIntegerInstantiation" deprecated="true" />
-    <rule ref="category/java/performance.xml/BooleanInstantiation" deprecated="true" />
-
-    <rule ref="category/java/design.xml/CollapsibleIfStatements" deprecated="true" />
-    <rule ref="category/java/design.xml/SimplifiedTernary" deprecated="true" />
-
+    <rule ref="category/java/errorprone.xml"> <exclude name="AvoidBranchingStatementAsLastInLoop" /></rule>
+    <rule ref="category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor"  />
+    <rule ref="category/java/errorprone.xml/AvoidMultipleUnaryOperators"  />
+    <rule ref="category/java/errorprone.xml/AvoidUsingOctalValues"  />
+    <rule ref="category/java/errorprone.xml/BrokenNullCheck"  />
+    <rule ref="category/java/errorprone.xml/CheckSkipResult" />
+    <rule ref="category/java/errorprone.xml/ClassCastExceptionWithToArray"/>
+    <rule ref="category/java/errorprone.xml/DontUseFloatTypeForLoopIndices" />
+    <rule ref="category/java/errorprone.xml/JumbledIncrementer" />
+    <rule ref="category/java/errorprone.xml/MisplacedNullCheck" />
+    <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode" />
+    <rule ref="category/java/errorprone.xml/ReturnFromFinallyBlock"/>
+    <rule ref="category/java/errorprone.xml/UnconditionalIfStatement" />
+    <rule ref="category/java/multithreading.xml/AvoidThreadGroup" />
+    <rule ref="category/java/multithreading.xml/DontCallThreadRun"  />
+    <rule ref="category/java/multithreading.xml/DoubleCheckedLocking"  />
+    <rule ref="category/java/bestpractices.xml/AvoidUsingHardCodedIP" />
+    <rule ref="category/java/bestpractices.xml/CheckResultSet"/>
+    <rule ref="category/java/codestyle.xml/ExtendsObject" />
+    <rule ref="category/java/codestyle.xml/ForLoopShouldBeWhileLoop"  />
+    <rule ref="category/java/performance.xml/BigIntegerInstantiation" />
+    <rule ref="category/java/performance.xml/BooleanInstantiation"/>
+    <rule ref="category/java/design.xml/CollapsibleIfStatements" />
+    <rule ref="category/java/design.xml/SimplifiedTernary" />
 </ruleset>
