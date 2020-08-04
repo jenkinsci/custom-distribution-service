@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime
-FROM maven:3.5.2-jdk-8-alpine AS MAVEN_BUILD
+FROM maven:3.6.0-jdk-8-alpine AS MAVEN_BUILD
 
 # Add Maintainer Info
 LABEL maintainer="sladynnunes98@gmail.com"
@@ -14,7 +14,7 @@ COPY src /build/src/
 WORKDIR /build/
 
 # Runs the mvn package command to compile and package the application as an executable JAR
-RUN mvn package
+RUN mvn clean package spring-boot:repackage
 
 FROM openjdk:8-jre-alpine
 
@@ -23,4 +23,6 @@ WORKDIR /app
 
 COPY --from=MAVEN_BUILD /build/target/custom-distribution-service-0.0.1.jar /app/
 
-ENTRYPOINT ["java", "-jar", "custom-distribution-service-0.0.1.jar"]
+RUN ls
+
+ENTRYPOINT ["java", "-jar", "/app/custom-distribution-service-0.0.1.jar"]

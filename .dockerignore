@@ -1,7 +1,18 @@
-# Ignore everything
-**
 
-# Allow files and directories
-!/target/**
-!**/pom.xml
-!**/src/**
+# ignore .git and .cache folders and other irreleveant context
+.git
+.cache
+Jenkinsfile
+LICENSE
+
+# ignore all *.class files in all folders, including build root
+**/*.class
+
+# ignore frontend
+/frontend**
+
+# ignore node_modules
+/node_modules**
+
+# ignore package-lock.json
+/package-lock.json
