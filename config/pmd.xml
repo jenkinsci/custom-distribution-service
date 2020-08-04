@@ -8,28 +8,46 @@
 The Basic ruleset contains a collection of good practices which should be followed.
   </description>
 
-    <rule ref="category/java/errorprone.xml"> <exclude name="AvoidBranchingStatementAsLastInLoop" /></rule>
-    <rule ref="category/java/errorprone.xml/AvoidDecimalLiteralsInBigDecimalConstructor"  />
-    <rule ref="category/java/errorprone.xml/AvoidMultipleUnaryOperators"  />
-    <rule ref="category/java/errorprone.xml/AvoidUsingOctalValues"  />
-    <rule ref="category/java/errorprone.xml/BrokenNullCheck"  />
-    <rule ref="category/java/errorprone.xml/CheckSkipResult" />
-    <rule ref="category/java/errorprone.xml/ClassCastExceptionWithToArray"/>
-    <rule ref="category/java/errorprone.xml/DontUseFloatTypeForLoopIndices" />
-    <rule ref="category/java/errorprone.xml/JumbledIncrementer" />
-    <rule ref="category/java/errorprone.xml/MisplacedNullCheck" />
-    <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode" />
-    <rule ref="category/java/errorprone.xml/ReturnFromFinallyBlock"/>
-    <rule ref="category/java/errorprone.xml/UnconditionalIfStatement" />
-    <rule ref="category/java/multithreading.xml/AvoidThreadGroup" />
-    <rule ref="category/java/multithreading.xml/DontCallThreadRun"  />
-    <rule ref="category/java/multithreading.xml/DoubleCheckedLocking"  />
-    <rule ref="category/java/bestpractices.xml/AvoidUsingHardCodedIP" />
-    <rule ref="category/java/bestpractices.xml/CheckResultSet"/>
-    <rule ref="category/java/codestyle.xml/ExtendsObject" />
-    <rule ref="category/java/codestyle.xml/ForLoopShouldBeWhileLoop"  />
-    <rule ref="category/java/performance.xml/BigIntegerInstantiation" />
-    <rule ref="category/java/performance.xml/BooleanInstantiation"/>
-    <rule ref="category/java/design.xml/CollapsibleIfStatements" />
-    <rule ref="category/java/design.xml/SimplifiedTernary" />
+    <rule ref="category/java/errorprone.xml">
+      <exclude name="AvoidBranchingStatementAsLastInLoop" />
+      <exclude name="AvoidMultipleUnaryOperators"/>
+      <exclude name="AvoidUsingOctalValues"/>
+      <exclude name="BrokenNullCheck"/>
+      <exclude name="CheckSkipResult"/>
+      <exclude name="ClassCastExceptionWithToArray"/>
+      <exclude name="DontUseFloatTypeForLoopIndices"/>
+      <exclude name="JumbledIncrementer"/>
+      <exclude name="MisplacedNullCheck"/>
+      <exclude name="OverrideBothEqualsAndHashcode"/>
+      <exclude name="ReturnFromFinallyBlock"/>
+      <exclude name="UnconditionalIfStatement"/>
+    </rule>
+
+    <rule ref="category/java/multithreading.xml">
+      <exclude name="AvoidThreadGroup" />
+      <exclude name="DontCallThreadRun"/>
+      <exclude name="DoubleCheckedLocking"/>
+      <exclude name="BrokenNullCheck"/>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml">
+      <exclude name="AvoidUsingHardCodedIP" />
+      <exclude name="CheckResultSet"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml">
+      <exclude name="ExtendsObject" />
+      <exclude name="ForLoopShouldBeWhileLoop"/>
+    </rule>
+
+    <rule ref="category/java/performance.xml">
+      <exclude name="BigIntegerInstantiation" />
+      <exclude name="BooleanInstantiation"/>
+    </rule>
+
+    <rule ref="category/java/design.xml">
+      <exclude name="CollapsibleIfStatements" />
+      <exclude name="SimplifiedTernary"/>
+    </rule>
+ 
 </ruleset>
