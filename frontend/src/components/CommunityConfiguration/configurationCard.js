@@ -18,7 +18,7 @@ class configurationCard extends React.Component {
 
     async viewDetails(configName) {
         console.log(configName)
-        const response = await fetch('https://raw.githubusercontent.com/jenkins-zh/jenkins-formulas/master/formulas/' + configName);
+        const response = await fetch('https://raw.githubusercontent.com/sladyn98/custom-distribution-service-community-configurations/master/configurations/' + configName);
         const body = await response.text();
         localStorage.setItem("packageConfigYAML", body)
         // Once the fetch call is achieved naviagte to the editor page.
