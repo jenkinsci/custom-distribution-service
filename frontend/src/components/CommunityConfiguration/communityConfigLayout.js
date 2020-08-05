@@ -14,7 +14,17 @@ class communityConfigLayout extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(process.env.REACT_APP_GITHUB_COMMUNITY_URL);
+
+        // Use the default GITHUB_API_URL
+        let GITHUB_API_URL = "https://api.github.com/repos/sladyn98/custom-distribution-service-community-configurations/contents/configurations"
+
+        // If environment variable has been set it will override the default
+        if (process.env.REACT_APP_GITHUB_COMMUNITY_URL) {
+            console.log("Environment variable has been set")
+            GITHUB_API_URL = process.env.REACT_APP_GITHUB_COMMUNITY_URL
+        }
+
+        const response = await fetch(GITHUB_API_URL);
         const body = await response.json();
         this.setState({data: body})
     }

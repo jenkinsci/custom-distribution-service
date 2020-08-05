@@ -29,6 +29,19 @@ Run the containers:
 docker-compose up
 ```
 
+## Environment Variable configuration
+
+We currently have two environment variables 
+
+a) REACT_APP_API_URL: This variable points to the base API_URL to which the service makes calls to.If you decide to run the backend on another port this variable should be set. The default value is set to `http://localhost:8080`
+
+b) REACT_APP_GITHUB_COMMUNITY_URL: This variable points to the URL at which you would like to store your community configurations on github. It needs to be in the format of:
+`https://api.github.com/repos/{repo-owner}/{repo-name}/contents/{path-to-folder}`
+
+The default configuration is: 
+
+`https://api.github.com/repos/sladyn98/custom-distribution-service-community-configurations/contents/configurations`
+
 ## Useful Links
 
 a) [Project page](https://www.jenkins.io/projects/gsoc/2020/projects/custom-jenkins-distribution-build-service/)

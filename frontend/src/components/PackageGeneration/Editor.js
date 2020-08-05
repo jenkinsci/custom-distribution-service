@@ -33,6 +33,7 @@ class editor extends React.Component {
      description: '',
      isLoading: true
     }
+    
 
    componentDidMount() {
     this.setState({code: localStorage.getItem("packageConfigYAML")})
@@ -42,7 +43,7 @@ class editor extends React.Component {
 
    downloadWarfile() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", process.env.REACT_APP_API_URL + '/package/downloadWarPackage', true);
+    xhr.open("POST", this.getAPIURL + '/package/downloadWarPackage', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
       if(xhr.status == 404) {
@@ -56,12 +57,24 @@ class editor extends React.Component {
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", process.env.REACT_APP_API_URL + '/package/downloadPackageConfiguration', true);
+    xhr.open("POST", this.getAPIURL + '/package/downloadPackageConfiguration', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'casc.yml');
     };
     xhr.send(localStorage.getItem("packageConfigYAML"));
+   }
+
+   getAPIURL () {
+    // Use the default API_URL
+    let API_URL = "http://localhost:8080"
+
+    // If environment variable has been set it will override the default
+    if (process.env.REACT_APP_API_URL) {
+        console.log("Environment variable has been set")
+        API_URL = process.env.REACT_APP_API_URL
+    }
+    return API_URL
    }
 
    render()  {
