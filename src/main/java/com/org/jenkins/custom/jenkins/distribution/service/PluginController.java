@@ -1,6 +1,7 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
 import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
+import java.util.Map;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/plugin")
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public class PluginController {
 
     private transient final static Logger LOGGER = Logger.getLogger(PluginController.class.getName());
-    private transient final UpdateCenterService updateCenterService;
+    private transient final UpdateCenterService updateService;
 
     @Autowired
-    public PluginController(UpdateCenterService updateCenterService) {
-        this.updateCenterService = updateCenterService;
+    public PluginController(final UpdateCenterService updateCenterService) {
+        this.updateService = updateCenterService;
     }
 
     /*
@@ -30,11 +32,15 @@ public class PluginController {
     @GetMapping(path = "/getPluginList")
     public ResponseEntity<?> getPlugins() {
         LOGGER.info("Request Received");
+        Map updateMap = null;
+        HttpStatus status;
         try {
-            return new ResponseEntity<>(updateCenterService.downloadUpdateCenterJSON().toMap(), HttpStatus.OK);
+            updateMap = updateService.downloadUpdateCenterJSON().toMap();
+            status = HttpStatus.OK;
         } catch (Exception e) {
             LOGGER.severe(e.toString());
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            status = HttpStatus.NOT_FOUND;
         }
+        return new ResponseEntity(updateMap, status);
     }
 }

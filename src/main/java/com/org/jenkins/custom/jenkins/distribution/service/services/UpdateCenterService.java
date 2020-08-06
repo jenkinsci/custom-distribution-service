@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UpdateCenterService {
 
-    private transient Util util = new Util();
+    private final transient Util util = new Util();
 
     private transient final static Logger LOGGER = Logger.getLogger(UpdateCenterService.class.getName());
-    private transient static final String UPDATE_CENTER_JSON_URL = "https://updates.jenkins.io/current/update-center.actual.json";
-    private transient int updateFlag = 0;
+    private transient static final String UPDATE_CENTER_URL = "https://updates.jenkins.io/current/update-center.actual.json";
+    private transient int updateFlag;
     private transient String responseString;
-    private transient String updateCenterFilePath = "";
+    private transient String updateCenterPath = "";
 
     public JSONObject downloadUpdateCenterJSON() throws Exception {
         /*
@@ -30,29 +30,29 @@ public class UpdateCenterService {
         * is being run so we need to download the update-center
         */
         LOGGER.info("Update flag is " + updateFlag);
-        LOGGER.info("Update Center Path " + updateCenterFilePath);
+        LOGGER.info("Update Center Path " + updateCenterPath);
 
         if(updateFlag == 0) {
-            File updateCenterFile = File.createTempFile("update-center", ".json");
-            updateCenterFilePath = updateCenterFile.getPath();
+            final File updateCenterFile = File.createTempFile("update-center", ".json");
+            updateCenterPath = updateCenterFile.getPath();
             LOGGER.info("Creating a new file" + updateCenterFile.getPath());
-            LOGGER.info("Executing Request at " + UPDATE_CENTER_JSON_URL);
+            LOGGER.info("Executing Request at " + UPDATE_CENTER_URL);
             try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                 CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_JSON_URL))) {
+                 CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL))) {
                 responseString = EntityUtils.toString(response.getEntity());}
-            byte[] buf = responseString.getBytes();
+            final byte[] buf = responseString.getBytes();
             Files.write(updateCenterFile.toPath(), buf);
             updateFlag = 1;
 
 
         } else {
-            responseString = readFileAsString(updateCenterFilePath);
+            responseString = readFileAsString(updateCenterPath);
         }
         LOGGER.info("Returning Response");
         return util.convertPayloadToJSON(responseString);
     }
 
-    private static String readFileAsString(String fileName) throws Exception {
+    private static String readFileAsString(final String fileName) throws Exception {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
