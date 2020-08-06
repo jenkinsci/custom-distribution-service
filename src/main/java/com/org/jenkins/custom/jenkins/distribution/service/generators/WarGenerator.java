@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.generators;
 import io.jenkins.tools.warpackager.lib.config.Config;
 import io.jenkins.tools.warpackager.lib.impl.Builder;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ public class WarGenerator {
         final Config cfg;
         Path tempDirWithPrefix = Files.createTempDirectory(TEMP_PREFIX);
             File packagerConfigFile = File.createTempFile("packager-config", ".yml");
-            byte[] buf = configuration.getBytes();
+            byte[] buf = configuration.getBytes(StandardCharsets.UTF_8);
             Files.write(packagerConfigFile.toPath(), buf);
             cfg = Config.loadConfig(packagerConfigFile);
             cfg.buildSettings.setTmpDir(tempDirWithPrefix.toFile());
