@@ -2,6 +2,8 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
@@ -24,6 +26,7 @@ public class UpdateCenterService {
     private String responseString;
     private String updateCenterFilePath = "";
 
+
     public JSONObject downloadUpdateCenterJSON() throws Exception {
         /*
         * Check if updateFlag has been set if not then it is the first time the application
@@ -31,24 +34,29 @@ public class UpdateCenterService {
         */
         LOGGER.info("Update flag is " + updateFlag);
         LOGGER.info("Update Center Path " + updateCenterFilePath);
-
         if(updateFlag == 0) {
-            File updateCenterFile = File.createTempFile("update-center", ".json");
-            updateCenterFilePath = updateCenterFile.getPath();
-            LOGGER.info("Creating a new file" + updateCenterFile.getPath());
-            HttpGet get = new HttpGet(UPDATE_CENTER_JSON_URL);
-            LOGGER.info("Executing Request at " + UPDATE_CENTER_JSON_URL);
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse response = httpClient.execute(get);
-            responseString = EntityUtils.toString(response.getEntity());
-            byte[] buf = responseString.getBytes();
-            Files.write(updateCenterFile.toPath(), buf);
+            downloadJSON(UPDATE_CENTER_JSON_URL);
             updateFlag = 1;
         } else {
             responseString = readFileAsString(updateCenterFilePath);
         }
-        LOGGER.info("Returning Response");
+        LOGGER.info("Returning Response" + responseString);
         return util.convertPayloadToJSON(responseString);
+    }
+
+   public JSONObject downloadJSON (String updateCenterURL) throws Exception {
+            File updateCenterFile = File.createTempFile("update-center", ".json");
+            updateCenterFilePath = updateCenterFile.getPath();
+            LOGGER.info("Creating a new file" + updateCenterFile.getPath());
+            HttpGet get = new HttpGet(updateCenterURL);
+            LOGGER.info("Executing Request at " + updateCenterURL);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(get);
+            responseString = EntityUtils.toString(response.getEntity());
+            byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
+            Files.write(updateCenterFile.toPath(), buf);
+            LOGGER.info("Returning Response");
+            return util.convertPayloadToJSON(responseString);
     }
 
     private static String readFileAsString(String fileName) throws Exception {
