@@ -33,11 +33,24 @@ The Basic ruleset contains a collection of good practices which should be follow
     <rule ref="category/java/bestpractices.xml">
       <exclude name="AvoidUsingHardCodedIP" />
       <exclude name="CheckResultSet"/>
+      <exclude name="GuardLogStatement"/>
     </rule>
 
     <rule ref="category/java/codestyle.xml">
       <exclude name="ExtendsObject" />
       <exclude name="ForLoopShouldBeWhileLoop"/>
+      <exclude name="AtLeastOneConstructor"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions">
+      <properties>
+        <property name="classPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="abstractClassPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="interfacePattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="enumPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="annotationPattern" value="[A-Z][a-zA-Z0-9]*" />
+        <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]+" />
+      </properties>
     </rule>
 
     <rule ref="category/java/performance.xml">
@@ -48,6 +61,13 @@ The Basic ruleset contains a collection of good practices which should be follow
     <rule ref="category/java/design.xml">
       <exclude name="CollapsibleIfStatements" />
       <exclude name="SimplifiedTernary"/>
+      <exclude name="LawOfDemeter"/>
+    </rule>
+
+    <rule ref="category/java/design.xml/UseUtilityClass">
+      <properties>
+        <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration/preceding-sibling::Annotation/MarkerAnnotation/Name[@Image='SpringBootApplication']" />
+      </properties>
     </rule>
  
 </ruleset>

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class PackageConfigGenerator {
 
-    private final static UpdateCenterService UpdateService = new UpdateCenterService();
+    private final static UpdateCenterService UPDATE_SERVICE = new UpdateCenterService();
 
     public static final String generatePackageConfig(final JSONObject formData)
         throws  Exception {
@@ -102,7 +102,7 @@ public class PackageConfigGenerator {
                 final String pluginName = pluginNames.next();
                 pluginInfo.put("groupId", "org.jenkins-ci.plugins");
                 pluginInfo.put("artifactId", pluginName);
-                pluginInfo.put("source", new JSONObject().put("version", UpdateService.downloadUpdateCenterJSON()
+                pluginInfo.put("source", new JSONObject().put("version", UPDATE_SERVICE.downloadUpdateCenterJSON()
                                                                          .getJSONObject("plugins")
                                                                          .getJSONObject(pluginName)
                                                                          .getString("version")));

@@ -1,6 +1,7 @@
 package com.org.jenkins.custom.jenkins.distribution.service.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.logging.Logger;
@@ -28,7 +29,7 @@ public class Util {
 
     }
 
-    public String readStringFromFile(final String filename) throws Exception {
+    public String readStringFromFile(final String filename) throws IOException {
         return new String(Files.readAllBytes(getFileFromResources(filename).toPath()));
     }
 

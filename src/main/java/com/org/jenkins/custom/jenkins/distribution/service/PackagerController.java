@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
+import java.io.IOException;
 import java.util.Map;
 import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
@@ -21,7 +22,6 @@ import static com.org.jenkins.custom.jenkins.distribution.service.generators.Pac
 @RestController
 @CrossOrigin
 @RequestMapping("/package")
-@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.OnlyOneReturn"})
 public class PackagerController {
 
     private static Util util = new Util();
@@ -93,15 +93,13 @@ public class PackagerController {
         }
     }
 
-    private String getWarVersion() throws Exception {
+    private String getWarVersion() throws IOException {
         Yaml yaml = new Yaml();
         final JSONObject json;
-        try {
-            final Map<String, Map<String, String>> yamlMaps = (Map<String, Map<String, String>>) yaml.load(util.readStringFromFile("packager-config.yml"));
-            json = new JSONObject(new ObjectMapper().writeValueAsString(yamlMaps.get("war")));
-        } catch (Exception e) {
-            throw e;
-        }
+
+        final Map<String, Map<String, String>> yamlMaps = (Map<String, Map<String, String>>) yaml.load(util.readStringFromFile("packager-config.yml"));
+        json = new JSONObject(new ObjectMapper().writeValueAsString(yamlMaps.get("war")));
+
         return json.getJSONObject("source").get("version").toString();
     }
 }
