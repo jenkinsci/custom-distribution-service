@@ -2,7 +2,6 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -63,7 +62,7 @@ public class UpdateCenterService {
 
     private static String readFileAsString(String fileName) throws Exception {
         String data;
-        data = new String(Files.readAllBytes(Paths.get(fileName)));
+        data = new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.UTF_8);
         return data;
     }
 }

@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
@@ -80,10 +81,11 @@ public class PackagerController {
     public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
         try {
             LOGGER.info(postPayload);
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes()));
+            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(
+                StandardCharsets.UTF_8)));
             String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
-            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes().length, resource);
+            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes(StandardCharsets.UTF_8).length, resource);
         } catch (Exception e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);

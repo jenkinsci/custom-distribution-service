@@ -1,16 +1,28 @@
 # Start with a base image containing Java runtime
-FROM openjdk:8-jdk-alpine
+FROM maven:3.6.0-jdk-8-alpine AS MAVEN_BUILD
 
 # Add Maintainer Info
 LABEL maintainer="sladynnunes98@gmail.com"
 
-# Add a volume pointing to /tmp
-VOLUME /tmp
+# Creates a build directory in the image and copies the pom.xml into it
+COPY pom.xml /build/
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
+# Copies the src directory into the build directory in the image.
+COPY src /build/src/
 
-COPY . /app
+# Set Workdir
+WORKDIR /build/
 
-# Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/target/custom-distribution-service-0.0.1.jar"]
+# Runs the mvn package command to compile and package the application as an executable JAR
+RUN mvn clean package spring-boot:repackage
+
+FROM openjdk:8-jre-alpine
+
+# Create a new working directory in the image called /app
+WORKDIR /app
+
+COPY --from=MAVEN_BUILD /build/target/custom-distribution-service-0.0.1.jar /app/
+
+RUN ls
+
+ENTRYPOINT ["java", "-jar", "/app/custom-distribution-service-0.0.1.jar"]
