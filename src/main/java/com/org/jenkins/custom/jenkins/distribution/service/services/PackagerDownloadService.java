@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 import com.org.jenkins.custom.jenkins.distribution.service.generators.WarGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class PackagerDownloadService {
 
     private final static Logger LOGGER = Logger.getLogger(PackagerDownloadService.class.getName());
@@ -26,16 +26,14 @@ public class PackagerDownloadService {
      * @return Response Entity with body as the war file in the form of a resource
      * @throws Exception
      */
-    public ResponseEntity<Resource> downloadWAR(final String versionName, final String configuration) throws Exception {
+    public ResponseEntity<Resource> downloadWAR(final String versionName, final String configuration) throws IOException, InterruptedException {
         File warFile = null;
         try {
             warFile = WarGenerator.generateWAR(versionName, configuration);
             final InputStreamResource resource = new InputStreamResource(Files.newInputStream(Paths.get(warFile.getAbsolutePath())));
-            String headerValue = "attachment; filename=jenkins.war";
+            final String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");
             return returnResource(returnHeaders(headerValue), warFile, resource);
-        } catch (Exception e) {
-            throw e;
         } finally {
             if(warFile != null) {
                 util.cleanupTempDirectory(warFile);

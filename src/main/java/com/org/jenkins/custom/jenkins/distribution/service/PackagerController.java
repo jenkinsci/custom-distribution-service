@@ -48,7 +48,7 @@ public class PackagerController {
         try {
             yamlResponse = generatePackageConfig(new JSONObject(postPayload));
             httpStatus = HttpStatus.OK;
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.severe(e.toString());
             httpStatus = HttpStatus.NOT_FOUND;
         }
@@ -67,7 +67,7 @@ public class PackagerController {
         LOGGER.info("Request Received for downloading war file with configuration" + postPayload);
         try {
             return new PackagerDownloadService().downloadWAR(getWarVersion(), postPayload);
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -81,20 +81,15 @@ public class PackagerController {
      */
     @PostMapping (path = "/downloadPackageConfiguration")
     public ResponseEntity<?> downloadPackageConfig(@RequestBody final String postPayload) {
-        try {
             LOGGER.info(postPayload);
             final InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes()));
             final String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
             return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes().length, resource);
-        } catch (Exception e) {
-            LOGGER.severe(e.toString());
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
     }
 
     private String getWarVersion() throws IOException {
-        Yaml yaml = new Yaml();
+        final Yaml yaml = new Yaml();
         final JSONObject json;
 
         final Map<String, Map<String, String>> yamlMaps = (Map<String, Map<String, String>>) yaml.load(util.readStringFromFile("packager-config.yml"));

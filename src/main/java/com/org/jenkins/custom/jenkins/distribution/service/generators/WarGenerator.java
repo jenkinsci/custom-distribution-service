@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.generators;
 import io.jenkins.tools.warpackager.lib.config.Config;
 import io.jenkins.tools.warpackager.lib.impl.Builder;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ public class WarGenerator {
     private static final String TEMP_PREFIX = "CDS";
 
 
-    public static File generateWAR(final String versionName, final String configuration) throws Exception {
+    public static File generateWAR(final String versionName, final String configuration) throws IOException, InterruptedException {
         LOGGER.info("Generating War File");
         final Config cfg;
         final Path tempDirWithPrefix = Files.createTempDirectory(TEMP_PREFIX);

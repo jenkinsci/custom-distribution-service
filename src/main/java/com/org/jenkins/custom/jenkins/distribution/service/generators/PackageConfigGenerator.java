@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
+import java.io.IOException;
 import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,7 +14,7 @@ public class PackageConfigGenerator {
     private final static UpdateCenterService UPDATE_SERVICE = new UpdateCenterService();
 
     public static final String generatePackageConfig(final JSONObject formData)
-        throws  Exception {
+        throws IOException {
 
         //Get the bundle object
         final JSONObject bundle = formData.getJSONObject("bundle");
@@ -91,7 +92,7 @@ public class PackageConfigGenerator {
         return sysInfo;
     }
 
-    private static JSONArray generatePluginList(final JSONArray pluginArray) throws Exception {
+    private static JSONArray generatePluginList(final JSONArray pluginArray) throws IOException {
 
         final JSONArray pluginInfoArray = new JSONArray();
         for (int i = 0; i < pluginArray.length(); i++) {

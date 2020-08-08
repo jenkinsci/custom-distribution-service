@@ -21,6 +21,7 @@ The Basic ruleset contains a collection of good practices which should be follow
       <exclude name="OverrideBothEqualsAndHashcode"/>
       <exclude name="ReturnFromFinallyBlock"/>
       <exclude name="UnconditionalIfStatement"/>
+      <exclude name="DataflowAnomalyAnalysis"/>
     </rule>
 
     <rule ref="category/java/multithreading.xml">
@@ -40,6 +41,8 @@ The Basic ruleset contains a collection of good practices which should be follow
       <exclude name="ExtendsObject" />
       <exclude name="ForLoopShouldBeWhileLoop"/>
       <exclude name="AtLeastOneConstructor"/>
+      <exclude name="UnnecessaryAnnotationValueElement"/>
+      <exclude name="OnlyOneReturn"/>
     </rule>
 
     <rule ref="category/java/codestyle.xml/ClassNamingConventions">
@@ -56,18 +59,14 @@ The Basic ruleset contains a collection of good practices which should be follow
     <rule ref="category/java/performance.xml">
       <exclude name="BigIntegerInstantiation" />
       <exclude name="BooleanInstantiation"/>
+      <exclude name="AvoidInstantiatingObjectsInLoops" />
     </rule>
 
     <rule ref="category/java/design.xml">
+      <exclude name="UseUtilityClass"/>
       <exclude name="CollapsibleIfStatements" />
       <exclude name="SimplifiedTernary"/>
       <exclude name="LawOfDemeter"/>
     </rule>
 
-    <rule ref="category/java/design.xml/UseUtilityClass">
-      <properties>
-        <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration/preceding-sibling::Annotation/MarkerAnnotation/Name[@Image='SpringBootApplication']" />
-      </properties>
-    </rule>
- 
 </ruleset>

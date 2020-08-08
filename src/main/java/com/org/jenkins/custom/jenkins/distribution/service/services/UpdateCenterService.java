@@ -2,6 +2,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ public class UpdateCenterService {
     private transient String responseString;
     private transient String updateCenterPath = "";
 
-    public JSONObject downloadUpdateCenterJSON() throws Exception {
+    public JSONObject downloadUpdateCenterJSON() throws IOException {
         /*
         * Check if updateFlag has been set if not then it is the first time the application
         * is being run so we need to download the update-center
@@ -52,7 +53,7 @@ public class UpdateCenterService {
         return util.convertPayloadToJSON(responseString);
     }
 
-    private static String readFileAsString(final String fileName) throws Exception {
+    private static String readFileAsString(final String fileName) throws IOException {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;

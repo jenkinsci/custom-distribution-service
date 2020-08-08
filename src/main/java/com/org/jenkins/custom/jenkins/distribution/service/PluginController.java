@@ -21,8 +21,8 @@ public class PluginController {
     private transient final UpdateCenterService updateService;
 
     @Autowired
-    public PluginController(final UpdateCenterService updateCenterService) {
-        this.updateService = updateCenterService;
+    public PluginController(final UpdateCenterService updaterService) {
+        this.updateService = updaterService;
     }
 
     /*

@@ -13,7 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@SuppressWarnings({"PMD.LawOfDemeter", "PMD.ShortClassName"})
+@SuppressWarnings("PMD.ShortClassName")
 public class Util {
 
     private final static Logger LOGGER = Logger.getLogger(Util.class.getName());
@@ -41,12 +41,12 @@ public class Util {
                 LOGGER.info("deleting temporary directory: " + file.getAbsolutePath());
                 FileUtils.deleteDirectory(tmpDir);
             }
-        }catch (Exception e) {
+        }catch (IOException e) {
             LOGGER.severe(e.getMessage());
         }
     }
 
-    public JSONObject convertPayloadToJSON(final String payload) throws Exception{
+    public JSONObject convertPayloadToJSON(final String payload) throws IOException{
         return new JSONObject(payload);
     }
 
