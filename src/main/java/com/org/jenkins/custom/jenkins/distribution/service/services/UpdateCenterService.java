@@ -56,6 +56,8 @@ public class UpdateCenterService {
             byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
             Files.write(updateCenterFile.toPath(), buf);
             LOGGER.info("Returning Response");
+            // Mark the file for deletion once the JVM shuts down
+            updateCenterFile.deleteOnExit();
             return util.convertPayloadToJSON(responseString);
     }
 

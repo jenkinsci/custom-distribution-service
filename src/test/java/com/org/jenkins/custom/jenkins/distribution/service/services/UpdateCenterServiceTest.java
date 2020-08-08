@@ -33,6 +33,7 @@ public class UpdateCenterServiceTest {
                         .withHeader("Content-Type", "application/json")
                         .withBody(updateCenterBody)));
             JSONObject updateCenterJSON = new UpdateCenterService().downloadJSON("http://localhost:8080/getUpdateCenter");
+            // Check if the returned JSON is not null
             assertNotNull(updateCenterJSON);
         } catch (Exception e) {
             e.printStackTrace();
