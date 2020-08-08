@@ -29,6 +29,26 @@ Run the containers:
 docker-compose up
 ```
 
+### Run without docker
+
+#### Prerequisites
+
+a) [maven](https://maven.apache.org/install.html)
+
+b) [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 
+
+You can run the backend spring boot server from the root directory using:
+```
+mvn spring-boot:run
+```
+
+You can run the front end using the following:
+```
+cd frontend/
+npm install
+npm start
+```
+
 ## Environment Variable configuration
 
 We currently have two environment variables 
