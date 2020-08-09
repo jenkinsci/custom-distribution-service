@@ -35,9 +35,25 @@ class editor extends React.Component {
     }
 
    componentDidMount() {
-    this.setState({code: localStorage.getItem("packageConfigYAML")})
-    this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
-    this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+
+    if (localStorage.getItem("packageConfigYAML")) {
+      this.setState({code: localStorage.getItem("packageConfigYAML")})
+    } else {
+      this.setState({code: "Kindly generate or paste your configuration here"})
+    }
+
+    if (localStorage.getItem("packageConfigJSON")["bundle"]["title"]) {
+      this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
+    } else {
+      this.setState({title: "No title Specified"})
+    }
+
+    if (localStorage.getItem("packageConfigJSON")["bundle"]["description"]) {
+      this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+    } else {
+      this.setState({description: "No description specified"})
+    }
+   
   }
 
    downloadWarfile() {
