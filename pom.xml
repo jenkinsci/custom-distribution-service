@@ -95,6 +95,25 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.13.0</version>
+				<configuration>
+				<rulesets>
+					<ruleset>/config/pmd.xml</ruleset>
+				</rulesets>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+							<goal>cpd-check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+				<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.3</version>
@@ -271,5 +290,4 @@
 		  <url>https://repo.jenkins-ci.org/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

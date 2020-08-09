@@ -3,40 +3,41 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
+import java.io.IOException;
 import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class PackageConfigGenerator {
 
-    private final static UpdateCenterService updateCenterService = new UpdateCenterService();
+    private final static UpdateCenterService UPDATE_SERVICE = new UpdateCenterService();
 
-    public static String generatePackageConfig(JSONObject formData)
-        throws  Exception {
+    public static final String generatePackageConfig(final JSONObject formData)
+        throws IOException {
 
         //Get the bundle object
-        JSONObject bundle = formData.getJSONObject("bundle");
+        final JSONObject bundle = formData.getJSONObject("bundle");
         //Building the initial bundle
-        JSONObject bundleInfo = generateBundle(bundle);
+        final JSONObject bundleInfo = generateBundle(bundle);
 
         //Get the build settings object
-        JSONObject buildSettings = formData.getJSONObject("buildSettings");
-        JSONObject docker = generateBuildSettings(buildSettings);
+        final JSONObject buildSettings = formData.getJSONObject("buildSettings");
+        final JSONObject docker = generateBuildSettings(buildSettings);
 
         //Get the war object
-        JSONObject war = formData.getJSONObject("war");
+        final JSONObject war = formData.getJSONObject("war");
         //Building the WAR File
-        JSONObject warInfo = generateWarSettings(war);
+        final JSONObject warInfo = generateWarSettings(war);
 
         //Building system Settings
-        JSONObject systemSettings = formData.getJSONObject("sysSettings");
-        JSONObject sysInfo = generateSystemSettings(systemSettings);
+        final JSONObject systemSettings = formData.getJSONObject("sysSettings");
+        final JSONObject sysInfo = generateSystemSettings(systemSettings);
 
-        JSONArray pluginArray = formData.getJSONArray("plugins");
-        JSONArray pluginInfoArray = generatePluginList(pluginArray);
+        final JSONArray pluginArray = formData.getJSONArray("plugins");
+        final JSONArray pluginInfoArray = generatePluginList(pluginArray);
 
-        JSONObject packageConfig = new JSONObject();
+        final JSONObject packageConfig = new JSONObject();
         packageConfig.put("buildSettings", docker);
         packageConfig.put("bundle", bundleInfo);
         packageConfig.put("war", warInfo);
@@ -48,14 +49,12 @@ public class PackageConfigGenerator {
         }
 
         // parse JSON
-        JsonNode jsonNodeTree = new ObjectMapper().readTree(packageConfig.toString());
-        // save it as YAML
-        String jsonAsYaml = new YAMLMapper().writeValueAsString(jsonNodeTree);
-        return jsonAsYaml;
+        final JsonNode jsonNodeTree = new ObjectMapper().readTree(packageConfig.toString());
+        return new YAMLMapper().writeValueAsString(jsonNodeTree);
     }
 
-    private static JSONObject generateBundle(JSONObject bundle) {
-        JSONObject bundleInfo = new JSONObject();
+    private static JSONObject generateBundle(final JSONObject bundle) {
+        final JSONObject bundleInfo = new JSONObject();
         bundleInfo.put("groupId", "io.jenkins.tools.custom-distribution-service.build");
         bundleInfo.put("artifactId", bundle.getString("artifactId"));
         bundleInfo.put("vendor", "Jenkins project");
@@ -64,27 +63,27 @@ public class PackageConfigGenerator {
         return bundleInfo;
     }
 
-    private static JSONObject generateBuildSettings(JSONObject buildSettings) {
-        JSONObject dockerInfo = new JSONObject();
+    private static JSONObject generateBuildSettings(final JSONObject buildSettings) {
+        final JSONObject dockerInfo = new JSONObject();
         dockerInfo.put("base", buildSettings.getString("base"));
         if (buildSettings.has("tag")) {
             dockerInfo.put("tag", buildSettings.getString("tag"));
             dockerInfo.put("build", "true");
         }
-        JSONObject docker = new JSONObject().put("docker", dockerInfo);
-        return docker;
+
+        return new JSONObject().put("docker", dockerInfo);
     }
 
-    private static JSONObject generateWarSettings(JSONObject warSettings) {
-        JSONObject warInfo = new JSONObject();
+    private static JSONObject generateWarSettings(final JSONObject warSettings) {
+        final JSONObject warInfo = new JSONObject();
         warInfo.put("groupId", "org.jenkins-ci.main");
         warInfo.put("artifactId", "jenkins-war");
         warInfo.put("source", new JSONObject().put("version", warSettings.getString("jenkinsVersion")));
         return warInfo;
     }
 
-    private static JSONObject generateSystemSettings(JSONObject systemSettings) {
-        JSONObject sysInfo = new JSONObject();
+    private static JSONObject generateSystemSettings(final JSONObject systemSettings) {
+        final JSONObject sysInfo = new JSONObject();
         sysInfo.put("jenkins.install.runSetupWizard", systemSettings.getString("setupWizard"));
         sysInfo.put("jenkins.model.Jenkins.slaveAgentPort",
             systemSettings.getString("slaveAgentPort"));
@@ -93,21 +92,21 @@ public class PackageConfigGenerator {
         return sysInfo;
     }
 
-    private static JSONArray generatePluginList(JSONArray pluginArray) throws Exception {
+    private static JSONArray generatePluginList(final JSONArray pluginArray) throws IOException {
 
-        JSONObject updateCenterJSON = updateCenterService.downloadUpdateCenterJSON();
-        JSONObject jsonPluginList = updateCenterJSON.getJSONObject("plugins");
-
-        JSONArray pluginInfoArray = new JSONArray();
+        final JSONArray pluginInfoArray = new JSONArray();
         for (int i = 0; i < pluginArray.length(); i++) {
-            JSONObject pluginObject = pluginArray.getJSONObject(i);
-            Iterator<String> pluginNames = pluginObject.keys();
+            final JSONObject pluginObject = pluginArray.getJSONObject(i);
+            final Iterator<String> pluginNames = pluginObject.keys();
             while (pluginNames.hasNext()) {
-                JSONObject pluginInfo = new JSONObject();
-                String pluginName = pluginNames.next();
+                final JSONObject pluginInfo = new JSONObject();
+                final String pluginName = pluginNames.next();
                 pluginInfo.put("groupId", "org.jenkins-ci.plugins");
                 pluginInfo.put("artifactId", pluginName);
-                pluginInfo.put("source", new JSONObject().put("version", jsonPluginList.getJSONObject(pluginName).getString("version")));
+                pluginInfo.put("source", new JSONObject().put("version", UPDATE_SERVICE.downloadUpdateCenterJSON()
+                                                                         .getJSONObject("plugins")
+                                                                         .getJSONObject(pluginName)
+                                                                         .getString("version")));
                 pluginInfoArray.put(pluginInfo);
             }
         }
@@ -115,7 +114,7 @@ public class PackageConfigGenerator {
     }
 
     private static JSONObject generateJCasC() {
-        JSONObject jcascInfo = new JSONObject();
+        final JSONObject jcascInfo = new JSONObject();
         jcascInfo.put("id", "casc");
         jcascInfo.put("source", new JSONObject().put("dir", "casc.yml"));
         return jcascInfo;
