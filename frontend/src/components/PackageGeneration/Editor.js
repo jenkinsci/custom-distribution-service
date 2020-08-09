@@ -42,16 +42,16 @@ class editor extends React.Component {
       this.setState({code: "Kindly generate or paste your configuration here"})
     }
 
-    if (localStorage.getItem("packageConfigJSON")["bundle"]["title"]) {
-      this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
-    } else {
+    if (localStorage.getItem("packageConfigJSON")["bundle"] === undefined) {
       this.setState({title: "No title Specified"})
+    } else {
+      this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
     }
 
-    if (localStorage.getItem("packageConfigJSON")["bundle"]["description"]) {
-      this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
-    } else {
+    if (localStorage.getItem("packageConfigJSON")["bundle"] === undefined) {
       this.setState({description: "No description specified"})
+    } else {
+      this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
     }
    
   }
