@@ -40,8 +40,10 @@ public class UpdateCenterService {
             LOGGER.info("Creating a new file" + updateCenterFile.getPath());
             LOGGER.info("Executing Request at " + UPDATE_CENTER_URL);
             try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                 CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL))) {
-                responseString = EntityUtils.toString(response.getEntity());}
+                 CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL)))
+            {
+                responseString = EntityUtils.toString(response.getEntity());
+            }
             final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
            
             Files.write(updateCenterFile.toPath(), buf);
