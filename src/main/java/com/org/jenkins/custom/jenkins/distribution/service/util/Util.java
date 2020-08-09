@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.util;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
@@ -30,7 +31,7 @@ public class Util {
     }
 
     public String readStringFromFile(final String filename) throws IOException {
-        return new String(Files.readAllBytes(getFileFromResources(filename).toPath()));
+        return new String(Files.readAllBytes(getFileFromResources(filename).toPath()), StandardCharsets.UTF_8);
     }
 
     public void cleanupTempDirectory(final File file) {

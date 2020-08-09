@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
@@ -41,7 +42,8 @@ public class UpdateCenterService {
             try (CloseableHttpClient httpClient = HttpClients.createDefault();
                  CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL))) {
                 responseString = EntityUtils.toString(response.getEntity());}
-            final byte[] buf = responseString.getBytes();
+            final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
+           
             Files.write(updateCenterFile.toPath(), buf);
             updateFlag = 1;
 
@@ -55,7 +57,7 @@ public class UpdateCenterService {
 
     private static String readFileAsString(final String fileName) throws IOException {
         String data;
-        data = new String(Files.readAllBytes(Paths.get(fileName)));
+        data = new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.UTF_8);
         return data;
     }
 }

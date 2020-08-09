@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
@@ -82,10 +83,10 @@ public class PackagerController {
     @PostMapping (path = "/downloadPackageConfiguration")
     public ResponseEntity<?> downloadPackageConfig(@RequestBody final String postPayload) {
             LOGGER.info(postPayload);
-            final InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes()));
+            final InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(StandardCharsets.UTF_8)));
             final String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
-            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes().length, resource);
+            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes(StandardCharsets.UTF_8).length, resource);
     }
 
     private String getWarVersion() throws IOException {

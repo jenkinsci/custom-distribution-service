@@ -4,6 +4,7 @@ import io.jenkins.tools.warpackager.lib.config.Config;
 import io.jenkins.tools.warpackager.lib.impl.Builder;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
@@ -20,9 +21,10 @@ public class WarGenerator {
         final Config cfg;
         final Path tempDirWithPrefix = Files.createTempDirectory(TEMP_PREFIX);
             final File packagerFile = File.createTempFile("packager-config", ".yml");
-            final byte[] buf = configuration.getBytes();
+            final byte[] buf = configuration.getBytes(StandardCharsets.UTF_8);
             Files.write(packagerFile.toPath(), buf);
             cfg = Config.loadConfig(packagerFile);
+        
             cfg.buildSettings.setTmpDir(tempDirWithPrefix.toFile());
             cfg.buildSettings.setVersion(versionName);
             cfg.buildSettings.setInstallArtifacts(true);
