@@ -42,17 +42,23 @@ class editor extends React.Component {
       this.setState({code: "Kindly generate or paste your configuration here"})
     }
 
-    if (localStorage.getItem("packageConfigJSON")["bundle"] === undefined) {
-      this.setState({title: "No title Specified"})
-    } else {
-      this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
-    }
+    if (!localStorage.getItem("packageConfigJSON")["bundle"] === undefined ) {
+      if (localStorage.getItem("packageConfigJSON")["bundle"]["title"] === undefined ) {
+        this.setState({title: "No title Specified"})
+      }
+      else {
+        this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
+     }
+   }
 
-    if (localStorage.getItem("packageConfigJSON")["bundle"] === undefined) {
-      this.setState({description: "No description specified"})
-    } else {
-      this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
-    }
+    if (!localStorage.getItem("packageConfigJSON")["bundle"] === undefined ) {
+      if (localStorage.getItem("packageConfigJSON")["bundle"]["description"] === undefined ) {
+        this.setState({description: "No description specified"})
+      }
+      else {
+        this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+      }
+  }
    
   }
 
