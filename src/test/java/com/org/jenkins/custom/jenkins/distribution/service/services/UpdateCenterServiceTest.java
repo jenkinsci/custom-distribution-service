@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -35,6 +36,7 @@ public class UpdateCenterServiceTest {
             JSONObject updateCenterJSON = new UpdateCenterService().downloadJSON("http://localhost:8080/getUpdateCenter");
             // Check if the returned JSON is not null
             assertNotNull(updateCenterJSON);
+            Assert.assertEquals(updateCenterJSON.toString(), updateCenterBody);
         } catch (Exception e) {
             e.printStackTrace();
             fail();
