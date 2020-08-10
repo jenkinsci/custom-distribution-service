@@ -2,6 +2,7 @@ package com.org.jenkins.custom.jenkins.distribution.service.services;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,16 +18,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class UpdateCenterService {
 
-    private Util util = new Util();
+    private final transient Util util = new Util();
 
-    private final static Logger LOGGER = Logger.getLogger(UpdateCenterService.class.getName());
-    private static final String UPDATE_CENTER_JSON_URL = "https://updates.jenkins.io/current/update-center.actual.json";
-    private int updateFlag = 0;
-    private String responseString;
-    private String updateCenterFilePath = "";
+    private transient final static Logger LOGGER = Logger.getLogger(UpdateCenterService.class.getName());
+    private transient static final String UPDATE_CENTER_URL = "https://updates.jenkins.io/current/update-center.actual.json";
+    private transient int updateFlag;
+    private transient String responseString;
+    private transient String updateCenterPath = "";
 
-
-    public JSONObject downloadUpdateCenterJSON() throws Exception {
+    public JSONObject downloadUpdateCenterJSON() throws IOException {
         /*
         * Check if updateFlag has been set if not then it is the first time the application
         * is being run so we need to download the update-center
@@ -58,9 +58,9 @@ public class UpdateCenterService {
             // Mark the file for deletion once the JVM shuts down
             updateCenterFile.deleteOnExit();
             return util.convertPayloadToJSON(responseString);
-    }
+   }      
 
-    private static String readFileAsString(String fileName) throws Exception {
+    private static String readFileAsString(final String fileName) throws IOException {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.UTF_8);
         return data;
