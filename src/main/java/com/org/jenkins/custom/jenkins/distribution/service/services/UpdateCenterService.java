@@ -32,27 +32,28 @@ public class UpdateCenterService {
         * is being run so we need to download the update-center
         */
         LOGGER.info("Update flag is " + updateFlag);
-        LOGGER.info("Update Center Path " + updateCenterFilePath);
+        LOGGER.info("Update Center Path " + updateCenterPath);
         if(updateFlag == 0) {
-            downloadJSON(UPDATE_CENTER_JSON_URL);
+            downloadJSON(UPDATE_CENTER_URL);
             updateFlag = 1;
         } else {
-            responseString = readFileAsString(updateCenterFilePath);
+            responseString = readFileAsString(updateCenterPath);
         }
         LOGGER.info("Returning Response" + responseString);
         return util.convertPayloadToJSON(responseString);
     }
 
-   public JSONObject downloadJSON (String updateCenterURL) throws Exception {
-            File updateCenterFile = File.createTempFile("update-center", ".json");
-            updateCenterFilePath = updateCenterFile.getPath();
+   public JSONObject downloadJSON (final String updateCenterURL) throws IOException {
+            final File updateCenterFile = File.createTempFile("update-center", ".json");
+            updateCenterPath = updateCenterFile.getPath();
             LOGGER.info("Creating a new file" + updateCenterFile.getPath());
-            HttpGet get = new HttpGet(updateCenterURL);
             LOGGER.info("Executing Request at " + updateCenterURL);
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse response = httpClient.execute(get);
-            responseString = EntityUtils.toString(response.getEntity());
-            byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
+            try (CloseableHttpClient httpClient = HttpClients.createDefault();
+               CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL)))
+            {
+               responseString = EntityUtils.toString(response.getEntity());
+            }
+            final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
             Files.write(updateCenterFile.toPath(), buf);
             LOGGER.info("Returning Response");
             // Mark the file for deletion once the JVM shuts down
