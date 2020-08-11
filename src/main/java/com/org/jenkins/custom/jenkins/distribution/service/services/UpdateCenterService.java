@@ -33,29 +33,33 @@ public class UpdateCenterService {
         */
         LOGGER.info("Update flag is " + updateFlag);
         LOGGER.info("Update Center Path " + updateCenterPath);
-
         if(updateFlag == 0) {
-            final File updateCenterFile = File.createTempFile("update-center", ".json");
-            updateCenterPath = updateCenterFile.getPath();
-            LOGGER.info("Creating a new file" + updateCenterFile.getPath());
-            LOGGER.info("Executing Request at " + UPDATE_CENTER_URL);
-            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                 CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL)))
-            {
-                responseString = EntityUtils.toString(response.getEntity());
-            }
-            final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
-           
-            Files.write(updateCenterFile.toPath(), buf);
+            downloadJSON(UPDATE_CENTER_URL);
             updateFlag = 1;
-
-
         } else {
             responseString = readFileAsString(updateCenterPath);
         }
-        LOGGER.info("Returning Response");
+        LOGGER.info("Returning Response" + responseString);
         return util.convertPayloadToJSON(responseString);
     }
+
+   public JSONObject downloadJSON (final String updateCenterURL) throws IOException {
+            final File updateCenterFile = File.createTempFile("update-center", ".json");
+            updateCenterPath = updateCenterFile.getPath();
+            LOGGER.info("Creating a new file" + updateCenterFile.getPath());
+            LOGGER.info("Executing Request at " + updateCenterURL);
+            try (CloseableHttpClient httpClient = HttpClients.createDefault();
+               CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL)))
+            {
+               responseString = EntityUtils.toString(response.getEntity());
+            }
+            final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
+            Files.write(updateCenterFile.toPath(), buf);
+            LOGGER.info("Returning Response");
+            // Mark the file for deletion once the JVM shuts down
+            updateCenterFile.deleteOnExit();
+            return util.convertPayloadToJSON(responseString);
+   }      
 
     private static String readFileAsString(final String fileName) throws IOException {
         String data;
