@@ -10,6 +10,8 @@ COPY pom.xml /build/
 # Copies the src directory into the build directory in the image.
 COPY src /build/src/
 
+COPY config /build/config/
+
 # Set Workdir
 WORKDIR /build/
 
