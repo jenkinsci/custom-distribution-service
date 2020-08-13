@@ -36,7 +36,7 @@ public class PluginControllerTest extends SpringMVCSetup {
         String uri = "/api/plugin/getPluginList";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         int status = mvcResult.getResponse().getStatus();
-        assertThat(new JSONObject(dummyUpdateBody).toString(), CoreMatchers.containsString(mvcResult.getResponse().getContentAsString()));
+        assertThat(mvcResult.getResponse().getContentAsString(), CoreMatchers.containsString(new JSONObject(dummyUpdateBody).toString()));
         assertEquals(200, status);
     }
 
