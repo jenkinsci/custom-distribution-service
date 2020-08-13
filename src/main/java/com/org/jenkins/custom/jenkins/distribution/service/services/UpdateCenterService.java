@@ -39,7 +39,7 @@ public class UpdateCenterService {
         } else {
             responseString = readFileAsString(updateCenterPath);
         }
-        LOGGER.info("Returning Response" + responseString);
+        LOGGER.info("Returning Response Successfully");
         return util.convertPayloadToJSON(responseString);
     }
 
@@ -55,7 +55,7 @@ public class UpdateCenterService {
             }
             final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
             Files.write(updateCenterFile.toPath(), buf);
-            LOGGER.info("Returning Response");
+            LOGGER.info("Returning Response from API");
             // Mark the file for deletion once the JVM shuts down
             updateCenterFile.deleteOnExit();
             return util.convertPayloadToJSON(responseString);
