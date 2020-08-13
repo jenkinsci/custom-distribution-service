@@ -17,7 +17,7 @@ to use out of the box.
 ## QuickStart
 
 You can spin up the entire web application using a docker compose file command: 
-The front-end runs on `localhost:3001` and the backend  runs on `localhost:5000`.
+The front-end runs on `localhost:3001` and the backend  runs on `localhost:8080`.
 
 Build the containers: 
 ```

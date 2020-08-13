@@ -11,7 +11,7 @@ COPY pom.xml /build/
 COPY src /build/src/
 
 # Copies the config directory into the build directory in the image.
-COPY config /build/config
+COPY config /build/config/
 
 # Set Workdir
 WORKDIR /build/

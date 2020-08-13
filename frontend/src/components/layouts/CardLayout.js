@@ -158,9 +158,9 @@ class CardLayout extends React.Component {
                             q: query,
                             sort
                         });
-                        console.log("Fetching values with key" + key)
+                        console.log("Fetching values with key", key)
                         const url = `https://plugins.jenkins.io/api/plugins?${params}`
-                        console.log("URL is " + url)
+                        console.log("URL is ", url)
                         const response = await fetch(url);
                         const body = await response.json();
                         const mainBody = body["plugins"]
