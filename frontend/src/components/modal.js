@@ -42,6 +42,7 @@ class ModalExample extends React.Component {
         // Add war object
         packagerInfo["war"] = {jenkinsVersion: this.state.warVersion}
         // Make the casc section permanently false since no support for it
+        // https://github.com/jenkinsci/custom-distribution-service/issues/117 (Support Ticket)
         packagerInfo["casc"] = false
         // Add plugin object
         packagerInfo["plugins"] = JSON.parse(localStorage.getItem("pluginsArray"))
