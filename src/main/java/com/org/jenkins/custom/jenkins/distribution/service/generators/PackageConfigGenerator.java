@@ -13,7 +13,7 @@ public class PackageConfigGenerator {
 
     private final static UpdateCenterService UPDATE_SERVICE = new UpdateCenterService();
 
-    public static final String generatePackageConfig(final JSONObject formData)
+    public static String generatePackageConfig(final JSONObject formData)
         throws IOException {
 
         //Get the bundle object
