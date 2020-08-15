@@ -8,14 +8,14 @@ casc:
   source:
     dir: "casc.yml"
 plugins:
-  - groupId: "org.jenkins-ci.plugins"
-    artifactId: "dotnet-as-script"
-    source:
-      version: "1.0.2"
-  - groupId: "org.jenkins-ci.plugins"
-    artifactId: "ApicaLoadtest"
-    source:
-      version: "1.10"
+- groupId: "org.jenkins-ci.plugins"
+  artifactId: "dotnet-as-script"
+  source:
+    version: "1.0.2"
+- groupId: "org.jenkins-ci.plugins"
+  artifactId: "ApicaLoadtest"
+  source:
+    version: "1.10"
 war:
   groupId: "org.jenkins-ci.main"
   artifactId: "jenkins-war"
