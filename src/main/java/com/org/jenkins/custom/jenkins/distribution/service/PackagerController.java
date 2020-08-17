@@ -3,6 +3,7 @@ package com.org.jenkins.custom.jenkins.distribution.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.io.ByteArrayInputStream;
@@ -22,7 +23,6 @@ import static com.org.jenkins.custom.jenkins.distribution.service.generators.Pac
 @RestController
 @CrossOrigin
 @RequestMapping("/package")
-
 public class PackagerController {
 
     private static Util util = new Util();
@@ -42,15 +42,18 @@ public class PackagerController {
      * @return a ResponseEntity instance with a body containing the package configuration as a YAML string.
      */
     @PostMapping(path = "/getPackageConfiguration")
-    public ResponseEntity<?> getPackageConfig(@RequestBody String postPayload) {
+    public ResponseEntity<?> getPackageConfig(@RequestBody final String postPayload) {
         LOGGER.info("Request Received for packaging configuration with params" + postPayload);
+        String yamlResponse = "";
+        HttpStatus httpStatus;
         try {
-            String yamlResponse = generatePackageConfig(new JSONObject(postPayload));
-            return new ResponseEntity<>(yamlResponse, HttpStatus.OK);
-        } catch (Exception e) {
+            yamlResponse = generatePackageConfig(new JSONObject(postPayload));
+            httpStatus = HttpStatus.OK;
+        } catch (IOException e) {
             LOGGER.severe(e.toString());
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            httpStatus = HttpStatus.NOT_FOUND;
         }
+        return new ResponseEntity<>(yamlResponse, httpStatus);
     }
 
     /**
@@ -61,11 +64,11 @@ public class PackagerController {
      * @return a ResponseEntity instance with a body containing the generated jenkins.war package.
      */
     @PostMapping (path = "/downloadWarPackage")
-    public ResponseEntity<?> downloadWAR(@RequestBody String postPayload) {
+    public ResponseEntity<?> downloadWAR(@RequestBody final String postPayload) {
         LOGGER.info("Request Received for downloading war file with configuration" + postPayload);
         try {
             return new PackagerDownloadService().downloadWAR(getWarVersion(), postPayload);
-        } catch (Exception e) {
+        } catch (IOException | InterruptedException e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -78,24 +81,21 @@ public class PackagerController {
      * @return The content of the browser's text editor in an HTTP response (download from the server).
      */
     @PostMapping (path = "/downloadPackageConfiguration")
-    public ResponseEntity<?> downloadPackageConfig(@RequestBody String postPayload) {
-        try {
+    public ResponseEntity<?> downloadPackageConfig(@RequestBody final String postPayload) {
             LOGGER.info(postPayload);
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(
-                StandardCharsets.UTF_8)));
-            String headerValue = "attachment; filename=packager-config.yml";
+            final InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(StandardCharsets.UTF_8)));
+            final String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
             return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes(StandardCharsets.UTF_8).length, resource);
-        } catch (Exception e) {
-            LOGGER.severe(e.toString());
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
     }
 
-    private String getWarVersion() throws Exception {
-        Yaml yaml = new Yaml();
-        Map<String , Map<String,String>> yamlMaps = (Map<String, Map<String,String>>) yaml.load(util.readStringFromFile("packager-config.yml"));
-        JSONObject json = new JSONObject(new ObjectMapper().writeValueAsString(yamlMaps.get("war")));
+    private String getWarVersion() throws IOException {
+        final Yaml yaml = new Yaml();
+        final JSONObject json;
+
+        final Map<String, Map<String, String>> yamlMaps = (Map<String, Map<String, String>>) yaml.load(util.readStringFromFile("packager-config.yml"));
+        json = new JSONObject(new ObjectMapper().writeValueAsString(yamlMaps.get("war")));
+
         return json.getJSONObject("source").get("version").toString();
     }
 }
