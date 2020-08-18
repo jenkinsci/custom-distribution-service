@@ -7,7 +7,7 @@ COPY config/ /build/config/
 WORKDIR /build/
 
 RUN mvn clean package spring-boot:repackage
-RUN mv target/custom-distribution-service-0.0.1.jar custom-distribution-service.jar
+RUN mv target/custom-distribution-service-*.jar custom-distribution-service.jar
 
 FROM node:14.7.0-alpine AS NODE_BUILD
 
