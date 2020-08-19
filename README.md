@@ -62,6 +62,69 @@ The default configuration is:
 
 `https://api.github.com/repos/sladyn98/custom-distribution-service-community-configurations/contents/configurations`
 
+
+## How to change ports and run without Docker
+
+In order to change the ports on which spring-boot runs you need to execute the following command. For example if you need to run the spring boot server on port 8081 these are the commands you would want to run.
+
+* For Windows
+```
+SET SERVER_PORT=8081
+java -jar springBootApp.jar
+```
+
+* For UNIX
+```
+SERVER_PORT=8081 java -jar springBootApp.jar
+```
+
+Once you have started the spring boot server the next thing is to configure the front-end environment file so that the react server knows where to find the backend server.
+
+* The file that needs to be changed is the `.env` inside the frontend folder.
+
+* Inside this file this line needs  to be changed `REACT_APP_API_URL=INSERT_NEW_PORT_HERE`
+for eg: If the backend is running on port 8081
+```
+REACT_APP_API_URL=http://localhost:8081
+```
+
+## How to change ports and run with Docker
+
+In order to change the docker port the following file need to changed
+
+* Inside the docker-compose.yml the `line 14` needs to be changed to the port you want to run it at.
+
+Eg: The port on the left indicates the port that needs to be exposed on the host machine, so it needs to be changed according to our requirement. So in order to run on port 8081 we need to make the following change.
+```
+ ports:
+      - "8081:8080"
+```
+
+Once you have started the spring boot server the next thing is to configure the front-end environment file so that the react server knows where to find the backend server.
+
+* The file that needs to be changed is the `.env.docker` inside the frontend folder.
+
+* Inside this file this line needs  to be changed `REACT_APP_API_URL=INSERT_NEW_PORT_HERE`
+for eg: If the backend is running on port 8081
+```
+REACT_APP_API_URL=http://localhost:8081
+```
+
+## How to change Community-Configurations URL
+
+### For Docker Environment
+
+* The file that needs to be changed is the `.env.docker` inside the frontend folder.
+
+* Inside this file this line needs to be changed `REACT_APP_GITHUB_COMMUNITY_URL=ENTER_URL_HERE`
+
+### For Non-Docker Environment
+
+* The file that needs to be changed is the `.env` inside the frontend folder.
+
+* Inside this file this line needs to be changed `REACT_APP_GITHUB_COMMUNITY_URL=ENTER_URL_HERE`
+
+
 ## Useful Links
 
 a) [Project page](https://www.jenkins.io/projects/gsoc/2020/projects/custom-jenkins-distribution-build-service/)
