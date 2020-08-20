@@ -1,18 +1,39 @@
-
-# ignore .git and .cache folders and other irreleveant context
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
 .git
 .cache
 Jenkinsfile
 LICENSE
 
-# ignore all *.class files in all folders, including build root
-**/*.class
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-# ignore frontend
-/frontend**
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+# ignore all *.class files in all folders, including build root
+*.class
 
 # ignore node_modules
-/node_modules**
-
-# ignore package-lock.json
-/package-lock.json
+/node_modules/

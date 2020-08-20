@@ -41,7 +41,9 @@ class ModalExample extends React.Component {
         packagerInfo["bundle"] = bundle
         // Add war object
         packagerInfo["war"] = {jenkinsVersion: this.state.warVersion}
-        packagerInfo["casc"] = true
+        // Make the casc section permanently false since no support for it
+        // https://github.com/jenkinsci/custom-distribution-service/issues/117 (Support Ticket)
+        packagerInfo["casc"] = false
         // Add plugin object
         packagerInfo["plugins"] = JSON.parse(localStorage.getItem("pluginsArray"))
         // Add buildSettings object
@@ -139,6 +141,8 @@ class ModalExample extends React.Component {
                         onChange={ (e) => this.handleChange(e) }
                      />
                     </FormGroup>  
+                    {/* Disable this section for now since we do 
+                    not have support for JCaSC 
                     <FormGroup check>
                         <Label check>
                         <Input 
@@ -147,7 +151,7 @@ class ModalExample extends React.Component {
                          onChange={ (e) => this.handleChange(e) }/>{' '}
                         Include Configuration as Code Section
                         </Label>
-                    </FormGroup>   
+                    </FormGroup>    */}
                     <FormGroup>
                     <legend>Build Settings</legend>
                     <Label for = "dockertag">Docker Build</Label>
