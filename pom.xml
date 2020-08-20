@@ -99,6 +99,12 @@
 			<artifactId>docker-compose-rule-junit4</artifactId>
 			<version>0.29.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>1.14.3</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
   
 	<licenses>

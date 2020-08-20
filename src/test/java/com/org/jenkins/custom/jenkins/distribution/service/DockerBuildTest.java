@@ -1,18 +1,17 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
-import com.palantir.docker.compose.DockerComposeRule;
+import java.io.File;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.containers.DockerComposeContainer;
 
 public class DockerBuildTest {
 
     @ClassRule
-    public static DockerComposeRule docker = DockerComposeRule.builder()
-        .file("src/test/resources/docker-compose.yml")
-        .build();
+    public static DockerComposeContainer environment = new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"));
 
     @Test
-    public void testDockerBuild() throws Exception {
-        docker.dockerCompose().build();
+    public void testContainerStart() {
+        environment.start();
     }
 }
