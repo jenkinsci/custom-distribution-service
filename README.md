@@ -75,7 +75,7 @@ java -jar springBootApp.jar
 
 * For UNIX
 ```
-SERVER_PORT=8081 java -jar springBootApp.jar
+SERVER_PORT=8081 java -jar target/custom-distribution-service-0.0.1.jar
 ```
 
 Once you have started the spring boot server the next thing is to configure the front-end environment file so that the react server knows where to find the backend server.
