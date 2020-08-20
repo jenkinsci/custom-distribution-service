@@ -2,6 +2,7 @@ package com.org.jenkins.custom.jenkins.distribution.service;
 
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.nio.charset.Charset;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +32,7 @@ public class PackageControllerTest extends SpringMVCSetup{
             .contentType(APPLICATION_JSON_UTF8)
             .content(util.readStringFromFile("simple-config.json"))).andReturn();
         Assert.assertEquals(result.getResponse().getContentAsString(), util.readStringFromFile("simple-config.yaml"));
+        Assert.assertEquals(result.getResponse().getStatus(), 200);
     }
 
     @Test
@@ -40,6 +42,7 @@ public class PackageControllerTest extends SpringMVCSetup{
             .contentType(APPLICATION_JSON_UTF8)
             .content(util.readStringFromFile("simple-config.yaml"))).andReturn();
         Assert.assertEquals(result.getResponse().getContentAsString(), util.readStringFromFile("simple-config.yaml"));
+        Assert.assertEquals(result.getResponse().getStatus(), 200);
     }
 
     @Test

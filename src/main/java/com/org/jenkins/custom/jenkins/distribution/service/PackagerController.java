@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.yaml.snakeyaml.Yaml;
 
-import static com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator.generatePackageConfig;
+import static com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/package")
