@@ -35,34 +35,27 @@ class editor extends React.Component {
     }
 
    componentDidMount() {
+    this.setTitle()
+    this.setDescription()
+  }
 
-    if (localStorage.getItem("packageConfigYAML")) {
-      this.setState({code: localStorage.getItem("packageConfigYAML")})
-    } else {
-      this.setState({code: "Kindly generate or paste your configuration here"})
+   setTitle() {
+    try {
+      this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
+    } catch (e) {
+      this.setState({title: "No title Specified"})
     }
-
-    if (!localStorage.getItem("packageConfigJSON")["bundle"] === undefined ) {
-      if (localStorage.getItem("packageConfigJSON")["bundle"]["title"] === undefined ) {
-        this.setState({title: "No title Specified"})
-      }
-      else {
-        this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
-     }
-   }
-
-    if (!localStorage.getItem("packageConfigJSON")["bundle"] === undefined ) {
-      if (localStorage.getItem("packageConfigJSON")["bundle"]["description"] === undefined ) {
-        this.setState({description: "No description specified"})
-      }
-      else {
-        this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
-      }
-  }
-   
   }
 
-   downloadWarfile() {
+  setDescription() {
+    try {
+      this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+    } catch (e) {
+      this.setState({description: "No description specified"})
+    }
+  }
+
+  downloadWarfile() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'http://localhost:8080/package/downloadWarPackage', true);
     xhr.responseType = "blob";
