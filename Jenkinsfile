@@ -1,5 +1,12 @@
+if (JENKINS_URL.contains('infra.ci.jenkins.io')) {
+  buildDockerAndPublishImage('custom-distribution-service', [dockerfile: 'Dockerfile.infra'])
+  return;
+}
+
 pipeline {
-    agent any 
+    agent {
+        label 'linux'
+    }
     stages {
         stage('Checkout') {
             steps{
@@ -14,7 +21,6 @@ pipeline {
                     "PATH+MVN=${tool 'mvn'}/bin",
                     'PATH+JDK=$JAVA_HOME/bin',
                 ]) {
-                    
                     timeout(60) {
                         script {
                             List<String> mvnOptions = ['-Dmaven.test.failure.ignore','verify']

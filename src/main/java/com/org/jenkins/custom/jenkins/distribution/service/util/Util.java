@@ -1,7 +1,9 @@
 package com.org.jenkins.custom.jenkins.distribution.service.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.logging.Logger;
 import org.codehaus.plexus.util.FileUtils;
@@ -12,13 +14,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+@SuppressWarnings("PMD.ShortClassName")
 public class Util {
 
     private final static Logger LOGGER = Logger.getLogger(Util.class.getName());
 
-    public File getFileFromResources(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource(fileName);
+    public File getFileFromResources(final String fileName) {
+        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        final URL resource = classLoader.getResource(fileName);
         if (resource == null) {
             throw new IllegalArgumentException("file is not found!");
         } else {
@@ -27,11 +30,11 @@ public class Util {
 
     }
 
-    public String readStringFromFile(String filename) throws Exception {
-        return new String(Files.readAllBytes(getFileFromResources(filename).toPath()));
+    public String readStringFromFile(final String filename) throws IOException {
+        return new String(Files.readAllBytes(getFileFromResources(filename).toPath()), StandardCharsets.UTF_8);
     }
 
-    public void cleanupTempDirectory(File file) {
+    public void cleanupTempDirectory(final File file) {
         // Cleanup the temporary directory
         try {
             final File tmpDir = file;
@@ -39,16 +42,16 @@ public class Util {
                 LOGGER.info("deleting temporary directory: " + file.getAbsolutePath());
                 FileUtils.deleteDirectory(tmpDir);
             }
-        }catch (Exception e) {
-            e.printStackTrace();
+        }catch (IOException e) {
+            LOGGER.severe(e.getMessage());
         }
     }
 
-    public JSONObject convertPayloadToJSON(String payload) throws Exception{
+    public JSONObject convertPayloadToJSON(final String payload) throws IOException{
         return new JSONObject(payload);
     }
 
-    public static ResponseEntity<Resource> returnResource(HttpHeaders headers, int fileLength, InputStreamResource resource){
+    public static ResponseEntity<Resource> returnResource(final HttpHeaders headers,final  int fileLength, final InputStreamResource resource){
         return ResponseEntity.ok()
             .headers(headers)
             .contentLength(fileLength)
@@ -56,8 +59,8 @@ public class Util {
             .body(resource);
     }
 
-    public static HttpHeaders returnHeaders(String headerValue) {
-        HttpHeaders headers = new HttpHeaders();
+    public static HttpHeaders returnHeaders(final String headerValue) {
+        final HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
