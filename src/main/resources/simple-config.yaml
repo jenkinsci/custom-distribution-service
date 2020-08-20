@@ -3,10 +3,6 @@ systemProperties:
   jenkins.install.runSetupWizard: "true"
   jenkins.model.Jenkins.slaveAgentPort: "5000"
   jenkins.model.Jenkins.slaveAgentPortEnforce: "true"
-casc:
-  id: "casc"
-  source:
-    dir: "casc.yml"
 plugins:
 - groupId: "org.jenkins-ci.plugins"
   artifactId: "dotnet-as-script"

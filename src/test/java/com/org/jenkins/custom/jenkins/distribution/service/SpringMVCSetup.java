@@ -1,5 +1,8 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
+import com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator;
+import com.org.jenkins.custom.jenkins.distribution.service.generators.WarGenerator;
+import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +29,16 @@ public abstract class SpringMVCSetup {
     @MockBean
     public UpdateCenterService updateService;
 
+    @MockBean
+    public PackageConfigGenerator packageConfigGenerator;
+
+    @MockBean
+    public WarGenerator warGenerator;
+
+    @MockBean
+    public PackagerDownloadService packagerDownloadService;
+
     protected void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-
 }

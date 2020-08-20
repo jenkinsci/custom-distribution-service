@@ -7,13 +7,15 @@ import java.io.IOException;
 import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@Service
 public class PackageConfigGenerator {
 
     private final static UpdateCenterService UPDATE_SERVICE = new UpdateCenterService();
 
-    public final static String generatePackageConfig(final JSONObject formData)
+    public String generatePackageConfig(final JSONObject formData)
         throws IOException {
 
         //Get the bundle object

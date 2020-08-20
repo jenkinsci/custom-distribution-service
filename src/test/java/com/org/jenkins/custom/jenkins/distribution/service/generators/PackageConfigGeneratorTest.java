@@ -14,7 +14,7 @@ public class PackageConfigGeneratorTest {
     public void testSimplePackageConfigGeneration() {
         try {
             String sampleConfig = util.readStringFromFile("packagerConfig/simpleConfig.json");
-            String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
+            String generatedYAML = new PackageConfigGenerator().generatePackageConfig(new JSONObject(sampleConfig));
             String expectedYAML = util.readStringFromFile("packagerConfig/simpleConfig.yml");
             Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
@@ -27,7 +27,7 @@ public class PackageConfigGeneratorTest {
     public void testPackagerConfigWithoutDockerTag() {
         try {
         String sampleConfig = util.readStringFromFile("packagerConfig/emptyDockerTag.json");
-        String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
+        String generatedYAML = new PackageConfigGenerator().generatePackageConfig(new JSONObject(sampleConfig));
         String expectedYAML = util.readStringFromFile("packagerConfig/emptyDockerTag.yaml");
         Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class PackageConfigGeneratorTest {
     public void testPackagerConfigWithoutCasCTag() {
         try {
             String sampleConfig = util.readStringFromFile("packagerConfig/emptyCascSection.json");
-            String generatedYAML = PackageConfigGenerator.generatePackageConfig(new JSONObject(sampleConfig));
+            String generatedYAML = new PackageConfigGenerator().generatePackageConfig(new JSONObject(sampleConfig));
             String expectedYAML = util.readStringFromFile("packagerConfig/emptyCascSection.yaml");
             Assert.assertEquals(generatedYAML, expectedYAML);
         } catch (Exception e) {
