@@ -21,15 +21,15 @@ public class PackagerDownloadService {
     private static Util util = new Util();
 
     /**
-     * @param versionName This is the version name of the war file eg: jenkins-all-latest
      * @param configuration This is the configuration with which the war is generated.
      * @return Response Entity with body as the war file in the form of a resource
      * @throws Exception
      */
-    public ResponseEntity<Resource> downloadWAR(final String versionName, final String configuration) throws IOException, InterruptedException {
+    public ResponseEntity<Resource> downloadWAR(final String configuration) throws IOException, InterruptedException {
         File warFile = null;
         try {
-            warFile = WarGenerator.generateWAR(versionName, configuration);
+            LOGGER.info("We are about to enter the war generator function");
+            warFile = WarGenerator.generateWAR(configuration);
             final InputStreamResource resource = new InputStreamResource(Files.newInputStream(Paths.get(warFile.getAbsolutePath())));
             final String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");
