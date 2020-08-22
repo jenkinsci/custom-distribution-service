@@ -25,6 +25,21 @@ function saveData(blob, fileName) {
   window.URL.revokeObjectURL(url);
 }
 
+function getAPIURL () {
+  // Use the default API_URL
+  console.log("We are calling this function")
+  let API_URL = "http://localhost:8080"
+
+  // If environment variable has been set it will override the default
+  if (process.env.REACT_APP_API_URL) {
+      console.log("Environment variable has been set")
+      API_URL = process.env.REACT_APP_API_URL
+  }
+  console.log(process.env.REACT_APP_API_URL)
+  console.log(API_URL)
+  return API_URL
+}
+
 class editor extends React.Component {
 
    state = { 
@@ -34,7 +49,6 @@ class editor extends React.Component {
      isLoading: true
     }
     
-
    componentDidMount() {
     this.setState({code: localStorage.getItem("packageConfigYAML")})
     this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
@@ -43,7 +57,7 @@ class editor extends React.Component {
 
    downloadWarfile() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", this.getAPIURL + '/package/downloadWarPackage', true);
+    xhr.open("POST", getAPIURL() + '/package/downloadWarPackage', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
       if(xhr.status == 404) {
@@ -57,7 +71,7 @@ class editor extends React.Component {
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", this.getAPIURL + '/package/downloadPackageConfiguration', true);
+    xhr.open("POST", getAPIURL() + '/package/downloadPackageConfiguration', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'casc.yml');
@@ -65,17 +79,7 @@ class editor extends React.Component {
     xhr.send(localStorage.getItem("packageConfigYAML"));
    }
 
-   getAPIURL () {
-    // Use the default API_URL
-    let API_URL = "http://localhost:8080"
-
-    // If environment variable has been set it will override the default
-    if (process.env.REACT_APP_API_URL) {
-        console.log("Environment variable has been set")
-        API_URL = process.env.REACT_APP_API_URL
-    }
-    return API_URL
-   }
+   
 
    render()  {
     const packageJSON = JSON.parse(localStorage.getItem("packageConfigJSON"))
