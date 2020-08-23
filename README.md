@@ -67,15 +67,9 @@ The default configuration is:
 
 In order to change the ports on which spring-boot runs you need to execute the following command. For example if you need to run the spring boot server on port 8081 these are the commands you would want to run.
 
-* For Windows
-```
-SET SERVER_PORT=8081
-java -jar springBootApp.jar
-```
-
 * For UNIX
 ```
-SERVER_PORT=8081 java -jar target/custom-distribution-service-0.0.1.jar
+SERVER_PORT=8081 mvn spring-boot:run
 ```
 
 Once you have started the spring boot server the next thing is to configure the front-end environment file so that the react server knows where to find the backend server.
@@ -92,7 +86,14 @@ REACT_APP_API_URL=http://localhost:8081
 
 In order to change the docker port the following file need to changed
 
-* Inside the docker-compose.yml the `line 14` needs to be changed to the port you want to run it at.
+* Inside the docker-compose.yml the line: 
+
+```
+ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+```
+
+needs to be changed to the port you want to run it at.
 
 Eg: The port on the left indicates the port that needs to be exposed on the host machine, so it needs to be changed according to our requirement. So in order to run on port 8081 we need to make the following change.
 ```
