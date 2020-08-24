@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class PackageControllerTest extends SpringMVCSetup{
+public class PackagerControllerTest extends SpringMVCSetup{
 
     @Override
     @Before
@@ -37,7 +37,7 @@ public class PackageControllerTest extends SpringMVCSetup{
         .forName("utf8"));
 
     @Test
-    public void generate_packager_configYAML() throws Exception {
+    public void getPackageConfigTest() throws Exception {
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -51,7 +51,7 @@ public class PackageControllerTest extends SpringMVCSetup{
     }
 
     @Test
-    public void return_404_for_packager_config() throws Exception {
+    public void getPackageConfigReturns404WhenIOException() throws Exception {
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -64,7 +64,7 @@ public class PackageControllerTest extends SpringMVCSetup{
     }
 
     @Test
-    public void download_packager_configYAML() throws Exception {
+    public void downloadPackageConfigTest() throws Exception {
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         String uri = "/package/downloadPackageConfiguration";
@@ -77,7 +77,7 @@ public class PackageControllerTest extends SpringMVCSetup{
 
 
     @Test
-    public void test_war_generator_throws_400() throws Exception {
+    public void downloadWARReturns404WhenIOException() throws Exception {
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -91,7 +91,7 @@ public class PackageControllerTest extends SpringMVCSetup{
     }
 
     @Test
-    public void test_war_generator_return_war_file() throws Exception {
+    public void downloadWarTest() throws Exception {
 
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
