@@ -35,12 +35,27 @@ class editor extends React.Component {
     }
 
    componentDidMount() {
-    this.setState({code: localStorage.getItem("packageConfigYAML")})
-    this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
-    this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+    this.setTitle()
+    this.setDescription()
   }
 
-   downloadWarfile() {
+   setTitle() {
+    try {
+      this.setState({title: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["title"]})
+    } catch (e) {
+      this.setState({title: "No title Specified"})
+    }
+  }
+
+  setDescription() {
+    try {
+      this.setState({description: JSON.parse(localStorage.getItem("packageConfigJSON"))["bundle"]["description"]})
+    } catch (e) {
+      this.setState({description: "No description specified"})
+    }
+  }
+
+  downloadWarfile() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'http://localhost:8080/package/downloadWarPackage', true);
     xhr.responseType = "blob";
