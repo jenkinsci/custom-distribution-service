@@ -26,6 +26,11 @@ public class UpdateCenterService {
     private transient String responseString;
     private transient String updateCenterPath = "";
 
+    /**
+     *
+     * @return returns the UpdateCenter contents as a JSONObject
+     * @throws IOException
+     */
     public JSONObject downloadUpdateCenterJSON() throws IOException {
         /*
         * Check if updateFlag has been set if not then it is the first time the application
@@ -43,6 +48,12 @@ public class UpdateCenterService {
         return util.convertPayloadToJSON(responseString);
     }
 
+    /**
+     *
+     * @param updateCenterURL it is the updateCenter URL to which the GET call is made to obtain the contents.
+     * @return JSONObject returns the updateCenter JSON in the form of a JSON Object
+     * @throws IOException
+     */
    public JSONObject downloadJSON (final String updateCenterURL) throws IOException {
             final File updateCenterFile = File.createTempFile("update-center", ".json");
             updateCenterPath = updateCenterFile.getPath();
@@ -59,8 +70,14 @@ public class UpdateCenterService {
             // Mark the file for deletion once the JVM shuts down
             updateCenterFile.deleteOnExit();
             return util.convertPayloadToJSON(responseString);
-   }      
+   }
 
+    /**
+     *
+     * @param fileName takes filename for the file to be read
+     * @return contents of the file in the form of a string
+     * @throws IOException
+     */
     private static String readFileAsString(final String fileName) throws IOException {
         String data;
         data = new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.UTF_8);

@@ -10,6 +10,10 @@ public class IndexController implements ErrorController {
 
     private static final String PATH = "/error";
 
+    /**
+     *
+     * @return error message in the form of a string
+     */
     public String error() {
         return "This is the backend of the custom distribution service application. If you see this message the service is up and running";
     }

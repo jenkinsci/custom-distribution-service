@@ -13,6 +13,12 @@ public class PackageConfigGenerator {
 
     private final static UpdateCenterService UPDATE_SERVICE = new UpdateCenterService();
 
+    /**
+     *
+     * @param formData takes in the formData from the front-end in the form of a JSONObject to generate the package
+     * @return generated packageConfiguration in the form of a string.
+     * @throws IOException
+     */
     public static final String generatePackageConfig(final JSONObject formData)
         throws IOException {
 
@@ -53,6 +59,11 @@ public class PackageConfigGenerator {
         return new YAMLMapper().writeValueAsString(jsonNodeTree);
     }
 
+    /**
+     *
+     * @param bundle takes in the bundle object from the form-data.
+     * @return the generated bundle in the form of a JSONObject
+     */
     private static JSONObject generateBundle(final JSONObject bundle) {
         final JSONObject bundleInfo = new JSONObject();
         bundleInfo.put("groupId", "io.jenkins.tools.custom-distribution-service.build");
@@ -63,6 +74,11 @@ public class PackageConfigGenerator {
         return bundleInfo;
     }
 
+    /**
+     *
+     * @param buildSettings takes in the buildSettings Object from the form-data.
+     * @return the generated buildSettings in the form of a JSONObject
+     */
     private static JSONObject generateBuildSettings(final JSONObject buildSettings) {
         final JSONObject dockerInfo = new JSONObject();
         dockerInfo.put("base", buildSettings.getString("base"));
@@ -74,6 +90,11 @@ public class PackageConfigGenerator {
         return new JSONObject().put("docker", dockerInfo);
     }
 
+    /**
+     *
+     * @param warSettings takes in the warSettings Object from the form-data
+     * @return the generated WarSettings in the form of a JSONObject
+     */
     private static JSONObject generateWarSettings(final JSONObject warSettings) {
         final JSONObject warInfo = new JSONObject();
         warInfo.put("groupId", "org.jenkins-ci.main");
@@ -82,6 +103,11 @@ public class PackageConfigGenerator {
         return warInfo;
     }
 
+    /**
+     *
+     * @param systemSettings takes in the systemSettings Object from the form-data
+     * @return the generated systemSettings in the form of a JSONObject
+     */
     private static JSONObject generateSystemSettings(final JSONObject systemSettings) {
         final JSONObject sysInfo = new JSONObject();
         sysInfo.put("jenkins.install.runSetupWizard", systemSettings.getString("setupWizard"));
@@ -92,6 +118,12 @@ public class PackageConfigGenerator {
         return sysInfo;
     }
 
+    /**
+     *
+     * @param pluginArray takes in the pluginArray from the form-data
+     * @return the generated pluginList in the form of a JSONArray
+     * @throws IOException
+     */
     private static JSONArray generatePluginList(final JSONArray pluginArray) throws IOException {
 
         final JSONArray pluginInfoArray = new JSONArray();
@@ -113,6 +145,10 @@ public class PackageConfigGenerator {
         return pluginInfoArray;
     }
 
+    /**
+     *
+     * @return the generated JCasC section in the form of a JSONObject
+     */
     private static JSONObject generateJCasC() {
         final JSONObject jcascInfo = new JSONObject();
         jcascInfo.put("id", "casc");

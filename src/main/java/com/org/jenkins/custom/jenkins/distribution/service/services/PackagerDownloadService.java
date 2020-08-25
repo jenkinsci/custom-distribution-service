@@ -41,6 +41,13 @@ public class PackagerDownloadService {
         }
     }
 
+    /**
+     *
+     * @param headers headers for the resource
+     * @param file content for the resource
+     * @param resource body for the resource
+     * @return responseEntity with the generated ResourceObject
+     */
     private ResponseEntity<Resource> returnResource(final HttpHeaders headers, final File file, final InputStreamResource resource){
         return ResponseEntity.ok()
             .headers(headers)
@@ -49,6 +56,12 @@ public class PackagerDownloadService {
             .body(resource);
     }
 
+    /**
+     *
+     * @param headerValue header value to be included in the content-disposition
+     * of the header eg: attachment; filename=jenkins.war
+     * @return HttpHeaders Object with the relevant values
+     */
     private HttpHeaders returnHeaders(final String headerValue) {
         final HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, headerValue);

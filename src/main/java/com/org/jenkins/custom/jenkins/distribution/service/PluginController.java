@@ -29,6 +29,11 @@ public class PluginController {
     * Usage : GET: api/plugin/getPluginList
     * Returns: Plugin List from update center in the form of a JSONObject
     */
+    /**
+     * Returns the plugin List from update center in the form of a JSONObject.
+     * @return a ResponseEntity instance with a body containing the updateCenterJSONObject in the form
+     * of a map. It is a map because the front-end requires it in that format to render the cards.
+     */
     @GetMapping(path = "/getPluginList")
     public ResponseEntity<?> getPlugins() {
         LOGGER.info("Request Received");
