@@ -29,7 +29,7 @@ public class PackagerDownloadService {
     public ResponseEntity<Resource> downloadWAR(final String versionName, final String configuration) throws IOException, InterruptedException {
         File warFile = null;
         try {
-            warFile = WarGenerator.generateWAR(versionName, configuration);
+            warFile = new WarGenerator().generateWAR(versionName, configuration);
             final InputStreamResource resource = new InputStreamResource(Files.newInputStream(Paths.get(warFile.getAbsolutePath())));
             final String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");

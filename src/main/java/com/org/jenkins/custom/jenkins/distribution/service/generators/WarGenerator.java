@@ -16,7 +16,7 @@ public class WarGenerator {
     private static final String TEMP_PREFIX = "CDS";
 
 
-    public static File generateWAR(final String versionName, final String configuration) throws IOException, InterruptedException {
+    public File generateWAR(final String versionName, final String configuration) throws IOException, InterruptedException {
         LOGGER.info("Generating War File");
         final Config cfg;
         final Path tempDirWithPrefix = Files.createTempDirectory(TEMP_PREFIX);
