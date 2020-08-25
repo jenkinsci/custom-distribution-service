@@ -55,6 +55,11 @@ The Basic ruleset contains a collection of good practices which should be follow
         <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]+" />
       </properties>
     </rule>
+    <rule ref="category/java/codestyle.xml/LongVariable">
+        <properties>
+            <property name="minimum" value="48" />
+        </properties>
+   </rule>
 
     <rule ref="category/java/performance.xml">
       <exclude name="BigIntegerInstantiation" />
