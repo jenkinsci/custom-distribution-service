@@ -27,13 +27,13 @@ import org.yaml.snakeyaml.Yaml;
 public class PackagerController {
 
     private static Util util = new Util();
-    private transient final PackageConfigGenerator packagerConfGen;
+    private transient final PackageConfigGenerator packageConfGen;
     private transient final PackagerDownloadService packagerDownServ;
     private final static Logger LOGGER = Logger.getLogger(PackagerController.class.getName());
 
     @Autowired
     public PackagerController(final PackageConfigGenerator packageConfGen, final PackagerDownloadService packagerDownServ) {
-        this.packagerConfGen = packageConfGen;
+        this.packageConfGen = packageConfGen;
         this.packagerDownServ = packagerDownServ;
     }
 
@@ -55,7 +55,7 @@ public class PackagerController {
         String yamlResponse = "";
         HttpStatus httpStatus;
         try {
-            yamlResponse = packagerConfGen.generatePackageConfig(new JSONObject(postPayload));
+            yamlResponse = packageConfGen.generatePackageConfig(new JSONObject(postPayload));
             httpStatus = HttpStatus.OK;
         } catch (IOException e) {
             LOGGER.severe(e.toString());
