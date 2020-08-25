@@ -81,7 +81,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        when(packagerDownloadService.downloadWAR(any(String.class), any(String.class))).thenThrow(IOException.class);
+        when(packagerDownloadService.downloadWAR(any(String.class))).thenThrow(IOException.class);
         String uri = "/package/downloadWarPackage";
         MvcResult result = packageMvc.perform( MockMvcRequestBuilders.post(uri)
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -100,7 +100,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
             "dummy_war.txt").getAbsolutePath())));
         final String headerValue = "attachment; filename=jenkins.war";
 
-        when(packagerDownloadService.downloadWAR(any(String.class), any(String.class))).
+        when(packagerDownloadService.downloadWAR(any(String.class))).
             thenReturn(returnResource(returnHeaders(headerValue), (int) util.getFileFromResources(
                 "dummy_war.txt").length(), resource));
         String uri = "/package/downloadWarPackage";

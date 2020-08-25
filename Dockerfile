@@ -18,7 +18,7 @@ WORKDIR /build/
 # Runs the mvn package command to compile and package the application as an executable JAR
 RUN mvn clean package spring-boot:repackage
 
-FROM openjdk:8-jre-alpine
+FROM maven:3.6.0-jdk-8-alpine
 
 # Create a new working directory in the image called /app
 WORKDIR /app
