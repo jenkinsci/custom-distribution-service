@@ -14,7 +14,7 @@ public class WarGenerator {
     private final static Logger LOGGER = Logger.getLogger(WarGenerator.class.getName());
 
 
-    public static File generateWAR(final String configuration) throws IOException, InterruptedException {
+    public File generateWAR(final String configuration) throws IOException, InterruptedException {
         LOGGER.info("Generating War File");
         final Config cfg;
         final File packagerFile = File.createTempFile("packager-config", ".yml");

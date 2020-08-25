@@ -29,7 +29,7 @@ public class PackagerDownloadService {
         File warFile = null;
         try {
             LOGGER.info("We are about to enter the war generator function");
-            warFile = WarGenerator.generateWAR(configuration);
+            warFile = new WarGenerator().generateWAR(configuration);
             final InputStreamResource resource = new InputStreamResource(Files.newInputStream(Paths.get(warFile.getAbsolutePath())));
             final String headerValue = "attachment; filename=jenkins.war";
             LOGGER.info("Returning War file");

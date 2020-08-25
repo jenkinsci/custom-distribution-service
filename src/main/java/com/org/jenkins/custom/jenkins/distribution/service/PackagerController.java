@@ -1,5 +1,6 @@
 package com.org.jenkins.custom.jenkins.distribution.service;
 
+import com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
 import com.org.jenkins.custom.jenkins.distribution.service.util.Util;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.ByteArrayInputStream;
 import java.util.logging.Logger;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +18,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator.generatePackageConfig;
 @RestController
 @CrossOrigin
 @RequestMapping("/package")
 public class PackagerController {
 
+    private transient final PackageConfigGenerator packageConfGen;
+    private transient final PackagerDownloadService packagerDownServ;
     private final static Logger LOGGER = Logger.getLogger(PackagerController.class.getName());
+
+    @Autowired
+    public PackagerController(final PackageConfigGenerator packageConfGen, final PackagerDownloadService packagerDownServ) {
+        this.packageConfGen = packageConfGen;
+        this.packagerDownServ = packagerDownServ;
+    }
 
     /**
      * Generate and return the package YAML configuration string.
@@ -42,7 +51,7 @@ public class PackagerController {
         String yamlResponse = "";
         HttpStatus httpStatus;
         try {
-            yamlResponse = generatePackageConfig(new JSONObject(postPayload));
+            yamlResponse = packageConfGen.generatePackageConfig(new JSONObject(postPayload));
             httpStatus = HttpStatus.OK;
         } catch (IOException e) {
             LOGGER.severe(e.toString());
@@ -62,7 +71,7 @@ public class PackagerController {
     public ResponseEntity<?> downloadWAR(@RequestBody final String postPayload) {
         LOGGER.info("Request Received for downloading war file with configuration" + postPayload);
         try {
-            return new PackagerDownloadService().downloadWAR(postPayload);
+            return  packagerDownServ.downloadWAR(postPayload);
         } catch (IOException | InterruptedException e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.NOT_FOUND);
