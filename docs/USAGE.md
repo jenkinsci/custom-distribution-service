@@ -46,7 +46,7 @@ a) After completing the above step you will see a modal screen similar to the on
 
 b) The fields in that list are self-explanatory and can be entered according to the requirements.
 
-c) Afer you have entered that information click on the `Generate Package` button at the bottom of the modal.
+c) After you have entered that information click on the `Generate Package` button at the bottom of the modal.
 
 d) This will kick-off the generation of the custom package and once done will take you to the editor on the next screen.
 
@@ -79,6 +79,6 @@ c) You will be redirected to an editor screen similar to `Step 4` above and you 
 ** Note: It could be that these community configurations may have placeholders like {{Jenkins.version}}. Please make sure that you enter the correct version here, so that it can generate the war package correctly.
 
 
-## Generating your own war file
+## Generating your own WAR file
 
 If you do not want to use the package generation feature of the service to generate a packager configuration file. You can paste your own configuration into the editor and generate and download the war file.
