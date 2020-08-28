@@ -1,6 +1,10 @@
 # Jenkins Custom Distribution Service
 
 
+<p align="center">
+    <img width="150px" src="images/cds_gsoc.png">
+</p>
+
 [![Gitter](https://badges.gitter.im/jenkinsci/jenkins-custom-distribution-service.svg)](https://gitter.im/jenkinsci/jenkins-custom-distribution-service?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b4fea9e79e2a485a929ed7aa71b222a1)](https://www.codacy.com/gh/jenkinsci/custom-distribution-service?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jenkinsci/custom-distribution-service&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/github/license/jenkinsci/custom-distribution-service)](https://github.com/jenkinsci/custom-distribution-service/blob/master/LICENSE)
@@ -125,6 +129,11 @@ REACT_APP_API_URL=http://localhost:8081
 
 * Inside this file this line needs to be changed `REACT_APP_GITHUB_COMMUNITY_URL=ENTER_URL_HERE`
 
+## Documentation
+
+You can find more documentation about how to use the service here:
+
+- [User Guide](./docs/USAGE.md)
 
 ## Useful Links
 
