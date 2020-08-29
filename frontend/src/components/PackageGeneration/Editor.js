@@ -37,7 +37,16 @@ class editor extends React.Component {
    componentDidMount() {
     this.setTitle()
     this.setDescription()
+    this.setCode()
   }
+
+   setCode() {
+    try {
+      this.setState({code: localStorage.getItem("packageConfigYAML")})
+    } catch (e) {
+      this.setState({code: "No code Specified"})
+    }
+   }
 
    setTitle() {
     try {
