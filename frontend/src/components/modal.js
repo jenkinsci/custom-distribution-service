@@ -65,7 +65,17 @@ class ModalExample extends React.Component {
     submitConfiguration = async () => {
         console.log("Submitting configuration")
         this.setState({isLoading:true})
-        const apiURL = "/package/getPackageConfiguration";
+
+        // Use the default API_URL
+        let API_URL = "http://localhost:8080"
+
+        // If environment variable has been set it will override the default
+        if (process.env.REACT_APP_API_URL) {
+            console.log("Environment variable has been set")
+            API_URL = process.env.REACT_APP_API_URL
+        }
+        
+        const apiURL = API_URL + "/package/getPackageConfiguration";
         fetch(apiURL, {
         method: 'POST',
         headers: {

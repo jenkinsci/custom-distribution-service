@@ -25,6 +25,21 @@ function saveData(blob, fileName) {
   window.URL.revokeObjectURL(url);
 }
 
+function getAPIURL () {
+  // Use the default API_URL
+  console.log("We are calling this function")
+  let API_URL = "http://localhost:8080"
+
+  // If environment variable has been set it will override the default
+  if (process.env.REACT_APP_API_URL) {
+      console.log("Environment variable has been set")
+      API_URL = process.env.REACT_APP_API_URL
+  }
+  console.log(process.env.REACT_APP_API_URL)
+  console.log(API_URL)
+  return API_URL
+}
+
 class editor extends React.Component {
 
    state = { 
@@ -33,7 +48,7 @@ class editor extends React.Component {
      description: '',
      isLoading: true
     }
-
+    
    componentDidMount() {
     this.setTitle()
     this.setDescription()
@@ -57,7 +72,7 @@ class editor extends React.Component {
 
   downloadWarfile() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'http://localhost:8080/package/downloadWarPackage', true);
+    xhr.open("POST", getAPIURL() + '/package/downloadWarPackage', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
       if(xhr.status == 404) {
@@ -71,13 +86,15 @@ class editor extends React.Component {
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/package/downloadPackageConfiguration', true);
+    xhr.open("POST", getAPIURL() + '/package/downloadPackageConfiguration', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'casc.yml');
     };
     xhr.send(localStorage.getItem("packageConfigYAML"));
    }
+
+   
 
    render()  {
     const packageJSON = JSON.parse(localStorage.getItem("packageConfigJSON"))

@@ -21,7 +21,15 @@ class CardLayout extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('/api/plugin/getPluginList');
+        // Use the default API_URL
+        let API_URL = "http://localhost:8080"
+
+        // If environment variable has been set it will override the default
+        if (process.env.REACT_APP_API_URL) {
+            console.log("Environment variable has been set")
+            API_URL = process.env.REACT_APP_API_URL
+        }
+        const response = await fetch(API_URL + '/api/plugin/getPluginList');
         const body = await response.json();
         const mainBody = body["plugins"]
         this.setState({ plugins: mainBody, isLoading: false});
