@@ -28,7 +28,7 @@ function saveData(blob, fileName) {
 function getAPIURL () {
   // Use the default API_URL
   console.log("We are calling this function")
-  let API_URL = "http://localhost:8080"
+  let API_URL = "http://localhost:8080/"
 
   // If environment variable has been set it will override the default
   if (process.env.REACT_APP_API_URL) {
@@ -72,7 +72,7 @@ class editor extends React.Component {
 
   downloadWarfile() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", getAPIURL() + '/package/downloadWarPackage', true);
+    xhr.open("POST", getAPIURL() + 'package/downloadWarPackage', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
       if(xhr.status == 404) {
@@ -86,7 +86,7 @@ class editor extends React.Component {
 
    downloadPackagerConfig() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", getAPIURL() + '/package/downloadPackageConfiguration', true);
+    xhr.open("POST", getAPIURL() + 'package/downloadPackageConfiguration', true);
     xhr.responseType = "blob";
     xhr.onload = function () {
         saveData(this.response, 'casc.yml');

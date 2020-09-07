@@ -83,7 +83,7 @@ Once you have started the spring boot server the next thing is to configure the 
 * Inside this file this line needs  to be changed `REACT_APP_API_URL=INSERT_NEW_PORT_HERE`
 for eg: If the backend is running on port 8081
 ```
-REACT_APP_API_URL=http://localhost:8081
+REACT_APP_API_URL=http://localhost:8081/
 ```
 
 ## How to change ports and run with Docker
@@ -112,7 +112,7 @@ Once you have started the spring boot server the next thing is to configure the 
 * Inside this file this line needs  to be changed `REACT_APP_API_URL=INSERT_NEW_PORT_HERE`
 for eg: If the backend is running on port 8081
 ```
-REACT_APP_API_URL=http://localhost:8081
+REACT_APP_API_URL=http://localhost:8081/
 ```
 
 ## How to change Community-Configurations URL

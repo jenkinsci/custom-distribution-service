@@ -1,5 +1,6 @@
 HELP.md
 target/
+.mvn/
 !.mvn/wrapper/maven-wrapper.jar
 .git
 .cache
@@ -37,3 +38,5 @@ build/
 
 # ignore node_modules
 /node_modules/
+frontend/build
+frontend/node_modules
