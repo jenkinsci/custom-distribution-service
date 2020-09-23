@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<deploy.skip>true</deploy.skip>
 	</properties>
 
 	<dependencies>
