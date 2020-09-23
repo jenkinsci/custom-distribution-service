@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>io.jenkins.tools.distribution-service</groupId>
 	<artifactId>custom-distribution-service</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>Custom Jenkins Distribution Service</name>
 	<description>The main idea behind the project is to build a customizable jenkins distribution service that could be used to build tailor-made jenkins distributions</description>
 
@@ -22,7 +22,7 @@
     <developerConnection>scm:git:ssh://git@github.com/jenkinsci/custom-distribution-service.git</developerConnection>
     <connection>scm:git:ssh://git@github.com/jenkinsci/custom-distribution-service.git</connection>
     <url>https://github.com/jenkins-infra/plugin-site-api</url>
-    <tag>HEAD</tag>
+    <tag>custom-distribution-service-0.0.2</tag>
   </scm>
 
 	<dependencies>
