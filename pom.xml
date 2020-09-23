@@ -19,6 +19,13 @@
 		<deploy.skip>true</deploy.skip>
 	</properties>
 
+  <scm>
+    <developerConnection>scm:git:ssh://git@github.com/jenkinsci/custom-distribution-service.git</developerConnection>
+    <connection>scm:git:ssh://git@github.com/jenkinsci/custom-distribution-service.git</connection>
+    <url>https://github.com/jenkins-infra/plugin-site-api</url>
+    <tag>HEAD</tag>
+  </scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
