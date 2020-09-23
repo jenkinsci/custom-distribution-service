@@ -23,7 +23,8 @@ public class PackagerDownloadService {
     /**
      * @param configuration This is the configuration with which the war is generated.
      * @return Response Entity with body as the war file in the form of a resource
-     * @throws Exception
+     * @throws IOException
+     * @throws InterruptedException
      */
     public ResponseEntity<Resource> downloadWAR(final String configuration) throws IOException, InterruptedException {
         File warFile = null;
