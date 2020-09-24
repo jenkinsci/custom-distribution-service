@@ -1,33 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { Navbar, Nav } from 'react-bootstrap'
 
 export const Header = () => {
-    return(
-        <header className="header colored sticky-header" data-scroll="out">
-				<div className="c-container">
-					<div className="nav-items">
-					<a href="">
-					<img className="site-logo" src="https://i.imgur.com/kAZS0eh.png" alt=""></img>
-					</a>
-					<ul className="main-nav">
-					 <Link to="/pluginList">
-						<li className="nav-item">
-							<a className="nav-link">Plugins</a>
-						</li>
-					</Link>
-					 <Link to="/generatePackage">
-						<li className="nav-item">
-							<a className="nav-link" >Package Generation</a>
-						</li>
-					</Link>
-					<Link to="/communityConfiguration">
-						<li className="nav-item">
-							<a className="nav-link" >Community Configurations</a>
-						</li>
-					</Link>
-					</ul>
-					</div>
-				</div>
-			</header>
-    )
+  return(
+    <>
+      <Navbar bg="#011a30" variant="dark" expand="lg">
+        <Navbar.Brand as={Link} to="/"><img className="site-logo" src="https://www.jenkins.io/images/logos/jenkins/jenkins.svg" alt="" /></Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav>
+            <Nav.Link as={NavLink} to="/pluginList">Plugins</Nav.Link>
+            <Nav.Link as={NavLink} to="/generatePackage">Package Generation</Nav.Link>
+            <Nav.Link as={NavLink} to="/communityConfiguration">Community Configurations</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </>
+  )
 }
