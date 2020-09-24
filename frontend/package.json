@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "env-cmd": "^10.1.0",
+    "http-proxy-middleware": "^1.0.5",
     "node-sass": "^4.14.1",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
