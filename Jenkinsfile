@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps{
-             checkout scm
+                checkout scm
             }
         }
 
@@ -45,9 +45,9 @@ pipeline {
 
         stage('React Build') {
             agent {
-            docker {
-                label 'linux'
-                image 'node:6-alpine'
+                docker {
+                    label 'linux'
+                    image 'node:12-alpine'
                 }
             }
             steps {
@@ -60,7 +60,7 @@ pipeline {
                 /* Archive the test results */
                 junit '**/target/surefire-reports/TEST-*.xml'
                 archiveArtifacts artifacts: '**/target/**/*.jar'
-                findbugs pattern: '**/target/findbugsXml.xml'
+                recordIssues(tools: [findBugs(pattern: '**/target/findbugsXml.xml', useRankAsPriority: true)])
             }
         }
     }
