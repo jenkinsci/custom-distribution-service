@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/package")
+@RequestMapping("api/package")
 public class PackagerController {
 
     private transient final PackageConfigGenerator packageConfGen;
