@@ -70,7 +70,7 @@ public class PackageConfigGenerator {
         dockerInfo.put("base", buildSettings.getString("base"));
         if (buildSettings.has("tag")) {
             dockerInfo.put("tag", buildSettings.getString("tag"));
-            dockerInfo.put("build", "true");
+            dockerInfo.put("build", "false");
         }
 
         return new JSONObject().put("docker", dockerInfo);
