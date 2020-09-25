@@ -41,7 +41,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        String uri = "/package/getPackageConfiguration";
+        String uri = "/api/package/getPackageConfiguration";
         when(packageConfigGenerator.generatePackageConfig(any(JSONObject.class))).thenReturn(util.readStringFromFile("simple-config.yaml"));
         MvcResult result = packageMvc.perform( MockMvcRequestBuilders.post(uri)
             .contentType(APPLICATION_JSON_UTF8)
@@ -55,7 +55,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        String uri = "/package/getPackageConfiguration";
+        String uri = "/api/package/getPackageConfiguration";
         when(packageConfigGenerator.generatePackageConfig(any(JSONObject.class))).thenThrow(IOException.class);
         MvcResult result = packageMvc.perform( MockMvcRequestBuilders.post(uri)
             .contentType(APPLICATION_JSON_UTF8)
@@ -67,7 +67,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
     public void downloadPackageConfigTest() throws Exception {
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        String uri = "/package/downloadPackageConfiguration";
+        String uri = "/api/package/downloadPackageConfiguration";
         MvcResult result = packageMvc.perform( MockMvcRequestBuilders.post(uri)
             .contentType(APPLICATION_JSON_UTF8)
             .content(util.readStringFromFile("simple-config.yaml"))).andReturn();
@@ -82,7 +82,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         when(packagerDownloadService.downloadWAR(any(String.class))).thenThrow(IOException.class);
-        String uri = "/package/downloadWarPackage";
+        String uri = "/api/package/downloadWarPackage";
         MvcResult result = packageMvc.perform( MockMvcRequestBuilders.post(uri)
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .content(util.readStringFromFile("simple-config.yaml"))).andReturn();
@@ -103,7 +103,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
         when(packagerDownloadService.downloadWAR(any(String.class))).
             thenReturn(returnResource(returnHeaders(headerValue), (int) util.getFileFromResources(
                 "dummy_war.txt").length(), resource));
-        String uri = "/package/downloadWarPackage";
+        String uri = "/api/package/downloadWarPackage";
         MvcResult result = packageMvc.perform(MockMvcRequestBuilders.post(uri)
                                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                                 .content(util.readStringFromFile("simple-config.yaml"))
