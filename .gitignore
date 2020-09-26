@@ -1,6 +1,11 @@
 HELP.md
 target/
+.mvn/
 !.mvn/wrapper/maven-wrapper.jar
+.git
+.cache
+Jenkinsfile
+LICENSE
 
 ### STS ###
 .apt_generated
@@ -27,5 +32,13 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# ignore all *.class files in all folders, including build root
+*.class
+
+# ignore node_modules
+/node_modules/
+frontend/build
+frontend/node_modules
 public/
 tmp/
