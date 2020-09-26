@@ -1,69 +1,42 @@
-
-.App {
-    background-color: #011a30;
+/*
+Header
+==================================================
+*/
+:root {
+    --theme-color1: #fff;
+    --theme-main-background: #011a30;
+    --theme-active-link: #00b5f2;
+    --theme-button-color: #185ecc;
 }
 
-/*Header
-================================================== */
+html,
+body
+ {
+    height: 100vh;
+}
+
+#root,
+.App
+{
+    height: 100%;
+}
+
 body {
+    background-color: var(--theme-main-background);
     margin: 0;
     padding: 0;
     font-family: 'Lato', sans-serif;
+    min-height: 100%;
 }
-:root {
-    --theme-color1: #fff;
-    --theme-color2: #011a30;
-    
-}
+
 .colored {
     width: 100%;
     background: #011a30;
-    -webkit-box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.18);
+    -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
     padding-top: 10px;
     padding-bottom: 10px;
     margin-top: 0;
-}
-
-.nav-items {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-.nav-items .main-nav {
-    width: 100%;
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.nav-items .main-nav li a {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--theme-color1);
-    text-transform: uppercase;
-    padding-right: 7px;
-    padding-left: 7px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 500;
-    margin-right: 10px;
-    margin-left: 10px;
-    display: block;
-    border-bottom: 2px solid transparent;
-    padding-bottom: 15px;
-    padding-top: 15px;
-    white-space: nowrap;
-}
-.nav-items .main-nav li a:hover {
-    border-color: var(--theme-color1);
-
-}
-.nav-items .main-nav li a.active {
-    border-color: var(--theme-color1);
 }
 
 .site-logo {
@@ -77,4 +50,57 @@ body {
     width: 93%;
     position: relative;
     z-index: 1;
+}
+
+.App-header {
+    .navbar-toggler-icon {
+        color: var(--theme-color1);
+    }
+    
+    .navbar-nav a {
+        text-decoration: none;
+        color: var(--theme-color1);
+        text-transform: uppercase;
+    
+        &:hover {
+            border: 1px solid var(--theme-color1);
+        }
+    
+        &.active {
+            border: 1px solid var(--theme-active-link);
+        }
+    }
+
+    .App-warnings {
+        color: red;
+        text-align: center;
+
+        a {
+            color: red;
+        }
+    }
+}
+
+.configurationCard,
+.pluginCard {
+    background-color: #001627;
+    border-color: #333;
+
+    .card-footer {
+        margin-top: 10px;
+    }
+}
+
+.btn {
+    background-color: #185ecc;
+}
+
+.SpinnerComponent {
+    height: 100%;
+
+    .spinner-border {
+        width: 6rem;
+        height: 6rem;
+        color: #011a30;
+    }
 }
