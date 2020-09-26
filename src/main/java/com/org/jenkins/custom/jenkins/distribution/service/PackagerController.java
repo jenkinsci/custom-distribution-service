@@ -55,7 +55,7 @@ public class PackagerController {
             httpStatus = HttpStatus.OK;
         } catch (IOException e) {
             LOGGER.severe(e.toString());
-            httpStatus = HttpStatus.NOT_FOUND;
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(yamlResponse, httpStatus);
     }
@@ -74,7 +74,7 @@ public class PackagerController {
             return  packagerDownServ.downloadWAR(postPayload);
         } catch (IOException | InterruptedException e) {
             LOGGER.severe(e.toString());
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
