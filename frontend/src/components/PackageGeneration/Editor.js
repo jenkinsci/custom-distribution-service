@@ -39,7 +39,7 @@ const downloadWarfile = (config) => {
         saveData(this.response, 'jenkins.war')
      
     }
-    xhr.send(config)
+    xhr.send(yamlDump(config))
 }
 
 const downloadPackagerConfig = (config) => {
@@ -53,7 +53,7 @@ const downloadPackagerConfig = (config) => {
         }
         saveData(this.response, 'casc.yml')
     }
-    xhr.send(config)
+    xhr.send(yamlDump(config))
 }
 
 export const Editor = ({ config, setConfiguration }) => {
