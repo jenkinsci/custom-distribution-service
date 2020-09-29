@@ -51,7 +51,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
     }
 
     @Test
-    public void getPackageConfigReturns404WhenIOException() throws Exception {
+    public void getPackageConfigReturns505WhenIOException() throws Exception {
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -60,7 +60,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
         MvcResult result = packageMvc.perform( MockMvcRequestBuilders.post(uri)
             .contentType(APPLICATION_JSON_UTF8)
             .content(util.readStringFromFile("simple-config.json"))).andReturn();
-        Assert.assertEquals(404, result.getResponse().getStatus());
+        Assert.assertEquals(500, result.getResponse().getStatus());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
 
 
     @Test
-    public void downloadWARReturns404WhenIOException() throws Exception {
+    public void downloadWARReturns500WhenIOException() throws Exception {
 
         MockMvc packageMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
@@ -87,7 +87,7 @@ public class PackagerControllerTest extends SpringMVCSetup{
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
             .content(util.readStringFromFile("simple-config.yaml"))).andReturn();
         int status = result.getResponse().getStatus();
-        Assert.assertEquals(status, 404);
+        Assert.assertEquals(status, 500);
     }
 
     @Test

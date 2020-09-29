@@ -1,224 +1,214 @@
-import React from 'react'
-import PluginCard from '../PluginCards/pluginCard'
-import { Container, Row, Col} from 'reactstrap';
-import { InputGroup, InputGroupAddon, Button, Input, Label } from 'reactstrap';
-import ModalExample from '../modal';
-import { Pagination, PaginationItem, PaginationLink, Spinner } from 'reactstrap';
-import {RadioGroup, Radio} from 'react-radio-group';
-import querystring from 'querystring';
+import React, {useState, useEffect} from 'react'
+import PropTypes from 'prop-types'
+import { safeLoad as yamlRead } from 'js-yaml'
+import { Container, Row, Col} from 'reactstrap'
+import {
+    InputGroup,
+    InputGroupAddon,
+    Button,
+    Input,
+    Pagination,
+    PaginationItem,
+    PaginationLink,
+} from 'reactstrap'
+import { RadioGroup, Radio } from 'react-radio-group'
+import querystring from 'querystring'
 
+import Spinner from '../Spinner/Spinner'
+import {GITHUB_COMMUNITY_REPO} from '../../config'
 
-class CardLayout extends React.Component {
+const DEFAULT_SORT_TYPES = [
+    ['relevance', 'Relevance'],
+    ['installed', 'Most installed'],
+    ['trend', 'Trending'],
+    ['title', 'Title'],
+    ['updated', 'Release date']
+]
 
-   
-    state = {
-        search:"",
-        modalShow : false,
-        plugins: {},
-        pluginsperPage : 10,
-        current :1,
-        isLoading: true
-    }
+const DEFAULT_CARDS_PER_PAGE = 10
 
-    async componentDidMount() {
-        // Use the default API_URL
-        let API_URL = "http://localhost:8080/"
+const CardLayout = ({
+    setConfiguration,
+    sortTypes,
+    cardsPerPage,
+    url,
+    cardInstanceFunc,
+    resultsPrefilter,
+    type
+}) => {
+    const [currentPage, setCurrentPage] = useState(0)
+    const [modalShow, setModalShow] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [data, setData] = useState([])
+    const [search, setSearch] = useState('')
+    const [query, setQuery] = useState('')
 
-        // If environment variable has been set it will override the default
-        if (process.env.REACT_APP_API_URL) {
-            API_URL = process.env.REACT_APP_API_URL
-            console.log("Environment variable has been set", API_URL)
-        }
-        const response = await fetch(API_URL + 'api/plugin/getPluginList');
-        const body = await response.json();
-        const mainBody = body["plugins"]
-        this.setState({ plugins: mainBody, isLoading: false});
-    }
-
-    changeModalState = () => {
-        console.log(this.state.modalShow)
-        this.setState({modalShow: !this.state.modalShow})
-    }
-
-    onchange = pluginName => {
-        this.setState({search: pluginName.target.value})
-        console.log("Searching Plugins")
-    }
-
-    changeModalState = () => {
-        console.log(this.state.modalShow)
-        this.setState({modalShow: !this.state.modalShow})
-    }
-
-    render () {
-         // We need to populate the plugin Array
-         let pluginArray = []
-         Object.keys(this.state.plugins).map(key => {
-             pluginArray.push(this.state.plugins[key])
-         });
-
-        const search  = this.state.search
-       
-        // Get current plugins
-        const indexOfLastPlugin =  this.state.current * this.state.pluginsperPage;
-        const indexOfFirstPlugin =  indexOfLastPlugin - this.state.pluginsperPage;
-        const currentPlugins = pluginArray.slice(indexOfFirstPlugin, indexOfLastPlugin)  
-
-        // Create index array
-        const indexArray = []
-        // Calculate first index
-        let lastIndex = indexOfFirstPlugin / 10 + 1;     
-
-        let firstIndex = 0;
-        if (lastIndex >= 10 ) {
-            firstIndex = lastIndex - 10;
-        } else {
-            lastIndex = 9;
-        }
-        let counter = 0;
-        for (let index = firstIndex + 1; index < lastIndex + 2; index++) {
-            indexArray[counter] = index 
-            counter = counter + 1;
-        }
-
-        let pluginCards;
-        if (search !== "") {
-            pluginCards = pluginArray.map(plugin => {
-                if(!(plugin["name"].toLowerCase().indexOf( search.toLowerCase() ) === -1)) {
-                    return(
-                        <Col sm="3">
-                            <PluginCard plugin = {plugin} /> 
-                        </Col>
-                    )
+    useEffect(() => {
+        async function fetchData() {
+            const yamlStr = await fetch(`${url}?${query}`).then((response) => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong')
                 }
-            })    
-        } else {
-            pluginCards = currentPlugins.map(plugin => {
-                if (search !== "" && plugin["name"].toLowerCase().indexOf( search.toLowerCase() ) === -1) {
-                    return null
-                }
-                return(
-                    <Col sm="3">
-                        <PluginCard plugin = {plugin} /> 
-                    </Col>
-                )
-            })  
-        }   
-
-        const updatePageWrapper = (num) => {
-            return (e) => {
-                e.preventDefault();
-                this.setState({current: num});     
-            };
-        };
-
-        if(this.state.isLoading) {
-            return (
-                <div style = { {
-                    position: "fixed",
-                    top: "50%", 
-                    left: "50%",
-                    }}>
-                 <Spinner style = {{width : "6rem", height: "6rem", color:"#011a30"}}> </Spinner>
-                </div>
-            )
+                return response.text()
+            })
+            const yaml = resultsPrefilter(yamlRead(yamlStr))
+            setData(yaml)
+            setIsLoading(false)
         }
+        setIsLoading(true)
+        fetchData()
+    }, [query, url, resultsPrefilter])
 
-        const SORT_TYPES = [
-            ['relevance', 'Relevance'],
-            ['installed', 'Most installed'],
-            ['trend', 'Trending'],
-            ['title', 'Title'],
-            ['updated', 'Release date']
-        ];
+    const onSearchChange = event => {
+        setSearch(event.target.value)
+    }
 
+    const changeModalState = () => {
+        setModalShow(!modalShow)
+    }
+    
+    // Get current Datas
+    const indexOfFirstData = currentPage * cardsPerPage
+    const indexOfLastData = indexOfFirstData + cardsPerPage
+    const currentData = data.slice(indexOfFirstData, indexOfLastData)  
+
+    // Create index array
+    const indexArray = []
+    // Calculate first index
+    let lastIndex = indexOfFirstData / 10 + 1     
+
+    let firstIndex = 0
+    if (lastIndex >= 10 ) {
+        firstIndex = lastIndex - 10
+    } else {
+        lastIndex = 9
+    }
+
+    let counter = 0
+    for (let index = firstIndex + 1; index < lastIndex + 2; index++) {
+        indexArray[counter] = index 
+        counter = counter + 1
+    }
+
+    const updatePageWrapper = (num) => {
+        return (e) => {
+            e.preventDefault()
+            setCurrentPage(num)
+        }
+    }
+
+    if (isLoading) {
+        return <Spinner />
+    }
+
+    const configurationCards = currentData.filter(config => {
+        if (search) {
+            return config.name.toLowerCase().includes(search.toLowerCase())
+        }
+        return true
+    }).map(data => {
         return (
-            <Container fluid style = {{height: "100vh"}} class="column">
+            <Col sm="3" key={ data.name }>
+                {cardInstanceFunc({ data, setConfiguration })} 
+            </Col>
+        )
+    })
+
+    return (
+        <Container fluid style={ {height: '100vh'} } className="column">
             <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }} >
+                style={ {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                } } >
 
                 {/* Filter Buttons */}
-                <RadioGroup name="sort" onChange = {async (key) =>{
-                let data = {
-                            categories: '',
-                            labels:'',
-                            page: 1,
-                            query: 'javascript',
-                            sort: key
-                        }
-                        const {categories, labels, page, query, sort} = data;
-                        const params = querystring.stringify({
-                            categories,
-                            labels,
-                            page,
-                            q: query,
-                            sort
-                        });
-                        console.log("Fetching values with key", key)
-                        const url = `https://plugins.jenkins.io/api/plugins?${params}`
-                        console.log("URL is ", url)
-                        const response = await fetch(url);
-                        const body = await response.json();
-                        const mainBody = body["plugins"]
-                        this.setState({plugins: mainBody, isLoading: false})
+                <RadioGroup name="sort" onChange={ async (key) =>{
+                    let data = {
+                        categories: '',
+                        labels:'',
+                        page: 1,
+                        query: 'javascript',
+                        sort: key
+                    }
+                    const {categories, labels, page, query, sort} = data
+                    setQuery(querystring.stringify({
+                        categories,
+                        labels,
+                        page,
+                        q: query,
+                        sort
+                    }))
                 } } >
-                    {SORT_TYPES.map(([key, label]) => (
-                        <label key={key} style = {{margin: "5px", color:"white"}}>
-                            <Radio value={key}/>
+                    {sortTypes.map(([key, label]) => (
+                        <label key={ key } style={ {margin: '5px', color:'white'} }>
+                            <Radio value={ key }/>
                             {` ${label}`}
                         </label>
                     ))}
                 </RadioGroup>
 
                 {/* Search Bar */}
-                <InputGroup style={{margin:"10px", width:"40%"}}>
-                <Input onChange = {this.onchange} />
-                <InputGroupAddon addonType="append">
-                <Button  style = {{backgroundColor:"#185ecc"}} >Search Plugin</Button>
-                </InputGroupAddon>
+                <InputGroup style={ {margin:'10px', width:'40%'} }>
+                    <Input onChange={ onSearchChange } />
+                    <InputGroupAddon addonType="append">
+                        <Button>Search Data</Button>
+                    </InputGroupAddon>
                 </InputGroup>
 
                 {/* Pagination Handling (Separate this into a different component later*/}
-                <Pagination aria-label="Page navigation example" style ={{margin:"10px"}}>
-                {this.state.current !== 1 && <PaginationItem>
-                    <PaginationLink first onClick={updatePageWrapper(0)} />
-                </PaginationItem>}
-                {this.state.current > 1 && <PaginationItem>
-                    <PaginationLink previous onClick ={updatePageWrapper(this.state.current - 1)} />
-                </PaginationItem>}
-                {currentPlugins.map((key, index) => {
-                    const isCurrent = this.state.current == indexArray[index];
-                    return (
-                        <PaginationItem key={indexArray[index]} active={isCurrent}>
-                            <PaginationLink onClick={updatePageWrapper(indexArray[index])}>
-                                {indexArray[index]}
-                            </PaginationLink>
-                        </PaginationItem>
-                    );
-                })}
-                {this.state.current !== 100 && <PaginationItem>
-                    <PaginationLink next onClick={updatePageWrapper(this.state.current + 1)} />
-                </PaginationItem>}
-                {this.state.current !== 100 && <PaginationItem>
-                    <PaginationLink last onClick={updatePageWrapper(pluginArray.length - 1)}/>
-                </PaginationItem>}
+                <Pagination aria-label="Page navigation example" style={ {margin:'10px'} }>
+                    {currentPage !== 1 && <PaginationItem>
+                        <PaginationLink first onClick={ updatePageWrapper(0) } />
+                    </PaginationItem>}
+                    {currentPage > 1 && <PaginationItem>
+                        <PaginationLink previous onClick={ updatePageWrapper(currentPage - 1) } />
+                    </PaginationItem>}
+                    {currentData.map((key, index) => {
+                        const isCurrent = currentPage === indexArray[index]
+                        return (
+                            <PaginationItem key={ indexArray[index] } active={ isCurrent }>
+                                <PaginationLink onClick={ updatePageWrapper(indexArray[index]) }>
+                                    {indexArray[index]}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )
+                    })}
+                    {currentPage !== 100 && <PaginationItem>
+                        <PaginationLink next onClick={ updatePageWrapper(currentPage + 1) } />
+                    </PaginationItem>}
+                    {currentPage !== 100 && <PaginationItem>
+                        <PaginationLink last onClick={ updatePageWrapper(data.length - 1) }/>
+                    </PaginationItem>}
                 </Pagination>
             </div>
             <Row>
-                {pluginCards} 
-             </Row>
-                <div className="card-footer text-center" >
-                <Button style = {{backgroundColor:"#185ecc"}}  onClick={() => {this.clickChild(); this.changeModalState()}}>Submit Plugins</Button>
-                </div>
-                <ModalExample  modalState = {this.state.modalShow} setClick={click => this.clickChild = click} />
-            </Container> 
-                  
-        )
-    }
+                {configurationCards} 
+            </Row>
+            <div className="card-footer text-center">
+                <Button onClick={ changeModalState }>Submit {type}</Button>
+            </div>
+        </Container> 
+                
+    )
 }
 
-export default CardLayout;
+CardLayout.defaultProps = {
+    // cardInstanceFunc: (config) => <ConfigurationCard setConfiguration={ setConfiguration } name={ config.name } file={ config.file } />
+    cardsPerPage: DEFAULT_CARDS_PER_PAGE,
+    sortTypes: DEFAULT_SORT_TYPES,
+    url: `https://raw.githubusercontent.com/${GITHUB_COMMUNITY_REPO}/master/configurations.yaml`,
+}
+
+CardLayout.propTypes = {
+    cardInstanceFunc: PropTypes.func.isRequired,
+    cardsPerPage: PropTypes.number,
+    resultsPrefilter: PropTypes.func.isRequired,
+    setConfiguration: PropTypes.func.isRequired,
+    sortTypes: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired, PropTypes.string.isRequired)),
+    type: PropTypes.string.isRequired,
+    url: PropTypes.string,
+}
+
+export default CardLayout

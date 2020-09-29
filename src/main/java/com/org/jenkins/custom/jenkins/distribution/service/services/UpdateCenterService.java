@@ -46,11 +46,12 @@ public class UpdateCenterService {
    public JSONObject downloadJSON (final String updateCenterURL) throws IOException {
             final File updateCenterFile = File.createTempFile("update-center", ".json");
             updateCenterPath = updateCenterFile.getPath();
-            LOGGER.info("Creating a new file" + updateCenterFile.getPath());
-            LOGGER.info("Executing Request at " + updateCenterURL);
-            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-               CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL)))
-            {
+            LOGGER.info("Creating a new file '" + updateCenterFile.getPath() + "'");
+            LOGGER.info("Executing Request at '" + updateCenterURL + "'");
+            try (
+                    CloseableHttpClient httpClient = HttpClients.createDefault();
+                    CloseableHttpResponse response = httpClient.execute(new HttpGet(UPDATE_CENTER_URL))
+            ) {
                responseString = EntityUtils.toString(response.getEntity());
             }
             final byte[] buf = responseString.getBytes(StandardCharsets.UTF_8);
