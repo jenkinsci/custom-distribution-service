@@ -6,15 +6,15 @@ import {
 } from 'reactstrap'
 import './pluginCard.scss'
 
-const PluginCard = ({ config, setConfiguration, name, version }) => {
+const PluginCard = ({ config, setConfiguration, name, version, callbackFromParent }) => {
     const [isPluginSelected, setIsPluginSelected] = useState(false)
 
     const addToConfiguration = () => {
         if (!config.plugins) {
             config.plugins = new Object();
         }
-
-        if (name in config.plugins) {
+        
+        if (name in config.plugins) {            
             setIsPluginSelected(!isPluginSelected);
             delete config.plugins[name];
         }

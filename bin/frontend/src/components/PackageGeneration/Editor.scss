@@ -1,0 +1,32 @@
+.Editor {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 auto;
+
+    .EditorEditor {
+        padding: 20px;
+        width: 50%;
+        border-radius: 5px;
+        color: white;
+        background-color: white;
+        text-align: center;
+        font-family: "Fira code", "Fira Mono", monospace;
+        font-size: 20;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+
+    .btn {
+        background-color: var(--theme-button-color);
+        font-size: 25px;
+        margin: 10px;
+    }
+
+    .card {
+        margin: 10px;
+    }
+}
