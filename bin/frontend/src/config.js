@@ -1,2 +1,0 @@
-export const GITHUB_COMMUNITY_REPO = process.env.REACT_APP_GITHUB_COMMUNITY_REPO  || 'halkeye/custom-distribution-service-community-configurations'
-export const API_URL = process.env.REACT_APP_API_URL || '/'
