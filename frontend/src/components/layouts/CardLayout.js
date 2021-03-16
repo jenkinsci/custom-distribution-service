@@ -25,7 +25,7 @@ const DEFAULT_SORT_TYPES = [
     ['updated', 'Release date']
 ]
 
-const DEFAULT_CARDS_PER_PAGE = 10
+const DEFAULT_CARDS_PER_PAGE = 12
 
 const CardLayout = ({
     setConfiguration,
@@ -75,13 +75,13 @@ const CardLayout = ({
     // Create index array
     const indexArray = []
     // Calculate first index
-    let lastIndex = indexOfFirstData / 10 + 1     
+    let lastIndex = indexOfFirstData / 12 + 1     
 
     let firstIndex = 0
-    if (lastIndex >= 10 ) {
-        firstIndex = lastIndex - 10
+    if (lastIndex >= 12 ) {
+        firstIndex = lastIndex - 12
     } else {
-        lastIndex = 9
+        lastIndex = 11
     }
 
     let counter = 0
@@ -108,7 +108,7 @@ const CardLayout = ({
         return true
     }).map(data => {
         return (
-            <Col sm="3" key={ data.name }>
+            <Col sm="4" key={ data.name }>
                 {cardInstanceFunc({ data, setConfiguration })} 
             </Col>
         )
