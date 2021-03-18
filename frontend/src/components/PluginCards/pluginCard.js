@@ -11,7 +11,7 @@ const PluginCard = ({ config, setConfiguration, name, version }) => {
 
     const addToConfiguration = () => {
         if (!config.plugins) {
-            config.plugins = new Object();
+            config.plugins = {};
         }
 
         if (name in config.plugins) {
@@ -33,7 +33,7 @@ const PluginCard = ({ config, setConfiguration, name, version }) => {
                     <CardTitle>Plugin Name: {name}</CardTitle>
                     <CardSubtitle>Version: {version}</CardSubtitle>
                     <div className="card-footer text-center">
-                        { (config.plugins && config.plugins[name])? <Button style={{backgroundColor: "#C34444"}} onClick={ addToConfiguration }>Remove from configuration</Button> :
+                        { (config.plugins && config.plugins[name])? <Button className="button_removeFromConfiguration" onClick={ addToConfiguration }>Remove from configuration</Button> :
                                                                     <Button onClick={ addToConfiguration }>Add to configuration</Button>}
                     </div>
                 </CardBody>

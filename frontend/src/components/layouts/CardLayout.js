@@ -203,7 +203,7 @@ const CardLayout = ({
             </Row>
 
             <div className="card-footer text-center">
-                <Button style={{marginRight: 20}} onClick={ openModal }>View Selected Plugins</Button>
+                <Button className="button_viewSelectedPlugins" onClick={ openModal }>View Selected Plugins</Button>
                 <Button onClick={ changeModalState }>Submit {type}</Button>
             </div>
         </Container> 
