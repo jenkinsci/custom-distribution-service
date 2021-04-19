@@ -16,6 +16,9 @@ import querystring from 'querystring'
 
 import Spinner from '../Spinner/Spinner'
 import {GITHUB_COMMUNITY_REPO} from '../../config'
+import './CardLayout.scss'
+import { ModalManager } from 'react-dynamic-modal';
+import MyModal from '../Modal/MyModal'
 
 const DEFAULT_SORT_TYPES = [
     ['relevance', 'Relevance'],
@@ -34,7 +37,8 @@ const CardLayout = ({
     url,
     cardInstanceFunc,
     resultsPrefilter,
-    type
+    type,
+    config
 }) => {
     const [currentPage, setCurrentPage] = useState(0)
     const [modalShow, setModalShow] = useState(false)
@@ -42,6 +46,7 @@ const CardLayout = ({
     const [data, setData] = useState([])
     const [search, setSearch] = useState('')
     const [query, setQuery] = useState('')
+    const [isPluginSelected, setIsPluginSelected] = useState(true)
 
     useEffect(() => {
         async function fetchData() {
@@ -66,7 +71,13 @@ const CardLayout = ({
     const changeModalState = () => {
         setModalShow(!modalShow)
     }
-    
+
+    const onConfigChange = (newConfig) => {
+        config.plugins = newConfig;
+        setConfiguration(config);
+        setIsPluginSelected(!isPluginSelected);
+    }
+
     // Get current Datas
     const indexOfFirstData = currentPage * cardsPerPage
     const indexOfLastData = indexOfFirstData + cardsPerPage
@@ -113,6 +124,10 @@ const CardLayout = ({
             </Col>
         )
     })
+
+    const openModal = () => {
+        ModalManager.open(<MyModal text={ config.plugins } onRequestClose={ () => true } onConfigChange={ onConfigChange } />);
+    }
 
     return (
         <Container fluid style={ {height: '100vh'} } className="column">
@@ -186,7 +201,9 @@ const CardLayout = ({
             <Row>
                 {configurationCards} 
             </Row>
+
             <div className="card-footer text-center">
+                <Button className="button_viewSelectedPlugins" onClick={ openModal }>View Selected Plugins</Button>
                 <Button onClick={ changeModalState }>Submit {type}</Button>
             </div>
         </Container> 

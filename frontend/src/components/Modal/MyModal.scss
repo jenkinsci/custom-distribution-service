@@ -1,0 +1,23 @@
+.modal-header, .modal-footer {
+    font-size: 30px;
+    margin: 0px;
+}
+
+.modal-body {
+    color: #000;
+    font-size: 18px;
+    width: 700px;
+    max-height: 210px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.button_clearAll {
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.button_close {
+    border-radius: 5px;
+}

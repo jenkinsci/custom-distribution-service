@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
     Card, CardBody,
     CardTitle, CardSubtitle, Button
 } from 'reactstrap'
 import './pluginCard.scss'
-  
+
 const PluginCard = ({ config, setConfiguration, name, version }) => {
+    const [isPluginSelected, setIsPluginSelected] = useState(false)
+
     const addToConfiguration = () => {
         if (!config.plugins) {
-            config.plugins = []
+            config.plugins = {};
         }
-        config.plugins.push({
-            [name]: {
-                version: version
-            }
-        })
+
+        if (name in config.plugins) {
+            setIsPluginSelected(!isPluginSelected);
+            delete config.plugins[name];
+        }
+        else {
+            config.plugins[name] = [version];
+            setIsPluginSelected(!isPluginSelected);
+        }
+
         setConfiguration(config)
     }
 
@@ -26,7 +33,8 @@ const PluginCard = ({ config, setConfiguration, name, version }) => {
                     <CardTitle>Plugin Name: {name}</CardTitle>
                     <CardSubtitle>Version: {version}</CardSubtitle>
                     <div className="card-footer text-center">
-                        <Button onClick={ addToConfiguration }>Add to configuration</Button>
+                        { (config.plugins && config.plugins[name])? <Button className="button_removeFromConfiguration" onClick={ addToConfiguration }>Remove from configuration</Button> :
+                                                                    <Button onClick={ addToConfiguration }>Add to configuration</Button>}
                     </div>
                 </CardBody>
             </Card>
