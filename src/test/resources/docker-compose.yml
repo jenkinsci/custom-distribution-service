@@ -6,8 +6,8 @@ services:
   app-server:
     # Configuration for building the docker image for the backend service
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../../..
+      dockerfile: ../../../Dockerfile
     volumes:
       - '/app'
     ports:
@@ -15,10 +15,9 @@ services:
     restart: always
 
   app-client:
-    container_name: cds_front-end
     build:
-      context: frontend/
-      dockerfile: Dockerfile
+      context: ../../..
+      dockerfile: ../../../frontend/Dockerfile
     volumes:
       - '.:/app'
       - '/app/node_modules'
