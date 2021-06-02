@@ -1,4 +1,4 @@
-package controller;
+package com.org.jenkins.custom.jenkins.distribution.service.controller;
 
 import com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
