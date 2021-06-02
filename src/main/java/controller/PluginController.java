@@ -1,4 +1,4 @@
-package com.org.jenkins.custom.jenkins.distribution.service;
+package controller;
 
 import com.org.jenkins.custom.jenkins.distribution.service.services.UpdateCenterService;
 import java.util.Map;
