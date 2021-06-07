@@ -46,7 +46,7 @@ public class PackagerController {
      * @return a ResponseEntity instance with a body containing the package configuration as a YAML string.
      */
     @PostMapping(path = "/getPackageConfiguration")
-    public ResponseEntity<?> getPackageConfig(@RequestBody final String postPayload) {
+    public ResponseEntity<?> getPackageConfiguration(@RequestBody final String postPayload) {
         LOGGER.info("Request Received for packaging configuration with params" + postPayload);
         String yamlResponse = "";
         HttpStatus httpStatus;
