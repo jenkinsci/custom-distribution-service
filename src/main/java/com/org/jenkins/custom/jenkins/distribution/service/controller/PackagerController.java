@@ -1,4 +1,4 @@
-package com.org.jenkins.custom.jenkins.distribution.service;
+package com.org.jenkins.custom.jenkins.distribution.service.controller;
 
 import com.org.jenkins.custom.jenkins.distribution.service.generators.PackageConfigGenerator;
 import com.org.jenkins.custom.jenkins.distribution.service.services.PackagerDownloadService;
@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/package")
 public class PackagerController {
 
-    private transient final PackageConfigGenerator packageConfGen;
-    private transient final PackagerDownloadService packagerDownServ;
+    private transient final PackageConfigGenerator packageConfigGenerator;
+    private transient final PackagerDownloadService packagerDownloadService;
     private final static Logger LOGGER = Logger.getLogger(PackagerController.class.getName());
 
     @Autowired
-    public PackagerController(final PackageConfigGenerator packageConfGen, final PackagerDownloadService packagerDownServ) {
-        this.packageConfGen = packageConfGen;
-        this.packagerDownServ = packagerDownServ;
+    public PackagerController(final PackageConfigGenerator packageConfigGenerator, final PackagerDownloadService packagerDownloadService) {
+        this.packageConfigGenerator = packageConfigGenerator;
+        this.packagerDownloadService = packagerDownloadService;
     }
 
     /**
@@ -46,12 +46,12 @@ public class PackagerController {
      * @return a ResponseEntity instance with a body containing the package configuration as a YAML string.
      */
     @PostMapping(path = "/getPackageConfiguration")
-    public ResponseEntity<?> getPackageConfig(@RequestBody final String postPayload) {
+    public ResponseEntity<?> getPackageConfiguration(@RequestBody final String postPayload) {
         LOGGER.info("Request Received for packaging configuration with params" + postPayload);
         String yamlResponse = "";
         HttpStatus httpStatus;
         try {
-            yamlResponse = packageConfGen.generatePackageConfig(new JSONObject(postPayload));
+            yamlResponse = packageConfigGenerator.generatePackageConfig(new JSONObject(postPayload));
             httpStatus = HttpStatus.OK;
         } catch (IOException e) {
             LOGGER.severe(e.toString());
@@ -71,7 +71,7 @@ public class PackagerController {
     public ResponseEntity<?> downloadWAR(@RequestBody final String postPayload) {
         LOGGER.info("Request Received for downloading war file with configuration" + postPayload);
         try {
-            return  packagerDownServ.downloadWAR(postPayload);
+            return  packagerDownloadService.downloadWAR(postPayload);
         } catch (IOException | InterruptedException e) {
             LOGGER.severe(e.toString());
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,12 +85,12 @@ public class PackagerController {
      * @return The content of the browser's text editor in an HTTP response (download from the server).
      */
     @PostMapping (path = "/downloadPackageConfiguration")
-    public ResponseEntity<?> downloadPackageConfig(@RequestBody final String postPayload) {
+    public ResponseEntity<?> downloadPackageConfiguration(@RequestBody final String postPayload) {
             LOGGER.info(postPayload);
-            final InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(StandardCharsets.UTF_8)));
+            final InputStreamResource inputStreamResource = new InputStreamResource(new ByteArrayInputStream(postPayload.getBytes(StandardCharsets.UTF_8)));
             final String headerValue = "attachment; filename=packager-config.yml";
             LOGGER.info("Returning packager-config.yml");
-            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes(StandardCharsets.UTF_8).length, resource);
+            return Util.returnResource(Util.returnHeaders(headerValue), postPayload.getBytes(StandardCharsets.UTF_8).length, inputStreamResource);
     }
 
 }
