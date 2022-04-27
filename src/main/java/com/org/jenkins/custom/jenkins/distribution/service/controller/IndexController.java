@@ -1,4 +1,4 @@
-package com.org.jenkins.custom.jenkins.distribution.service;
+package com.org.jenkins.custom.jenkins.distribution.service.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
