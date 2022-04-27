@@ -50,6 +50,9 @@ pipeline {
                     image 'node:12-alpine'
                 }
             }
+            environment {
+                HOME="/tmp"
+            }
             steps {
                 sh 'npm install'
             }
