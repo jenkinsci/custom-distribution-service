@@ -1,0 +1,39 @@
+bundle:
+  groupId: "io.jenkins.tools.custom-war-packager.demo.casc"
+  artifactId: "jenkins-casc-demo"
+  vendor: "Jenkins project"
+  title: "Configuration-as-Code demo"
+  description: "Configuration-as-Code demo, produced by Custom WAR Packager"
+buildSettings:
+  docker:
+    base: "jenkins/jenkins:2.138.2"
+war:
+  groupId: "org.jenkins-ci.main"
+  artifactId: "jenkins-war"
+  source:
+    version: 2.138.2
+plugins:
+  - groupId: "io.jenkins"
+    artifactId: "configuration-as-code"
+    source:
+      version: 1.1
+  - groupId: "io.jenkins.configuration-as-code"
+    artifactId: "configuration-as-code-support"
+    source:
+      version: 1.1
+  - groupId: "org.jenkins-ci.plugins"
+    artifactId: "role-strategy"
+    source:
+      version: "2.8.1"
+  - groupId: "org.jenkins-ci.plugins"
+    artifactId: "matrix-auth"
+    source:
+      version: "2.3"
+  - groupId: "org.jenkins-ci.plugins"
+    artifactId: "cloudbees-folder"
+    source:
+      version: "6.6"
+systemProperties:
+  jenkins.install.runSetupWizard: "false"
+  jenkins.model.Jenkins.slaveAgentPort: "50000"
+  jenkins.model.Jenkins.slaveAgentPortEnforce: "true"
